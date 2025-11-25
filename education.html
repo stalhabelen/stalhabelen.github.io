@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Suleyman Talha Belen | Education</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <div class="logo"><a href="index.html">S. T. Belen</a></div>
+      <nav>
+        <a href="education.html">Education</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Projects</a>
+        <a href="ideas.html">Ideas</a>
+        <a href="writings.html">Writings</a>
+        <a href="research.html">Research</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="reveal">
+      <h1>Education</h1>
+      <p class="page-subtitle">
+        Bilkent EE as my base, with visiting student experiences at Stanford University and UC Berkeley.
+      </p>
+
+      <div class="school-logos" style="margin-bottom:1.6rem;">
+        <img src="bilkent-logo.png" alt="Bilkent University logo" class="school-logo" />
+        <img src="stanford-logo.png" alt="Stanford University logo" class="school-logo" />
+        <img src="berkeley-logo.png" alt="UC Berkeley logo" class="school-logo" />
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h2>Bilkent University</h2>
+          <p class="meta">B.E., Electrical and Electronics Engineering · 2023–2027 (expected)</p>
+          <p>
+            Core coursework in circuits, analog electronics, microprocessors, digital logic, linear algebra,
+            differential equations, probability theory, and discrete mathematics. Building foundations in
+            signal processing, control, and machine learning.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>Stanford University</h2>
+          <p class="meta">Visiting Student, Computer Science · 2025</p>
+          <ul class="list">
+            <li><strong>CS 229: Machine Learning</strong> – Supervised and unsupervised learning, neural networks,
+              transformers, and reinforcement learning with a rigorous mathematical perspective.</li>
+            <li><strong>EE 364A: Convex Optimization</strong> – PhD-level course on convex analysis and optimization,
+              with applications to ML, signal processing, and control using CVXPY.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>University of California, Berkeley</h2>
+          <p class="meta">Visiting Student, EECS and Engineering · 2024</p>
+          <ul class="list">
+            <li><strong>EECS 16A</strong> – Designed information devices and systems such as cameras and touchscreens,
+              combining circuits and linear algebra.</li>
+            <li><strong>ENG 170</strong> – Technology leadership and entrepreneurship through team projects and startup
+              pitch style presentations.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="reveal" style="margin-top:2.5rem;">
+      <h2>Contact</h2>
+      <ul class="contact-list">
+        <li>📧 Email: <a href="mailto:talha.belen@ug.bilkent.edu.tr">talha.belen@ug.bilkent.edu.tr</a></li>
+        <li>💼 LinkedIn: <a href="https://www.linkedin.com/in/suleyman-talha-belen-b0645a2a5" target="_blank" rel="noreferrer">linkedin.com/in/suleyman-talha-belen-b0645a2a5</a></li>
+        <li>🐙 GitHub: <a href="https://github.com/stalhabelen" target="_blank" rel="noreferrer">github.com/stalhabelen</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <span>© <span id="year"></span> Suleyman Talha Belen.</span>
+    <span class="back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">↑ Back to top</span>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const reveals = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    reveals.forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>

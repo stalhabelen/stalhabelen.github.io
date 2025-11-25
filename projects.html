@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Suleyman Talha Belen | Projects</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <div class="logo"><a href="index.html">S. T. Belen</a></div>
+      <nav>
+        <a href="education.html">Education</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Projects</a>
+        <a href="ideas.html">Ideas</a>
+        <a href="writings.html">Writings</a>
+        <a href="research.html">Research</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="reveal">
+      <h1>Projects</h1>
+      <p class="page-subtitle">
+        Selected projects and research-style explorations in reinforcement learning, neural fields, and signal processing.
+      </p>
+
+      <div class="grid">
+        <article class="card">
+          <h3>Fast Adaptation on Meta World Assembly with PPO MAML</h3>
+          <p class="meta">Reinforcement Learning</p>
+          <p>
+            Investigating meta reinforcement learning on the Meta World Assembly task using PPO with
+            MAML-inspired adaptation. Focus on how a policy can rapidly adapt to new task variations with
+            a small number of updates.
+          </p>
+          <p class="meta">Code and detailed write-up: coming soon.</p>
+        </article>
+
+        <article class="card">
+          <h3>SpeedNeRF</h3>
+          <p class="meta">Neural Radiance Fields for Wave-based Imaging</p>
+          <p>
+            Experimenting with adapting Neural Radiance Fields concepts to sound waves for subsurface imaging,
+            inspired by seismic data. Exploring representation choices and potential for 3D reconstruction
+            from wave measurements.
+          </p>
+          <p class="meta">Early-stage ideas, not yet evaluated on real seismic datasets.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="reveal" style="margin-top:2.5rem;">
+      <h2>Contact</h2>
+      <ul class="contact-list">
+        <li>📧 Email: <a href="mailto:talha.belen@ug.bilkent.edu.tr">talha.belen@ug.bilkent.edu.tr</a></li>
+        <li>💼 LinkedIn: <a href="https://www.linkedin.com/in/suleyman-talha-belen-b0645a2a5" target="_blank" rel="noreferrer">linkedin.com/in/suleyman-talha-belen-b0645a2a5</a></li>
+        <li>🐙 GitHub: <a href="https://github.com/stalhabelen" target="_blank" rel="noreferrer">github.com/stalhabelen</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <span>© <span id="year"></span> Suleyman Talha Belen.</span>
+    <span class="back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">↑ Back to top</span>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const reveals = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    reveals.forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>

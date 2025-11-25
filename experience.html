@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Suleyman Talha Belen | Experience</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Experience of Suleyman Talha Belen: applied research internship at SDT - Space Defense Technologies on seismic data visualization inspired by Neural Radiance Fields."
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <div class="logo"><a href="index.html">S. T. Belen</a></div>
+      <nav>
+        <a href="education.html">Education</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Projects</a>
+        <a href="ideas.html">Ideas</a>
+        <a href="writings.html">Writings</a>
+        <a href="research.html">Research</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="reveal">
+      <h1>Experience</h1>
+      <p class="page-subtitle">
+        Applied research experience focused on seismic data visualization and neural field methods.
+      </p>
+
+      <div class="grid">
+        <article class="card">
+          <h2>SDT – Space Defense Technologies</h2>
+          <p class="meta">Applied Research Intern · Aug–Sep 2025</p>
+          <p>
+            Conducted conceptual research on visualizing seismic data inspired by Neural Radiance Fields (NeRF),
+            experimenting with 3D data representations and deep learning based approaches for subsurface imaging.
+            Explored how NeRF-style models could be adapted from vision to wave-based sensing for underground layers.
+            Worked with synthetic seismic-style data to think about reconstruction, noise, and limited measurements.
+            Connected the internship work with my long-term SpeedNeRF project, which aims to bring NeRF ideas to sound waves.
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© <span id="year"></span> Suleyman Talha Belen.</span>
+    <span
+      class="back-to-top"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    >
+      ↑ Back to top
+    </span>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const reveals = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    reveals.forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>

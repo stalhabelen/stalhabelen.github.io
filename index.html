@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Suleyman Talha Belen | Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Personal website of Suleyman Talha Belen, Electrical and Electronics Engineering student at Bilkent University. Projects, ideas, writings, and papers on signal processing, machine learning, robotics, and optimization."
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <div class="logo"><a href="index.html">S. T. Belen</a></div>
+      <nav>
+        <a href="education.html">Education</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Projects</a>
+        <a href="ideas.html">Ideas</a>
+        <a href="writings.html">Writings</a>
+        <a href="research.html">Research</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero reveal" id="hero">
+      <div class="hero-left">
+
+        <!-- hover-tilt profile card -->
+        <div class="profile-wrapper">
+          <div class="profile-card">
+            <img src="talha-photo.jpg" alt="Photo of Suleyman Talha Belen" class="profile-photo" />
+            <div class="profile-glow"></div>
+          </div>
+        </div>
+
+        <h1>
+          Suleyman Talha Belen<br />
+          <span>EEE Student, ML and Robotics Enthusiast</span>
+        </h1>
+        <p class="hero-subtitle">
+          Electrical and Electronics Engineering student at Bilkent University, interested in
+          signal processing, machine learning, robotics, reinforcement learning, and optimization.
+        </p>
+        
+        <div class="hero-buttons">
+          <a class="btn" href="projects.html">View Projects</a>
+          <a class="btn btn-outline" href="writings.html">Read Writings</a>
+        </div>
+
+        <p class="hero-note">
+          This site will gradually host technical notes, project logs, and personal reflections.
+        </p>
+
+        <div class="school-logos">
+          <span>Studied at:</span>
+          <img src="bilkent-logo.png" alt="Bilkent University logo" class="school-logo" />
+          <img src="stanford-logo.png" alt="Stanford University logo" class="school-logo" />
+          <img src="berkeley-logo.png" alt="UC Berkeley logo" class="school-logo" />
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <!-- robotics GIF card -->
+        <div class="hero-graphic">
+          <div class="robot-gif-card">
+            <img src="robotics.gif" alt="Robotics animation" class="robot-gif" />
+          </div>
+        </div>
+
+        <div class="hero-panel">
+          <h2>Currently</h2>
+          <ul>
+            <li>🎓 B.E. Electrical and Electronics Engineering @ Bilkent University (2027 expected)</li>
+            <li>📍 Visiting Student in CS @ Stanford University</li>
+            <li>📍 Visiting Student in EECS @ UC Berkeley</li>
+            <li>🤖 Exploring research at the intersection of robotics, signal processing, optimization and ML</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUICK LINKS -->
+    <section class="reveal">
+      <h2>Explore</h2>
+      <p class="section-subtitle">
+      </p>
+      <div class="quick-links">
+        <a href="education.html" class="ql-card">
+          <h3>Education</h3>
+          <p>Bilkent EE, and visiting student experiences at Stanford and UC Berkeley.</p>
+        </a>
+        <a href="experience.html" class="ql-card">
+          <h3>Experience</h3>
+          <p>Applied research internship on seismic data visualization at SDT.</p>
+        </a>
+        <a href="projects.html" class="ql-card">
+          <h3>Projects</h3>
+          <p>Reinforcement learning, neural fields, and study experiments.</p>
+        </a>
+        <a href="ideas.html" class="ql-card">
+          <h3>Ideas</h3>
+          <p>Future directions, concept notes, and open questions.</p>
+        </a>
+        <a href="research.html" class="ql-card">
+          <h3>Research</h3>
+          <p>Reading list and future work I would like to publish.</p>
+        </a>
+        <a href="writings.html" class="ql-card">
+          <h3>Writings</h3>
+          <p>Personal and technical posts, written mainly for my future self.</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="reveal">
+      <h2>Contact</h2>
+      <p class="section-subtitle">
+        Feel free to reach out about collaborations, internships, or just to say hello.
+      </p>
+      <ul class="contact-list">
+        <li>📧 Email: <a href="mailto:talha.belen@ug.bilkent.edu.tr">talha.belen@ug.bilkent.edu.tr</a></li>
+        <li>💼 LinkedIn: <a href="https://www.linkedin.com/in/suleyman-talha-belen-b0645a2a5" target="_blank" rel="noreferrer">linkedin.com/in/suleyman-talha-belen-b0645a2a5</a></li>
+        <li>🐙 GitHub: <a href="https://github.com/stalhabelen" target="_blank" rel="noreferrer">github.com/stalhabelen</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <span>© <span id="year"></span> Suleyman Talha Belen.</span>
+    <span
+      class="back-to-top"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    >
+      ↑ Back to top
+    </span>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const reveals = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    reveals.forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>

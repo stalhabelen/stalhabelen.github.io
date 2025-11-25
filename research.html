@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Suleyman Talha Belen | Research</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <div class="logo"><a href="index.html">S. T. Belen</a></div>
+      <nav>
+        <a href="education.html">Education</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Projects</a>
+        <a href="ideas.html">Ideas</a>
+        <a href="writings.html">Writings</a>
+        <a href="research.html">Research</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="reveal">
+      <h1>Research</h1>
+      <p class="page-subtitle">
+        Papers I have read or want to read carefully, and eventually papers I would like to write.
+      </p>
+
+      <div class="grid">
+        <article class="card">
+          <h3>Reading List</h3>
+          <p class="meta">ML, RL, and Neural Fields</p>
+          <ul class="list">
+            <li>Neural Radiance Fields (NeRF) and follow-up work on fast rendering and large scenes.</li>
+            <li>Key papers in meta reinforcement learning and model-agnostic meta-learning (MAML).</li>
+            <li>Convex optimization classics connected to ML and signal processing.</li>
+          </ul>
+          <p class="meta">
+            I plan to turn this into a public reading log with short summaries.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Future Work</h3>
+          <p class="meta">Ideas for my own papers</p>
+          <p>
+            The long-term goal is to develop robust, data-efficient models for physical systems:
+            from subsurface imaging to robotics. This section will eventually list my own papers and preprints.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="reveal" style="margin-top:2.5rem;">
+      <h2>Contact</h2>
+      <ul class="contact-list">
+        <li>📧 Email: <a href="mailto:talha.belen@ug.bilkent.edu.tr">talha.belen@ug.bilkent.edu.tr</a></li>
+        <li>💼 LinkedIn: <a href="https://www.linkedin.com/in/suleyman-talha-belen-b0645a2a5" target="_blank" rel="noreferrer">linkedin.com/in/suleyman-talha-belen-b0645a2a5</a></li>
+        <li>🐙 GitHub: <a href="https://github.com/stalhabelen" target="_blank" rel="noreferrer">github.com/stalhabelen</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <span>© <span id="year"></span> Suleyman Talha Belen.</span>
+    <span class="back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">↑ Back to top</span>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const reveals = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    reveals.forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
