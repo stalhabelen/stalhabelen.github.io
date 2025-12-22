@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <title>Suleyman Talha Belen | Ideas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Ideas and rough concept notes by Suleyman Talha Belen on neural fields, curiosity in AI, and the social impact of algorithms."
+  />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -16,7 +20,7 @@
         <a href="projects.html">Projects</a>
         <a href="ideas.html">Ideas</a>
         <a href="writings.html">Writings</a>
-        <a href="research.html">Research</a>
+        <a href="papers.html">Papers</a>
         <a href="index.html#contact">Contact</a>
       </nav>
     </div>
@@ -30,43 +34,84 @@
       </p>
 
       <div class="grid">
+        <!-- Idea 1: Seismic + Neural Fields -->
         <article class="card">
-          <h3>Bridging Seismic Imaging and Neural Fields</h3>
+          <h2>Bridging Seismic Imaging and Neural Fields</h2>
           <p class="meta">Concept note</p>
           <p>
             How far can NeRF-style models go for underground imaging when measurements are limited and noisy?
-            I am interested in representations that respect underlying physics, not just black box models.
+            I am interested in representations that respect underlying physics, not just black box models,
+            and in how priors from wave propagation can be folded into neural field architectures.
           </p>
         </article>
 
+        <!-- Idea 2: Curiosity in AI -->
         <article class="card">
-          <h3>Meta RL for Real-world Skill Transfer</h3>
-          <p class="meta">Concept note</p>
+          <h2>Curiosity Mechanisms in AI</h2>
+          <p class="meta">Short thought</p>
           <p>
-            Many reinforcement learning benchmarks assume idealized environments. I am curious about meta RL setups
-            where tasks reflect real robotics skills that need fast adaptation under uncertainty and hardware limits.
+            Curiosity feels like one of the most human-looking parts of intelligence: noticing a gap,
+            being pulled toward it, and exploring until the gap turns into a map. In RL we already have
+            a small piece of this via intrinsic motivation: rewards for novelty, surprise, or learning progress,
+            which help agents explore when external rewards are sparse.
+          </p>
+          <p>
+            But being curious about a topic is more than wandering in a maze. It needs memory of what is known,
+            a model of uncertainty, and a planner that can choose actions like “read papers,” “run experiments,”
+            or “compare baselines,” under constraints so that exploration has depth instead of becoming noise.
+            If such systems tie curiosity to useful novelty – not just new, but better, simpler, or more general –
+            they might realistically discover new algorithms rather than just random variations.
+          </p>
+        </article>
+
+        <!-- Idea 3: Billions Looking The Same -->
+        <article class="card">
+          <h2>Billions Looking The Same: Why We Need to Build New Algorithms</h2>
+          <p class="meta">Short essay</p>
+          <p>
+            I grew up in Turkiye, then went abroad for education—first the UK, then the US. Before I left,
+            I expected cultural difference to feel louder: different humor, norms, and ways of seeing the world.
+            Instead, what shocked me was how little 13,000 kilometers mattered. In London, in the US, back home,
+            people reference the same viral moments, “main character” quotes, meme templates, and trending sounds.
+          </p>
+          <p>
+            As platforms optimize for engagement, they compress billions of different lives into a few dominant ways
+            of seeing, thinking, and behaving. The system does not care about diversity of content; it cares about
+            what works on most people most of the time. Feeds drift toward safe, familiar, easily digestible pieces
+            that need no context or patience. Tools like duets, remixes, and templates lower the barrier to creation,
+            but they also turn creation into filling in predefined blanks: variation without real divergence.
+          </p>
+          <p>
+            Sameness is not an accident; it is efficient. Platforms benefit from predictable content and responses.
+            Advertisers benefit from aligned desires and aesthetics. Influencers who match the “algorithm-friendly”
+            template are rewarded, sending a signal for others to imitate. Personalization quietly becomes a funnel:
+            you start from “you,” but you end at “what performs.”
+          </p>
+          <p>
+            I do not think the only answer is “use social media less.” This is a systems problem. We need to build
+            new recommendation algorithms that also optimize for cultural diversity, long-term curiosity, local context,
+            and genuine novelty. Systems that sometimes choose “interesting” over “safe,” reward original structures
+            instead of only remixable formats, and keep the world from collapsing into one global aesthetic. Otherwise,
+            “billions looking the same” will not just describe our content, but also who we become.
           </p>
         </article>
       </div>
-    </section>
-
-    <section id="contact" class="reveal" style="margin-top:2.5rem;">
-      <h2>Contact</h2>
-      <ul class="contact-list">
-        <li>📧 Email: <a href="mailto:talha.belen@ug.bilkent.edu.tr">talha.belen@ug.bilkent.edu.tr</a></li>
-        <li>💼 LinkedIn: <a href="https://www.linkedin.com/in/suleyman-talha-belen-b0645a2a5" target="_blank" rel="noreferrer">linkedin.com/in/suleyman-talha-belen-b0645a2a5</a></li>
-        <li>🐙 GitHub: <a href="https://github.com/stalhabelen" target="_blank" rel="noreferrer">github.com/stalhabelen</a></li>
-      </ul>
     </section>
   </main>
 
   <footer>
     <span>© <span id="year"></span> Suleyman Talha Belen.</span>
-    <span class="back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">↑ Back to top</span>
+    <span
+      class="back-to-top"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    >
+      ↑ Back to top
+    </span>
   </footer>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
     const reveals = document.querySelectorAll(".reveal");
     const observer = new IntersectionObserver(
       (entries) => {
