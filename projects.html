@@ -30,15 +30,37 @@
       </p>
 
       <div class="grid">
+                <!-- Project 1: PPO-MAML -->
         <article class="card">
-          <h3>Fast Adaptation on Meta World Assembly with PPO MAML</h3>
-          <p class="meta">Reinforcement Learning</p>
-          <p>
-            Investigating meta reinforcement learning on the Meta World Assembly task using PPO with
-            MAML-inspired adaptation. Focus on how a policy can rapidly adapt to new task variations with
-            a small number of updates.
+          <img
+            src="ppo-maml-assembly.gif"
+            alt="PPO-MAML adaptation on Meta-World Assembly-v3"
+            class="project-image"
+          />
+          <h2>PPO-MAML for Meta-World Assembly-v3</h2>
+          <p class="meta">
+            Reinforcement Learning · Meta RL · Robotic Manipulation
           </p>
-          <p class="meta">Code and detailed write-up: coming soon.</p>
+          <p>
+            A compact PyTorch implementation that combines Model-Agnostic Meta-Learning (MAML) with a PPO inner loop
+            on the Meta-World ML1 <code>assembly-v3</code> benchmark. The goal is fast policy adaptation for a
+            robotic arm assembling a peg and socket under task variations.
+          </p>
+          <ul class="list">
+            <li>Single ~200-line script with fixed seeds, CSV logging, and GIF rollout for visualizing adaptation.</li>
+            <li>Focus on “simple but solid” ingredients: reward normalisation, entropy regularisation, gradient clipping.</li>
+            <li>Experiments run on CPU (MacBook Pro M2) and can be ported to GPU for faster sweeps.</li>
+          </ul>
+          <p class="meta">
+            Code and details:
+            <a
+              href="https://github.com/stbelen-st/Hands-on-Experiment-Fast-Adaptation-on-Meta-World-Assembly-v3-with-PPO-MAML"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub repository
+            </a>
+          </p>
         </article>
 
         <article class="card">
