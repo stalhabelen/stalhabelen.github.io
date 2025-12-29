@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <title>Suleyman Talha Belen | Projects</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Projects by Suleyman Talha Belen on reinforcement learning, neural rendering for seismic imaging, radar signal processing, and image super-resolution with SwinIR."
+  />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -26,11 +30,11 @@
     <section class="reveal">
       <h1>Projects</h1>
       <p class="page-subtitle">
-        Selected projects and research-style explorations in reinforcement learning, neural fields, and signal processing.
+        Selected hands-on projects and experiments, mostly around reinforcement learning, neural fields, radar, and image restoration.
       </p>
 
       <div class="grid">
-                <!-- Project 1: PPO-MAML -->
+        <!-- Project 1: PPO-MAML -->
         <article class="card">
           <img
             src="ppo-maml-assembly.gif"
@@ -54,7 +58,7 @@
           <p class="meta">
             Code and details:
             <a
-              href="https://github.com/stalhabelen/Hands-on-Experiment-Fast-Adaptation-on-Meta-World-Assembly-v3-with-PPO-MAML"
+              href="https://github.com/stbelen-st/Hands-on-Experiment-Fast-Adaptation-on-Meta-World-Assembly-v3-with-PPO-MAML"
               target="_blank"
               rel="noreferrer"
             >
@@ -63,36 +67,119 @@
           </p>
         </article>
 
-        <article class="card">
-          <h3>SpeedNeRF</h3>
-          <p class="meta">Neural Radiance Fields for Wave-based Imaging</p>
+        <!-- Project 2: Seismic NeRF-style imaging -->
+        <article class="card" id="seismic-nerf">
+          <div class="project-image-row">
+            <img
+            src="seismic.jpeg"
+            alt="Seismic Data Example"
+            class="project-image-half"
+            />
+            <img
+              src="nerf.png"
+              alt="Illustration of marine seismic acquisition and subsurface imaging"
+              class="project-image-half"
+            />
+          </div>
+          <h2>Seismic NeRF-inspired Subsurface Imaging</h2>
+          <p class="meta">Neural Rendering · Seismic Imaging · Concept pipeline</p>
           <p>
-            Experimenting with adapting Neural Radiance Fields concepts to sound waves for subsurface imaging,
-            inspired by seismic data. Exploring representation choices and potential for 3D reconstruction
-            from wave measurements.
+            I explored how Neural Radiance Fields (NeRF) ideas can transfer from multi-view camera rendering
+            to marine seismic acquisition. The focus was on understanding seismic data structure
+            (CMP gathers / SEG-Y) and designing a concept pipeline that treats offset and azimuth as “view”
+            parameters in a NeRF-like framework.
           </p>
-          <p class="meta">Early-stage ideas, not yet evaluated on real seismic datasets.</p>
+          <p>
+            Beyond geometry, I experimented with the idea of tokenising seismic traces using time–frequency features
+            plus vector quantisation. The goal is to learn CMP-level patterns with transformer models so that
+            interpretation becomes faster, more robust, and potentially more data-efficient than classic workflows.
+          </p>
+        </article>
+
+        <!-- Project 3: Doppler Radar classification -->
+        <article class="card" id="radar-ml">
+          <div class="project-image-row">
+            <img
+              src="dopler-2.png"
+              alt="Radar Data Example"
+              class="project-image-half"
+            />
+            <img
+              src="dopler.png"
+              alt="Classification Examples"
+              class="project-image-half"
+            />
+          </div>
+          <h2>Doppler Radar Classification (People / Car / Drone)</h2>
+          <p class="meta">Signal Processing · CNN Baseline · RAD-DAR dataset</p>
+          <p>
+            I built an end-to-end Doppler radar ML pipeline to classify people, cars, and drones from
+            range–Doppler maps. Using the RAD-DAR dataset (11 × 61 matrices), the project focused on
+            clean preprocessing and a transparent baseline rather than a huge model.
+          </p>
+          <p>
+            The pipeline includes normalisation, balanced train/validation/test splits, and a compact CNN
+            architecture with evaluation and visualisation tools to inspect predictions and common confusions.
+            The model reached around 93% test accuracy, and the setup is structured so that new architectures
+            can be plugged in later.
+          </p>
+        </article>
+
+        <!-- Project 4: SwinIR Super-Resolution -->
+        <article class="card" id="swinir-sr">
+          <div class="project-image-row">
+            <img
+              src="swinir-lr.png"
+              alt="Low-resolution input image for SwinIR"
+              class="project-image-half"
+            />
+            <img
+              src="swinir-hr.png"
+              alt="High-resolution reconstruction by SwinIR"
+              class="project-image-half"
+            />
+          </div>
+          <img
+            src="swinir-arch.png"
+            alt="SwinIR architecture diagram"
+            class="project-image"
+          />
+          <h2>Image Super-Resolution with SwinIR</h2>
+          <p class="meta">Image Restoration · Swin Transformer · Super-Resolution</p>
+          <p>
+            Implemented and trained SwinIR, a Transformer-based model for Single-Image Super-Resolution (SISR),
+            to reconstruct high-resolution images from low-resolution inputs. The model was trained from scratch
+            on the <code>LSDIR</code> dataset and evaluated on the <code>Manga109</code> benchmark for ×2 scaling.
+          </p>
+          <p>
+            The implementation achieved about <strong>36.18 dB PSNR (×2)</strong>, outperforming a standard
+            CNN-based baseline (<code>RCAN</code>) in both reconstruction quality and parameter efficiency.
+            The codebase is designed so that ablations on window size, depth, and attention configurations
+            can be run systematically.
+          </p>
+          <p class="meta">
+            Based on:
+            J. Liang, J. Cao, G. Sun, K. Zhang, L. Van Gool, and Y. Timofte,
+            “SwinIR: Image Restoration Using Swin Transformer,” ICCV Workshops (AIM Workshop), 2021.
+          </p>
         </article>
       </div>
-    </section>
-
-    <section id="contact" class="reveal" style="margin-top:2.5rem;">
-      <h2>Contact</h2>
-      <ul class="contact-list">
-        <li>📧 Email: <a href="mailto:talha.belen@ug.bilkent.edu.tr">talha.belen@ug.bilkent.edu.tr</a></li>
-        <li>💼 LinkedIn: <a href="https://www.linkedin.com/in/suleyman-talha-belen-b0645a2a5" target="_blank" rel="noreferrer">linkedin.com/in/suleyman-talha-belen-b0645a2a5</a></li>
-        <li>🐙 GitHub: <a href="https://github.com/stalhabelen" target="_blank" rel="noreferrer">github.com/stalhabelen</a></li>
-      </ul>
     </section>
   </main>
 
   <footer>
     <span>© <span id="year"></span> Suleyman Talha Belen.</span>
-    <span class="back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">↑ Back to top</span>
+    <span
+      class="back-to-top"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    >
+      ↑ Back to top
+    </span>
   </footer>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
     const reveals = document.querySelectorAll(".reveal");
     const observer = new IntersectionObserver(
       (entries) => {

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Experience of Suleyman Talha Belen: applied research internship at SDT - Space Defense Technologies and study session instructor role at Stanford University for Convex Optimization."
+    content="Experience of Suleyman Talha Belen on neural rendering, seismic imaging, radar signal processing, and teaching convex optimization."
   />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -30,23 +30,51 @@
     <section class="reveal">
       <h1>Experience</h1>
       <p class="page-subtitle">
-        Applied research and teaching-oriented experience in optimization, seismic data, and robotics-adjacent topics.
+        Hands-on work at the intersection of neural rendering, seismic and radar data, and teaching in optimization.
       </p>
 
       <div class="grid">
-        <!-- SDT Internship -->
+        <!-- SDT / Seismic & Radar work -->
         <article class="card">
-          <h2>SDT – Space Defense Technologies</h2>
-          <p class="meta">Applied Research Intern · Aug–Sep 2025</p>
+          <img
+            src="nerf.jpeg"
+            alt="Seismic acquisition and subsurface imaging illustration"
+            class="experience-photo"
+          />
+          <img
+            src="dopler.png"
+            alt="Radar Range-Doppler maps for cars, drones, and people"
+            class="experience-photo"
+          />
+          <h2>Neural Rendering, Seismic Imaging, and Radar Signal Processing</h2>
+          <p class="meta">Applied research work · 2025</p>
           <p>
-            Conducted conceptual research on visualizing seismic data inspired by Neural Radiance Fields (NeRF),
-            experimenting with 3D data representations and deep learning based approaches for subsurface imaging.
+            Exploratory work on bringing ideas from neural rendering and modern ML into wave-based sensing domains
+            such as seismic acquisition and FMCW radar.
           </p>
           <ul class="list">
-            <li>Explored how NeRF-style models could be adapted from vision to wave-based sensing for underground layers.</li>
-            <li>Worked with synthetic seismic-style data to think about reconstruction, noise, and limited measurements.</li>
-            <li>Connected the internship work with my long-term SpeedNeRF project, which aims to bring NeRF ideas to sound waves.</li>
+            <li>
+              <strong>Neural Rendering and NeRF.</strong>
+              Implemented a compact Neural Radiance Fields (NeRF) pipeline from scratch in PyTorch, using COLMAP
+              for structure-from-motion. Investigated how multi-view consistency and volumetric rendering ideas
+              could be adapted to seismic CMP gathers for subsurface imaging.
+            </li>
+            <li>
+              <strong>Radar Signal Processing.</strong>
+              Developed a supervised CNN pipeline to classify objects (Drones, Cars, People) using Range-Doppler
+              maps from the Real Doppler RAD-DAR dataset, reaching about 93% test accuracy with careful
+              preprocessing and regularisation.
+            </li>
+            <li>
+              <strong>Research directions.</strong>
+              Explored speech-inspired tokenisation and sequence-style representations for detecting patterns
+              in seismic signals, aiming to reuse ideas from ASR and self-supervised audio models.
+            </li>
           </ul>
+          <p class="meta">
+            For more technical details and experiments, see the related entries on the
+            <a href="projects.html">projects page</a>.
+          </p>
         </article>
 
         <!-- Stanford Study Session -->
@@ -57,13 +85,24 @@
             class="experience-photo"
           />
           <h2>Study Session Instructor, Stanford University</h2>
-          <p class="meta">Convex Optimization (EE 364A) · Study Session · 2025</p>
+          <p class="meta">Convex Optimization (EE 364A) · Study session · 2025</p>
           <p>
-            Co-led an exam review session with 3 peers, teaching and reviewing key optimization concepts for the entire class.
+            Co-led an exam review session with 3 peers, teaching and reviewing key optimization concepts
+            for the entire class.
           </p>
           <ul class="list">
-            <li>Prepared a structured recap of core convex optimization topics, including duality, Lagrange multipliers, and KKT conditions.</li>
-            <li>Answered student questions live and helped connect theory to practical applications.</li>
+            <li>
+              Prepared a structured recap of core convex optimization topics, including duality,
+              Lagrange multipliers, and KKT conditions.
+            </li>
+            <li>
+              Used geometric intuition and board sketches to explain constraints, feasible sets,
+              and optimality in low-dimensional examples.
+            </li>
+            <li>
+              Answered student questions live and helped connect theory to applications in machine learning
+              and control, reinforcing both conceptual and calculation skills.
+            </li>
           </ul>
         </article>
       </div>
