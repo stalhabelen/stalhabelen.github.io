@@ -463,15 +463,48 @@ h2 {
   object-fit: cover;
 }
 
-/* Project images */
+/* Project images — tidy layout */
 
 .project-image {
   width: 100%;
   border-radius: 0.9rem;
   margin-bottom: 0.6rem;
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.35);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.35);
   object-fit: cover;
+  max-height: 230px;         
 }
+
+.project-image-row {
+  display: flex;
+  gap: 0.7rem;
+  margin-bottom: 0.6rem;
+}
+
+.project-image-half {
+  flex: 1;
+  border-radius: 0.9rem;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.35);
+  object-fit: cover;
+  max-height: 200px;          
+}
+
+.project-image-arch {
+  width: 100%;
+  border-radius: 0.9rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0.6rem;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.35);
+  object-fit: contain;
+  max-height: 220px;
+  background: #020617;        /
+}
+
+@media (max-width: 800px) {
+  .project-image-row {
+    flex-direction: column;   
+}
+}
+
 /* Quick links on home */
 
 .quick-links {
