@@ -463,17 +463,36 @@ h2 {
   object-fit: cover;
 }
 
-/* Project images — tidy layout */
+/* === PROJECT IMAGES (clean layout) === */
+
+.card {
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  padding: 1rem 1.1rem;
+  font-size: 0.9rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 8px 20px rgba(148, 163, 184, 0.25);
+  overflow: hidden;              
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(148, 163, 184, 0.35);
+  border-color: #bfdbfe;
+}
 
 .project-image {
+  display: block;
   width: 100%;
   border-radius: 0.9rem;
   margin-bottom: 0.6rem;
   box-shadow: 0 8px 20px rgba(15, 23, 42, 0.35);
   object-fit: cover;
-  max-height: 230px;         
+  max-height: 230px;
 }
 
+/* LR vs HR */
 .project-image-row {
   display: flex;
   gap: 0.7rem;
@@ -482,13 +501,16 @@ h2 {
 
 .project-image-half {
   flex: 1;
+  display: block;
   border-radius: 0.9rem;
   box-shadow: 0 8px 20px rgba(15, 23, 42, 0.35);
   object-fit: cover;
-  max-height: 200px;          
+  max-height: 200px;
 }
 
+/* SwinIR architecture */
 .project-image-arch {
+  display: block;
   width: 100%;
   border-radius: 0.9rem;
   margin-top: 0.4rem;
@@ -496,13 +518,13 @@ h2 {
   box-shadow: 0 8px 20px rgba(15, 23, 42, 0.35);
   object-fit: contain;
   max-height: 220px;
-  background: #020617;        /
+  background: #020617;
 }
 
 @media (max-width: 800px) {
   .project-image-row {
-    flex-direction: column;   
-}
+    flex-direction: column;
+  }
 }
 
 /* Quick links on home */

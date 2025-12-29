@@ -34,7 +34,7 @@
       </p>
 
       <div class="grid">
-        <!-- Project 1: PPO-MAML -->
+        <!-- PPO-MAML -->
         <article class="card">
           <img
             src="ppo-maml-assembly.gif"
@@ -52,8 +52,8 @@
           </p>
           <ul class="list">
             <li>Single ~200-line script with fixed seeds, CSV logging, and GIF rollout for visualizing adaptation.</li>
-            <li>Focus on “simple but solid” ingredients: reward normalisation, entropy regularisation, gradient clipping.</li>
-            <li>Experiments run on CPU (MacBook Pro M2) and can be ported to GPU for faster sweeps.</li>
+            <li>“Simple but solid” ingredients: reward normalisation, entropy regularisation, gradient clipping.</li>
+            <li>Runs on CPU (MacBook Pro M2) and can be ported to GPU for larger sweeps.</li>
           </ul>
           <p class="meta">
             Code and details:
@@ -67,20 +67,13 @@
           </p>
         </article>
 
-        <!-- Project 2: Seismic NeRF-style imaging -->
+        <!-- Seismic / NeRF -->
         <article class="card" id="seismic-nerf">
-          <div class="project-image-row">
-            <img
-            src="seismic.jpeg"
-            alt="Seismic Data Example"
-            class="project-image-half"
-            />
-            <img
-              src="nerf.png"
-              alt="Illustration of marine seismic acquisition and subsurface imaging"
-              class="project-image-half"
-            />
-          </div>
+          <img
+            src="nerf.jpeg"
+            alt="Marine seismic acquisition and subsurface illustration"
+            class="project-image"
+          />
           <h2>Seismic NeRF-inspired Subsurface Imaging</h2>
           <p class="meta">Neural Rendering · Seismic Imaging · Concept pipeline</p>
           <p>
@@ -90,23 +83,23 @@
             parameters in a NeRF-like framework.
           </p>
           <p>
-            Beyond geometry, I experimented with the idea of tokenising seismic traces using time–frequency features
-            plus vector quantisation. The goal is to learn CMP-level patterns with transformer models so that
-            interpretation becomes faster, more robust, and potentially more data-efficient than classic workflows.
+            Beyond geometry, I experimented with the idea of tokenising seismic traces using time–frequency
+            features plus vector quantisation. The goal is to learn CMP-level patterns with transformer models so
+            that interpretation becomes faster, more robust, and potentially more data-efficient than classic workflows.
           </p>
         </article>
 
-        <!-- Project 3: Doppler Radar classification -->
+        <!-- Radar -->
         <article class="card" id="radar-ml">
           <div class="project-image-row">
             <img
-              src="dopler-2.png"
-              alt="Radar Data Example"
+              src="dopler.png"
+              alt="Range–Doppler maps from the RAD-DAR dataset"
               class="project-image-half"
             />
             <img
-              src="dopler.png"
-              alt="Classification Examples"
+              src="dopler-2.png"
+              alt="Alternative Range–Doppler visualisation"
               class="project-image-half"
             />
           </div>
@@ -114,18 +107,18 @@
           <p class="meta">Signal Processing · CNN Baseline · RAD-DAR dataset</p>
           <p>
             I built an end-to-end Doppler radar ML pipeline to classify people, cars, and drones from
-            range–Doppler maps. Using the RAD-DAR dataset (11 × 61 matrices), the project focused on
-            clean preprocessing and a transparent baseline rather than a huge model.
+            range–Doppler maps. Using the RAD-DAR dataset (11 × 61 matrices), the project focuses on clean
+            preprocessing and a clear baseline rather than a huge model.
           </p>
           <p>
             The pipeline includes normalisation, balanced train/validation/test splits, and a compact CNN
             architecture with evaluation and visualisation tools to inspect predictions and common confusions.
-            The model reached around 93% test accuracy, and the setup is structured so that new architectures
-            can be plugged in later.
+            The model reaches around 93% test accuracy, and the setup is structured so new architectures can
+            easily be plugged in.
           </p>
         </article>
 
-        <!-- Project 4: SwinIR Super-Resolution -->
+        <!-- SwinIR -->
         <article class="card" id="swinir-sr">
           <div class="project-image-row">
             <img
@@ -144,7 +137,6 @@
             alt="SwinIR architecture diagram"
             class="project-image-arch"
           />
-          />
           <h2>Image Super-Resolution with SwinIR</h2>
           <p class="meta">Image Restoration · Swin Transformer · Super-Resolution</p>
           <p>
@@ -155,8 +147,7 @@
           <p>
             The implementation achieved about <strong>36.18 dB PSNR (×2)</strong>, outperforming a standard
             CNN-based baseline (<code>RCAN</code>) in both reconstruction quality and parameter efficiency.
-            The codebase is designed so that ablations on window size, depth, and attention configurations
-            can be run systematically.
+            The codebase is set up for ablations on window size, depth, and attention configurations.
           </p>
           <p class="meta">
             Based on:
