@@ -2,78 +2,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Suleyman Talha Belen | Home</title>
+  <title>Süleyman Talha Belen — Robotics, AI & Control</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta
-    name="description"
-    content="Personal website of Suleyman Talha Belen, Electrical and Electronics Engineering student at Bilkent University. Projects, ideas, writings, and papers on signal processing, machine learning, robotics, and optimization."
-  />
-
   <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
+  <!-- ===== NAVBAR ===== -->
   <header>
     <div class="nav-container">
-      <div class="logo"><a href="index.html">S. T. Belen</a></div>
+      <div class="logo">
+        <a href="#top">STB</a>
+      </div>
       <nav>
-        <a href="education.html">Education</a>
-        <a href="experience.html">Experience</a>
-        <a href="projects.html">Projects</a>
-        <a href="ideas.html">Ideas</a>
-        <a href="writings.html">Writings</a>
-        <a href="research.html">Research</a>
+        <a href="#education">Education</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <!-- HERO -->
-    <section class="hero reveal" id="hero">
+  <main id="top">
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <!-- LEFT SIDE -->
       <div class="hero-left">
-        <!-- hover-tilt profile card -->
-        <div class="profile-wrapper">
-          <div class="profile-card">
-            <img src="talha-photo.jpg" alt="Photo of Suleyman Talha Belen" class="profile-photo" />
-            <div class="profile-glow"></div>
-          </div>
-        </div>
+        <p class="page-subtitle">STB · ROBOTICS · AI · CONTROL</p>
 
-        <h1>
-          Suleyman Talha Belen<br />
-          <span>EEE Student, ML and Robotics Enthusiast</span>
-        </h1>
+        <h1>Süleyman Talha <span>Belen</span></h1>
+
         <p class="hero-subtitle">
-          Electrical and Electronics Engineering student at Bilkent University, interested in
-          signal processing, machine learning, robotics, reinforcement learning, and optimization.
+          Robotics, control, and learning — from radar-based perception to neural
+          maze planning. I like building systems that actually move, sense, and decide.
         </p>
 
+        <div class="hero-tags">
+          <span class="tag">Robotics & Control</span>
+          <span class="tag">Machine Learning</span>
+          <span class="tag">Computer Vision</span>
+          <span class="tag">Embedded & Signals</span>
+        </div>
+
         <div class="hero-buttons">
-          <a class="btn" href="projects.html">View Projects</a>
-          <a class="btn btn-outline" href="ideas.html">Read Ideas</a>
+          <a class="btn" href="#projects">View projects</a>
+          <a class="btn btn-outline" href="#contact">Get in touch</a>
         </div>
 
         <p class="hero-note">
-          This site will gradually host technical notes, project logs, and personal reflections.
+          Focused on building reliable systems with strong theory and real-world deployment.
         </p>
-
-        <div class="school-logos">
-          <span>Studied at:</span>
-          <img src="bilkent-logo.png" alt="Bilkent University logo" class="school-logo" />
-          <img src="stanford-logo.png" alt="Stanford University logo" class="school-logo" />
-          <img src="berkeley-logo.png" alt="UC Berkeley logo" class="school-logo" />
-        </div>
       </div>
 
-      <!-- HERO RIGHT: GIF + CURRENTLY PANEL -->
+      <!-- RIGHT SIDE: GIF + CURRENTLY CARD -->
       <div class="hero-right">
         <div class="hero-graphic">
           <div class="robot-gif-card">
-            <!-- BURAYA GERÇEK GIF DOSYA ADINI KOY -->
             <img
-              src="stb-rl-loop.gif"
-              alt="STB particle RL / maze loop"
+              src="robotics.gif"
+              alt="Robotics particle loop"
               class="robot-gif"
             />
           </div>
@@ -83,86 +69,161 @@
           <h2>Currently</h2>
           <ul>
             <li>🎓 B.E. Electrical and Electronics Engineering @ Bilkent University (2027 expected)</li>
-            <li>📍 Visiting Student in CS @ Stanford University '25</li>
-            <li>📍 Visiting Student in EECS @ UC Berkeley '24</li>
+            <li>📍 Visiting Student in CS @ Stanford University ’25</li>
+            <li>📍 Visiting Student in EECS @ UC Berkeley ’24</li>
             <li>🤖 Exploring research at the intersection of robotics, signal processing, optimization and ML</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- QUICK LINKS -->
-    <section class="reveal">
-      <h2>Explore</h2>
-      <div class="quick-links">
-        <a href="education.html" class="ql-card">
-          <h3>Education</h3>
-          <p>Bilkent EE, and visiting student experiences at Stanford and UC Berkeley.</p>
-        </a>
-        <a href="experience.html" class="ql-card">
-          <h3>Experience</h3>
-          <p>Applied research internship on seismic data visualization at SDT.</p>
-        </a>
-        <a href="projects.html" class="ql-card">
-          <h3>Projects</h3>
-          <p>Reinforcement learning, neural fields, and study experiments.</p>
-        </a>
-        <a href="ideas.html" class="ql-card">
-          <h3>Ideas</h3>
-          <p>Future directions, concept notes, and open questions.</p>
-        </a>
-        <a href="research.html" class="ql-card">
-          <h3>Research</h3>
-          <p>Reading list and future work I would like to publish.</p>
-        </a>
-        <a href="writings.html" class="ql-card">
-          <h3>Writings</h3>
-          <p>Personal and technical posts, written mainly for my future self.</p>
-        </a>
+    <!-- ===== EDUCATION ===== -->
+    <section id="education">
+      <h2>Education</h2>
+      <p class="section-subtitle">
+        Building a rigorous foundation in signals, systems, control, and learning.
+      </p>
+
+      <div class="grid">
+        <article class="card reveal">
+          <h3>Bilkent University — B.Sc. Electrical & Electronics Engineering</h3>
+          <p class="meta">Full Scholarship · 2022 – Present · Ankara, Türkiye</p>
+          <ul class="list">
+            <li>Focusing on signals & systems, electronics, control, and machine learning.</li>
+            <li>Preparing for graduate studies in robotics / AI.</li>
+          </ul>
+        </article>
+
+        <article class="card reveal">
+          <h3>Stanford Summer Session</h3>
+          <p class="meta">CS229 — Machine Learning · EE364A — Convex Optimization</p>
+          <ul class="list">
+            <li>Graduate-level coursework in statistical learning and optimization.</li>
+            <li>Emphasis on practical algorithms and rigorous mathematical foundations.</li>
+          </ul>
+        </article>
+
+        <article class="card reveal">
+          <h3>UC Berkeley — Visiting</h3>
+          <p class="meta">EECS 16A / Technology Leadership</p>
+          <ul class="list">
+            <li>Information devices, linear systems, sensing and inference.</li>
+            <li>Leadership and systems thinking in technology teams.</li>
+          </ul>
+        </article>
       </div>
     </section>
 
-    <!-- CONTACT -->
-    <section id="contact" class="reveal">
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects">
+      <h2>Selected Projects</h2>
+      <p class="section-subtitle">
+        A mix of control, perception, reinforcement learning, and signal processing work.
+      </p>
+
+      <div class="grid">
+        <article class="card reveal">
+          <h3>Meta-World RL: Fast Adaptation with PPO-MAML</h3>
+          <p class="meta">Reinforcement Learning · Meta-Learning</p>
+          <ul class="list">
+            <li>Meta-learning policies that adapt quickly on Meta-World Assembly-v3.</li>
+            <li>Used PPO-MAML and careful reward shaping for stable convergence.</li>
+          </ul>
+          <p class="meta">
+            <a href="https://github.com/stalhabelen/Hands-on-Experiment-Fast-Adaptation-on-Meta-World-Assembly-v3-with-PPO-MAML" target="_blank">
+              GitHub repository
+            </a>
+          </p>
+        </article>
+
+        <article class="card reveal">
+          <h3>Seismic & Doppler Imaging Experiments</h3>
+          <p class="meta">Signal Processing · Imaging</p>
+          <ul class="list">
+            <li>NeRF-style seismic imaging and Doppler radar classification.</li>
+            <li>Explored robust feature extraction and domain-specific augmentations.</li>
+          </ul>
+        </article>
+
+        <article class="card reveal">
+          <h3>Image Restoration with SwinIR & Transformers</h3>
+          <p class="meta">Computer Vision · Deep Learning</p>
+          <ul class="list">
+            <li>Super-resolution and denoising experiments using SwinIR variants.</li>
+            <li>Compared transformer-based models to classical CNN baselines.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== EXPERIENCE ===== -->
+    <section id="experience">
+      <h2>Experience</h2>
+      <p class="section-subtitle">
+        Research, projects, and internships that shaped how I think about systems.
+      </p>
+
+      <div class="grid">
+        <article class="card reveal">
+          <h3>Research & Lab Work</h3>
+          <p class="meta">Bilkent University & collaborations</p>
+          <ul class="list">
+            <li>Radar-based classification and signal processing pipelines.</li>
+            <li>Control-oriented ML and robust optimization experiments.</li>
+          </ul>
+        </article>
+
+        <article class="card reveal">
+          <h3>Industry & Internships</h3>
+          <p class="meta">Embedded systems, robotics, and AI-adjacent work</p>
+          <ul class="list">
+            <li>Hands-on experience with real hardware and deployment constraints.</li>
+            <li>Bridging algorithm design with practical implementation.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact">
       <h2>Contact</h2>
       <p class="section-subtitle">
-        Feel free to reach out about collaborations, internships, or just to say hello.
+        Happy to chat about research, internships, or collaborations in robotics, ML, and control.
       </p>
+
       <ul class="contact-list">
-        <li>📧 Email: <a href="mailto:talha.belen@ug.bilkent.edu.tr">talha.belen@ug.bilkent.edu.tr</a></li>
-        <li>💼 LinkedIn: <a href="https://www.linkedin.com/in/suleyman-talha-belen-b0645a2a5" target="_blank" rel="noreferrer">linkedin.com/in/suleyman-talha-belen-b0645a2a5</a></li>
-        <li>🐙 GitHub: <a href="https://github.com/stalhabelen" target="_blank" rel="noreferrer">github.com/stalhabelen</a></li>
+        <li>✉️ Email: <a href="mailto:stalhabelen@gmail.com">stalhabelen@gmail.com</a></li>
+        <li>🌐 Website: <a href="https://stalhabelen.github.io" target="_blank">stalhabelen.github.io</a></li>
+        <li>💼 LinkedIn: <a href="https://www.linkedin.com" target="_blank">LinkedIn profile</a></li>
+        <li>🐙 GitHub: <a href="https://github.com/stalhabelen" target="_blank">github.com/stalhabelen</a></li>
       </ul>
     </section>
   </main>
 
+  <!-- ===== FOOTER ===== -->
   <footer>
-    <span>© <span id="year"></span> Suleyman Talha Belen.</span>
-    <span
-      class="back-to-top"
-      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
-    >
+    <span>© <span id="year"></span> Süleyman Talha Belen</span>
+    <span class="back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
       ↑ Back to top
     </span>
   </footer>
 
-  <!-- Basit JS: yıl + scroll reveal -->
+  <!-- Small JS for reveal-on-scroll + year -->
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+    // year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-    const reveals = document.querySelectorAll(".reveal");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("active");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    reveals.forEach((el) => observer.observe(el));
+    // reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    function onScroll() {
+      const trigger = window.innerHeight * 0.9;
+      revealEls.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < trigger) el.classList.add('active');
+      });
+    }
+    window.addEventListener('scroll', onScroll);
+    onScroll();
   </script>
 </body>
 </html>
