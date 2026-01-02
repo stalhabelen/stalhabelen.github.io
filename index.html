@@ -76,22 +76,13 @@
         </div>
       </div>
 
-      <div class="hero-right">
-        <!-- ANIMATION CONTAINER -->
-        <div id="stb-anim-box" class="stb-anim-box" style="width:100%; height:260px;"></div>
-
-        <span class="hero-badge">Reinforcement Learning</span>
-        <h2>Policies that converge instead of just exploring</h2>
-        <p>
-          Particle field morphing between an “STB” signature and a neural-style maze — a small visual
-          for my RL and robotics-oriented work.
-        </p>
-
-        <ul class="list">
-          <li>Focus: PPO-MAML for fast adaptation on Meta-World Assembly-v3.</li>
-          <li>Projects on seismic NeRF-style imaging and Doppler radar classification.</li>
-          <li>Image restoration experiments with SwinIR and transformer-based models.</li>
-        </ul>
+      <!-- RIGHT SIDE: ONLY ANIMATION, NO TEXT, NO NAVY BG -->
+      <div class="hero-right" style="background: transparent; box-shadow: none;">
+        <div
+          id="stb-anim-box"
+          class="stb-anim-box"
+          style="width:100%; height:260px; background: transparent; box-shadow:none; border-radius:0;"
+        ></div>
       </div>
 
       <div class="hero-panel">
@@ -108,7 +99,6 @@
     <!-- QUICK LINKS -->
     <section class="reveal">
       <h2>Explore</h2>
-      <p class="section-subtitle"></p>
       <div class="quick-links">
         <a href="education.html" class="ql-card">
           <h3>Education</h3>
@@ -180,43 +170,45 @@
     reveals.forEach((el) => observer.observe(el));
   </script>
 
-  <!-- FLUID STB & NEURAL MAZE ANIMATION (ONLY INSIDE stb-anim-box) -->
+  <!-- CLEAR STB & STRUCTURED MAZE ANIMATION (SCOPED TO stb-anim-box) -->
   <script type="module">
     import * as THREE from "three";
     import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
+    // --- AYARLAR ---
     const CONFIG = {
-      particleCount: 6500,
-      particleSize: 0.25,
+      particleCount: 9000,
+      particleSize: 0.22,
       colBlue: new THREE.Color(0x2563eb),
-      colDark: new THREE.Color(0x1e293b),
-      colHighlight: new THREE.Color(0x93c5fd),
-      colAgent: new THREE.Color(0xf43f5e),
-      speed: 0.025,
+      colDarkBlue: new THREE.Color(0x1e3a8a),
+      colAgent: new THREE.Color(0xff2244),
+      speed: 0.03
     };
 
     const STATES = {
       FORM_STB: 0,
       HOLD_STB: 1,
       TO_MAZE: 2,
-      MAZE_FLOW: 3,
-      TO_RESET: 4,
+      MAZE_ACTIVE: 3,
+      TO_RESET: 4
     };
 
     let currentState = STATES.FORM_STB;
     let lastStateTime = Date.now();
 
+    // Container boyutu (sadece kart içinde)
     const container = document.getElementById("stb-anim-box");
-    const getSize = () => {
+    function getSize() {
       const w = container.clientWidth || 480;
       const h = container.clientHeight || 260;
       return { w, h };
-    };
+    }
     let { w, h } = getSize();
 
+    // --- SAHNE KURULUMU ---
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
-    camera.position.set(0, 5, 28);
+    camera.position.set(0, 12, 28);
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setClearColor(0x000000, 0);
@@ -227,9 +219,10 @@
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.6;
+    controls.autoRotateSpeed = 0.4;
     controls.target.set(0, 2, 0);
 
+    // --- HEDEF POZİSYONLAR ---
     const stbTargets = [];
     const stbColors = [];
     const mazeTargets = [];
@@ -237,260 +230,265 @@
     let currentTargetPositions = [];
     let currentTargetColors = [];
 
+    // --- DOKU OLUŞTURUCU ---
     function getSprite() {
       const canvas = document.createElement("canvas");
-      canvas.width = 32;
-      canvas.height = 32;
-      const context = canvas.getContext("2d");
-      const gradient = context.createRadialGradient(16, 16, 0, 16, 16, 16);
+      canvas.width = 64;
+      canvas.height = 64;
+      const ctx = canvas.getContext("2d");
+      const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
       gradient.addColorStop(0, "rgba(255,255,255,1)");
-      gradient.addColorStop(0.2, "rgba(240,240,255,1)");
-      gradient.addColorStop(0.4, "rgba(128,128,255,0.2)");
+      gradient.addColorStop(0.3, "rgba(200,200,255,0.8)");
+      gradient.addColorStop(0.6, "rgba(100,100,255,0.2)");
       gradient.addColorStop(1, "rgba(0,0,0,0)");
-      context.fillStyle = gradient;
-      context.fillRect(0, 0, 32, 32);
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 64, 64);
       return new THREE.CanvasTexture(canvas);
     }
 
-    function createFlowingSTB() {
-      const points = [];
-      // S
-      for (let i = 0; i < 120; i++) {
-        const t = i / 120;
-        const a = t * Math.PI * 2 - Math.PI / 2;
-        const x = Math.cos(a) * 1.5 - 6.5;
-        let y = Math.sin(a * 1.5) * 2.5;
-        if (t < 0.5) y += 1;
-        else y -= 1;
-        points.push({ x, y, z: 0 });
-      }
-      // T
-      for (let i = 0; i < 60; i++)
-        points.push({ x: -1.5 + (i / 60) * 3, y: 3.5, z: 0 });
-      for (let i = 0; i < 100; i++)
-        points.push({ x: 0, y: 3.5 - (i / 100) * 5.5, z: 0 });
-      // B
-      const bOff = 5.0;
-      for (let i = 0; i < 100; i++)
-        points.push({ x: bOff, y: 3.5 - (i / 100) * 5.5, z: 0 });
-      for (let i = 0; i < 60; i++) {
-        const a = (i / 60) * Math.PI - Math.PI / 2;
-        points.push({
-          x: bOff + Math.cos(a) * 1.5,
-          y: 2.0 + Math.sin(a) * 1.5,
-          z: 0,
-        });
-      }
-      for (let i = 0; i < 60; i++) {
-        const a = (i / 60) * Math.PI - Math.PI / 2;
-        points.push({
-          x: bOff + Math.cos(a) * 1.8,
-          y: -0.8 + Math.sin(a) * 1.8,
-          z: 0,
-        });
-      }
+    // --- 1. NET STB ---
+    function createDenseSTB() {
+      const letters = {
+        S: [
+          [0,1,1,1,1,1,0],
+          [1,1,0,0,0,1,1],
+          [1,1,0,0,0,0,0],
+          [0,1,1,1,1,1,0],
+          [0,0,0,0,0,1,1],
+          [1,1,0,0,0,1,1],
+          [0,1,1,1,1,1,0]
+        ],
+        T: [
+          [1,1,1,1,1,1,1],
+          [1,1,1,1,1,1,1],
+          [0,0,0,1,0,0,0],
+          [0,0,0,1,0,0,0],
+          [0,0,0,1,0,0,0],
+          [0,0,0,1,0,0,0],
+          [0,0,0,1,0,0,0]
+        ],
+        B: [
+          [1,1,1,1,1,1,0],
+          [1,1,0,0,0,1,1],
+          [1,1,0,0,0,1,1],
+          [1,1,1,1,1,1,0],
+          [1,1,0,0,0,1,1],
+          [1,1,0,0,0,1,1],
+          [1,1,1,1,1,1,0]
+        ]
+      };
 
-      for (let i = 0; i < CONFIG.particleCount; i++) {
-        const base = points[Math.floor(Math.random() * points.length)];
-        const spread = 0.4;
-        stbTargets.push(
-          new THREE.Vector3(
-            base.x + (Math.random() - 0.5) * spread,
-            base.y + (Math.random() - 0.5) * spread,
-            base.z + (Math.random() - 0.5) * spread * 2
-          )
-        );
-        stbColors.push(
-          Math.random() > 0.85
-            ? CONFIG.colHighlight.clone()
-            : CONFIG.colBlue.clone()
-        );
-      }
-    }
+      let xOffset = -8;
+      const spacing = 6;
+      const scale = 0.8;
+      let particlesUsed = 0;
 
-    function createNeuralMaze() {
-      const layers = 4;
-      const size = 16;
-      const pathNodes = [];
-      const wallNodes = [];
-      for (let y = 0; y < layers; y++) {
-        const levelY = (y - 1.5) * 3.5;
-        for (let x = -size / 2; x < size / 2; x += 1.0) {
-          for (let z = -size / 2; z < size / 2; z += 1.0) {
-            const val = Math.sin(x * 0.4) * Math.cos(z * 0.4) + Math.sin(y * 1.2);
-            if (val > 0.3) {
-              if (Math.random() > 0.4)
-                wallNodes.push(
-                  new THREE.Vector3(
-                    x,
-                    levelY + (Math.random() - 0.5) * 1.5,
-                    z
-                  )
+      ["S", "T", "B"].forEach((key, lIdx) => {
+        const matrix = letters[key];
+        const rows = matrix.length;
+        const cols = matrix[0].length;
+
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            if (matrix[r][c]) {
+              const density = 45;
+              for (let i = 0; i < density; i++) {
+                const pt = new THREE.Vector3(
+                  xOffset + c * scale + (Math.random() - 0.5) * scale * 0.8,
+                  (rows - r) * scale + 2 + (Math.random() - 0.5) * scale * 0.8,
+                  (Math.random() - 0.5) * 2.0
                 );
-            } else if (val > -0.2) {
-              if (Math.random() > 0.8)
-                pathNodes.push(new THREE.Vector3(x, levelY, z));
+                stbTargets.push(pt);
+                const mix = lIdx / 2 + (c / cols) * 0.2;
+                stbColors.push(
+                  CONFIG.colBlue.clone().lerp(CONFIG.colDarkBlue, mix)
+                );
+                particlesUsed++;
+              }
             }
           }
         }
-      }
+        xOffset += spacing;
+      });
 
-      let wIdx = 0;
-      let pIdx = 0;
-      for (let i = 0; i < CONFIG.particleCount; i++) {
-        const isAgent = i > CONFIG.particleCount * 0.85;
-        if (isAgent && pathNodes.length > 0) {
-          const p = pathNodes[pIdx % pathNodes.length];
-          mazeTargets.push(
-            new THREE.Vector3(
-              p.x + (Math.random() - 0.5) * 0.5,
-              p.y,
-              p.z + (Math.random() - 0.5) * 0.5
-            )
-          );
-          mazeColors.push(CONFIG.colAgent.clone());
-          pIdx++;
-        } else if (wallNodes.length > 0) {
-          const w = wallNodes[wIdx % wallNodes.length];
-          mazeTargets.push(new THREE.Vector3(w.x, w.y, w.z));
-          const dist = Math.sqrt(w.x * w.x + w.z * w.z);
-          const fade = Math.min(1, dist / 12);
-          mazeColors.push(CONFIG.colBlue.clone().lerp(CONFIG.colDark, fade));
-          wIdx++;
-        } else {
-          mazeTargets.push(new THREE.Vector3(0, 0, 0));
-          mazeColors.push(CONFIG.colDark.clone());
+      while (stbTargets.length < CONFIG.particleCount) {
+        const idx = Math.floor(Math.random() * particlesUsed);
+        stbTargets.push(stbTargets[idx].clone());
+        stbColors.push(stbColors[idx].clone());
+      }
+    }
+    createDenseSTB();
+
+    // --- 2. STRUCTURED MAZE ---
+    function createStructuredMaze() {
+      const mazeMap = [
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,0,1,0,0,0,1,0,0,0,1,0,0,0,1],
+        [1,0,1,0,1,1,1,0,1,0,1,1,1,0,1],
+        [1,0,0,0,1,0,0,0,1,0,0,0,1,0,1],
+        [1,1,1,1,1,0,1,1,1,1,1,0,1,0,1],
+        [1,0,0,0,0,0,1,0,0,0,0,0,1,0,1],
+        [1,0,1,1,1,1,1,0,1,1,1,1,1,0,1],
+        [1,0,0,0,1,0,0,0,1,0,0,0,0,0,1],
+        [1,1,1,0,1,0,1,1,1,0,1,1,1,1,1],
+        [1,0,0,0,1,0,0,0,1,0,0,0,1,0,1],
+        [1,0,1,1,1,1,1,0,1,1,1,0,1,0,1],
+        [1,0,1,0,0,0,0,0,1,0,0,0,1,0,1],
+        [1,0,1,0,1,1,1,1,1,0,1,1,1,0,1],
+        [1,0,0,0,1,0,0,0,0,0,1,0,0,0,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+      ];
+
+      const rows = mazeMap.length;
+      const cols = mazeMap[0].length;
+      const scale = 2.5;
+      const wallHeight = 2.5;
+      const xOff = -(cols * scale) / 2;
+      const zOff = -(rows * scale) / 2;
+
+      const wallCells = [];
+      const pathCells = [];
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          if (mazeMap[r][c] === 1) wallCells.push({ r, c });
+          else pathCells.push({ r, c });
         }
       }
+
+      const wallParticleCount = Math.floor(CONFIG.particleCount * 0.85);
+      let pUsed = 0;
+
+      for (let i = 0; i < wallParticleCount; i++) {
+        const cell = wallCells[Math.floor(Math.random() * wallCells.length)];
+        const pt = new THREE.Vector3(
+          xOff + cell.c * scale + (Math.random() - 0.5) * scale,
+          (Math.random() - 0.1) * wallHeight,
+          zOff + cell.r * scale + (Math.random() - 0.5) * scale
+        );
+        mazeTargets.push(pt);
+        const brightness = pt.y / wallHeight;
+        mazeColors.push(
+          CONFIG.colDarkBlue.clone().lerp(CONFIG.colBlue, brightness)
+        );
+        pUsed++;
+      }
+
+      for (let i = pUsed; i < CONFIG.particleCount; i++) {
+        const cell = pathCells[Math.floor(Math.random() * pathCells.length)];
+        const pt = new THREE.Vector3(
+          xOff + cell.c * scale + (Math.random() - 0.5) * scale * 0.8,
+          0.5 + (Math.random() - 0.5) * 0.5,
+          zOff + cell.r * scale + (Math.random() - 0.5) * scale * 0.8
+        );
+        mazeTargets.push(pt);
+        mazeColors.push(CONFIG.colAgent.clone());
+      }
     }
+    createStructuredMaze();
 
-    createFlowingSTB();
-    createNeuralMaze();
-
+    // --- PARÇACIK SİSTEMİ ---
     const geometry = new THREE.BufferGeometry();
-    const posArray = new Float32Array(CONFIG.particleCount * 3);
-    const colArray = new Float32Array(CONFIG.particleCount * 3);
-    const phaseArray = new Float32Array(CONFIG.particleCount);
+    const positions = new Float32Array(CONFIG.particleCount * 3);
+    const colors = new Float32Array(CONFIG.particleCount * 3);
+    const phases = new Float32Array(CONFIG.particleCount);
 
     for (let i = 0; i < CONFIG.particleCount; i++) {
-      posArray[i * 3] = (Math.random() - 0.5) * 30;
-      posArray[i * 3 + 1] = (Math.random() - 0.5) * 30;
-      posArray[i * 3 + 2] = (Math.random() - 0.5) * 30;
-
-      colArray[i * 3] = CONFIG.colBlue.r;
-      colArray[i * 3 + 1] = CONFIG.colBlue.g;
-      colArray[i * 3 + 2] = CONFIG.colBlue.b;
-
-      phaseArray[i] = Math.random() * Math.PI * 2;
+      positions[i * 3] = (Math.random() - 0.5) * 40;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 40;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 40;
+      colors[i * 3] = CONFIG.colBlue.r;
+      colors[i * 3 + 1] = CONFIG.colBlue.g;
+      colors[i * 3 + 2] = CONFIG.colBlue.b;
+      phases[i] = Math.random() * Math.PI * 2;
     }
 
-    geometry.setAttribute(
-      "position",
-      new THREE.BufferAttribute(posArray, 3)
-    );
-    geometry.setAttribute("color", new THREE.BufferAttribute(colArray, 3));
-    geometry.setAttribute("phase", new THREE.BufferAttribute(phaseArray, 1));
+    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    geometry.setAttribute("phase", new THREE.BufferAttribute(phases, 1));
 
     const material = new THREE.PointsMaterial({
       size: CONFIG.particleSize,
       map: getSprite(),
       vertexColors: true,
       transparent: true,
-      opacity: 0.9,
+      opacity: 0.95,
       blending: THREE.AdditiveBlending,
-      depthWrite: false,
+      depthWrite: false
     });
 
     const particles = new THREE.Points(geometry, material);
     scene.add(particles);
 
+    // --- ANIMASYON ---
     function animate() {
       requestAnimationFrame(animate);
       controls.update();
 
       const now = Date.now();
       const elapsed = now - lastStateTime;
+      const time = now * 0.001;
 
-      const pArr = particles.geometry.attributes.position.array;
-      const cArr = particles.geometry.attributes.color.array;
+      const posArr = particles.geometry.attributes.position.array;
+      const colArr = particles.geometry.attributes.color.array;
       const phArr = particles.geometry.attributes.phase.array;
 
       switch (currentState) {
         case STATES.FORM_STB:
           currentTargetPositions = stbTargets;
           currentTargetColors = stbColors;
-          if (elapsed > 3000) {
-            currentState = STATES.HOLD_STB;
-            lastStateTime = now;
-          }
+          if (elapsed > 2500) { currentState = STATES.HOLD_STB; lastStateTime = now; }
           break;
         case STATES.HOLD_STB:
-          if (elapsed > 4000) {
-            currentState = STATES.TO_MAZE;
-            lastStateTime = now;
-          }
+          if (elapsed > 3000) { currentState = STATES.TO_MAZE; lastStateTime = now; }
           break;
         case STATES.TO_MAZE:
           currentTargetPositions = mazeTargets;
           currentTargetColors = mazeColors;
-          if (elapsed > 3000) {
-            currentState = STATES.MAZE_FLOW;
-            lastStateTime = now;
-          }
+          if (elapsed > 2500) { currentState = STATES.MAZE_ACTIVE; lastStateTime = now; }
           break;
-        case STATES.MAZE_FLOW:
-          if (elapsed > 6000) {
-            currentState = STATES.TO_RESET;
-            lastStateTime = now;
-          }
+        case STATES.MAZE_ACTIVE:
+          if (elapsed > 5000) { currentState = STATES.TO_RESET; lastStateTime = now; }
           break;
         case STATES.TO_RESET:
           currentTargetPositions = stbTargets;
           currentTargetColors = stbColors;
-          if (elapsed > 2500) {
-            currentState = STATES.HOLD_STB;
-            lastStateTime = now;
-          }
+          if (elapsed > 2500) { currentState = STATES.HOLD_STB; lastStateTime = now; }
           break;
       }
-
-      const time = now * 0.001;
 
       for (let i = 0; i < CONFIG.particleCount; i++) {
         const ix = i * 3;
         const tx = currentTargetPositions[i].x;
         const ty = currentTargetPositions[i].y;
         const tz = currentTargetPositions[i].z;
-
-        const trg = currentTargetColors[i];
+        const tr = currentTargetColors[i].r;
+        const tg = currentTargetColors[i].g;
+        const tb = currentTargetColors[i].b;
 
         let speed = CONFIG.speed;
-        let noiseX = 0,
-          noiseY = 0,
-          noiseZ = 0;
+        let noiseX = 0, noiseZ = 0;
 
-        if (
-          currentState === STATES.MAZE_FLOW ||
-          currentState === STATES.TO_MAZE
-        ) {
-          if (cArr[ix] > 0.8 && cArr[ix + 1] < 0.4) {
+        if (currentState === STATES.MAZE_ACTIVE || currentState === STATES.TO_MAZE) {
+          if (colArr[ix] > 0.8 && colArr[ix + 1] < 0.3) {
             speed = 0.05;
-            noiseX = Math.sin(time * 20 + i) * 0.2;
-          } else {
-            noiseY = Math.sin(time + phArr[i]) * 0.05;
+            const dir = i % 2 === 0 ? 1 : -1;
+            if (i % 3 === 0)
+              noiseX = Math.sin(time * 5 + phArr[i]) * 1.5 * dir;
+            else
+              noiseZ = Math.cos(time * 5 + phArr[i]) * 1.5 * dir;
           }
         } else {
-          noiseX = Math.sin(time * 2 + phArr[i]) * 0.05;
-          noiseY = Math.cos(time * 3 + phArr[i]) * 0.05;
+          noiseX = Math.sin(time * 3 + phArr[i]) * 0.02;
+          noiseZ = Math.cos(time * 2 + phArr[i]) * 0.02;
         }
 
-        pArr[ix] += (tx - pArr[ix]) * speed + noiseX;
-        pArr[ix + 1] += (ty - pArr[ix + 1]) * speed + noiseY;
-        pArr[ix + 2] += (tz - pArr[ix + 2]) * speed + noiseZ;
+        posArr[ix]     += (tx - posArr[ix]) * speed + noiseX;
+        posArr[ix + 1] += (ty - posArr[ix + 1]) * speed;
+        posArr[ix + 2] += (tz - posArr[ix + 2]) * speed + noiseZ;
 
-        cArr[ix] += (trg.r - cArr[ix]) * speed;
-        cArr[ix + 1] += (trg.g - cArr[ix + 1]) * speed;
-        cArr[ix + 2] += (trg.b - cArr[ix + 2]) * speed;
+        colArr[ix]     += (tr - colArr[ix]) * speed;
+        colArr[ix + 1] += (tg - colArr[ix + 1]) * speed;
+        colArr[ix + 2] += (tb - colArr[ix + 2]) * speed;
       }
 
       particles.geometry.attributes.position.needsUpdate = true;
