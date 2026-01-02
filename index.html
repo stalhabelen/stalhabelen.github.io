@@ -1,13 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fluid STB & Neural Maze</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Süleyman Talha Belen | STB</title>
+
     <style>
-        body { margin: 0; overflow: hidden; background-color: transparent; }
-        canvas { display: block; }
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: transparent;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                "Segoe UI", sans-serif;
+            color: #e5e7eb;
+        }
+
+        /* Canvas arkada full-screen */
+        canvas {
+            display: block;
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+        }
+
+        /* İçerik overlay */
+        .overlay {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .overlay-inner {
+            max-width: 960px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        @media (max-width: 900px) {
+            .overlay-inner {
+                grid-template-columns: minmax(0, 1fr);
+                text-align: center;
+            }
+        }
+
+        .name {
+            font-size: clamp(2.2rem, 3vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: 0.03em;
+        }
+
+        .subtitle {
+            margin-top: 0.4rem;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #9ca3af;
+        }
+
+        .tagline {
+            margin-top: 1.2rem;
+            font-size: 1rem;
+            color: #d1d5db;
+            max-width: 32rem;
+        }
+
+        .pill-row {
+            margin-top: 1.4rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .pill {
+            padding: 0.35rem 0.8rem;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            font-size: 0.75rem;
+            color: #e5e7eb;
+            backdrop-filter: blur(10px);
+            background: radial-gradient(circle at top, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.3));
+        }
+
+        .section-title {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: #9ca3af;
+        }
+
+        .edu-card {
+            margin-top: 0.8rem;
+            padding: 0.85rem 1rem;
+            border-radius: 0.9rem;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.4));
+            backdrop-filter: blur(16px);
+        }
+
+        .edu-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #f9fafb;
+        }
+
+        .edu-meta {
+            margin-top: 0.2rem;
+            font-size: 0.8rem;
+            color: #9ca3af;
+        }
+
+        .edu-desc {
+            margin-top: 0.4rem;
+            font-size: 0.85rem;
+            color: #d1d5db;
+        }
+
+        .right-note {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            max-width: 18rem;
+            margin-left: auto;
+        }
+
+        @media (max-width: 900px) {
+            .right-note {
+                margin: 1.5rem auto 0;
+            }
+        }
     </style>
+
+    <!-- three.js import map -->
     <script type="importmap">
         {
             "imports": {
@@ -18,6 +152,54 @@
     </script>
 </head>
 <body>
+    <!-- ÜSTTE GÖRÜNEN KISIM (EĞİTİM VS.) -->
+    <div class="overlay">
+        <div class="overlay-inner">
+            <div>
+                <div class="subtitle">STB · ROBOTICS · AI · CONTROL</div>
+                <div class="name">Süleyman Talha Belen</div>
+                <p class="tagline">
+                    Robotics, control, and learning — from radar-based perception to neural maze
+                    planning. I like building systems that actually move, sense, and decide.
+                </p>
+
+                <div class="pill-row">
+                    <div class="pill">Robotics & Control</div>
+                    <div class="pill">Machine Learning</div>
+                    <div class="pill">Computer Vision</div>
+                    <div class="pill">Embedded & Signals</div>
+                </div>
+
+                <div class="section-title">Education</div>
+
+                <div class="edu-card">
+                    <div class="edu-title">Bilkent University – B.Sc. Electrical & Electronics Engineering</div>
+                    <div class="edu-meta">Full Scholarship · 2022 – Present · Ankara, Türkiye</div>
+                    <div class="edu-desc">
+                        Focusing on signals & systems, electronics, control, and machine learning.
+                        Building a strong background for graduate studies in robotics / AI.
+                    </div>
+                </div>
+
+                <div class="edu-card">
+                    <div class="edu-title">Stanford Summer Session</div>
+                    <div class="edu-meta">CS229 – Machine Learning · EE364A – Convex Optimization</div>
+                    <div class="edu-desc">
+                        Graduate-level coursework in statistical learning and optimization, with an
+                        emphasis on practical algorithms and rigorous mathematical foundations.
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-note">
+                The point cloud animation in the background transitions between an STB
+                signature and a neural-style maze, echoing my interest in intelligent
+                control, planning, and multi-agent behaviour.
+            </div>
+        </div>
+    </div>
+
+    <!-- SENİN SON GÖNDERDİĞİN ANİMASYON KODU (AYNEN) -->
     <script type="module">
         import * as THREE from 'three';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -184,10 +366,6 @@
         }
         createNeuralMaze();
 
-        // 🔹 BAŞLANGIÇ HEDEFİNİ NETLEŞTİR (EKLEDİĞİM 2 SATIR)
-        currentTargetPositions = stbTargets;
-        currentTargetColors   = stbColors;
-
         // --- PARÇACIK SİSTEMİ ---
         const geometry = new THREE.BufferGeometry();
         const positions = new Float32Array(CONFIG.particleCount * 3);
@@ -287,12 +465,12 @@
                 }
 
                 // Pozisyon güncelleme (Lerp)
-                positions[ix]   += (tx - positions[ix]) * speed + noiseX;
+                positions[ix] += (tx - positions[ix]) * speed + noiseX;
                 positions[ix+1] += (ty - positions[ix+1]) * speed + noiseY;
                 positions[ix+2] += (tz - positions[ix+2]) * speed + noiseZ;
 
                 // Renk güncelleme
-                colors[ix]   += (currentTargetColors[i].r - colors[ix]) * speed;
+                colors[ix] += (currentTargetColors[i].r - colors[ix]) * speed;
                 colors[ix+1] += (currentTargetColors[i].g - colors[ix+1]) * speed;
                 colors[ix+2] += (currentTargetColors[i].b - colors[ix+2]) * speed;
             }
