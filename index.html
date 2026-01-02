@@ -1,13 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-  }
-}
-</script>
 <head>
   <meta charset="UTF-8" />
   <title>Suleyman Talha Belen | Home</title>
@@ -17,267 +9,17 @@
     content="Personal website of Suleyman Talha Belen, Electrical and Electronics Engineering student at Bilkent University. Projects, ideas, writings, and papers on signal processing, machine learning, robotics, and optimization."
   />
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- three.js import map (for STB particle animation) -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
 </head>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robotic Arm to STB Loop Animation</title>
-    <style>
-        body { margin: 0; overflow: hidden; background-color: transparent; }
-        canvas { display: block; }
-    </style>
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-            }
-        }
-    </script>
-</head>
-<body>
-<script type="module">
-        import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-        // --- AYARLAR ---
-        const CONFIG = {
-            particleCount: 3500,   // Yeterli yoğunluk için
-            particleSize: 0.35,    // Belirgin noktalar
-            colorBlue: 0x2563EB,   // Sitenizdeki Mavi
-            colorDark: 0x1E293B,   // Sitenizdeki Koyu Gri
-            speed: 0.04,           // Geçiş hızı
-            armDuration: 4000,     // Robot kolunun durma süresi (ms)
-            stbDuration: 4000,     // STB yazısının durma süresi (ms)
-            transitionDuration: 3000 // İki şekil arası geçiş süresi (ms)
-        };
-
-        let currentState = 'TO_ARM'; // Başlangıç durumu
-        let stateStartTime = Date.now();
-        let currentTargets = []; // Şu anki hedef noktalar
-
-        // Sahne Kurulumu
-        const scene = new THREE.Scene();
-        // Arka plan tamamen şeffaf
-
-        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 5, 25);
-
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        document.body.appendChild(renderer.domElement);
-
-        // Işıklandırma
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        scene.add(ambientLight);
-        const pointLight = new THREE.PointLight(CONFIG.colorBlue, 1.5, 100);
-        pointLight.position.set(10, 10, 10);
-        scene.add(pointLight);
-        const pointLight2 = new THREE.PointLight(CONFIG.colorDark, 1.0, 100);
-        pointLight2.position.set(-10, -5, 10);
-        scene.add(pointLight2);
-
-        // Kontroller
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.autoRotate = true;
-        controls.autoRotateSpeed = 0.8;
-        controls.target.set(0, 2, 0); // Dönme merkezini biraz yukarı al
-
-        // --- HEDEF NOKTALARI OLUŞTURMA ---
-        const stbTargets = [];
-        const armTargets = [];
-        const colors = [];
-        const colorBlueObj = new THREE.Color(CONFIG.colorBlue);
-        const colorDarkObj = new THREE.Color(CONFIG.colorDark);
-
-        // 1. STB Hedefleri
-        function createSTBTargets() {
-            const letters = {
-                S: [[0,1,1,1,1],[1,1,0,0,0],[1,1,1,1,0],[0,0,0,1,1],[1,1,1,1,0]],
-                T: [[1,1,1,1,1],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0]],
-                B: [[1,1,1,1,0],[1,0,0,0,1],[1,1,1,1,0],[1,0,0,0,1],[1,1,1,1,0]]
-            };
-            let xOffset = -6;
-            ['S', 'T', 'B'].forEach((key, index) => {
-                const matrix = letters[key];
-                for(let r=0; r<matrix.length; r++) {
-                    for(let c=0; c<matrix[0].length; c++) {
-                        if(matrix[r][c]) {
-                            for(let i=0; i<30; i++) { // Yoğunluk
-                                stbTargets.push(new THREE.Vector3(
-                                    xOffset + c + Math.random()*0.4,
-                                    (4-r) + Math.random()*0.4,
-                                    (Math.random()-0.5)*2
-                                ));
-                                // Renk ataması (S=Mavi, T=Geçiş, B=Koyu)
-                                const mix = index / 2;
-                                const col = colorBlueObj.clone().lerp(colorDarkObj, mix);
-                                colors.push(col.r, col.g, col.b);
-                            }
-                        }
-                    }
-                }
-                xOffset += 5;
-            });
-        }
-
-        // 2. Robot Kolu Hedefleri
-        function createArmTargets() {
-            // Taban (Base)
-            for(let i=0; i<800; i++) {
-                const angle = Math.random() * Math.PI * 2;
-                const radius = Math.random() * 3;
-                armTargets.push(new THREE.Vector3(Math.cos(angle)*radius, Math.random()*1 - 4, Math.sin(angle)*radius));
-            }
-            // Alt Kol (Lower Arm)
-            for(let i=0; i<1000; i++) {
-                armTargets.push(new THREE.Vector3((Math.random()-0.5)*1.5, Math.random()*6 - 3, (Math.random()-0.5)*1.5));
-            }
-            // Üst Kol (Upper Arm - Açılı)
-            for(let i=0; i<1000; i++) {
-                const t = Math.random();
-                armTargets.push(new THREE.Vector3(t*5, t*3 + 3, (Math.random()-0.5)*1.2));
-            }
-             // Kıskaç (Gripper)
-            for(let i=0; i<700; i++) {
-                const side = Math.random() > 0.5 ? 1 : -1;
-                armTargets.push(new THREE.Vector3(5 + Math.random()*2, 6 + Math.random()*1.5, side * (0.5 + Math.random()*0.5)));
-            }
-
-            // Eksik kalanları tamamla veya fazlalıkları kırp
-            while(armTargets.length < CONFIG.particleCount) {
-                 armTargets.push(armTargets[Math.floor(Math.random() * armTargets.length)].clone());
-            }
-            // STB hedeflerini de ana sayıya eşitle
-            while(stbTargets.length < CONFIG.particleCount) {
-                stbTargets.push(stbTargets[Math.floor(Math.random() * stbTargets.length)].clone());
-                // Renkleri de eşitle
-                colors.push(colors[Math.floor(Math.random() * colors.length)], colors[Math.floor(Math.random() * colors.length)+1], colors[Math.floor(Math.random() * colors.length)+2]);
-
-            }
-        }
-
-        createSTBTargets();
-        createArmTargets();
-        
-        // İlk hedef Robot Kolu
-        currentTargets = armTargets;
-
-        // Parçacık Sistemi
-        const geometry = new THREE.BufferGeometry();
-        const positions = new Float32Array(CONFIG.particleCount * 3);
-        const colorArray = new Float32Array(colors.slice(0, CONFIG.particleCount * 3));
-
-        // Başlangıçta rastgele dağıt
-        for(let i=0; i<CONFIG.particleCount * 3; i++) {
-            positions[i] = (Math.random() - 0.5) * 50;
-        }
-
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        geometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
-
-        const material = new THREE.PointsMaterial({
-            size: CONFIG.particleSize,
-            vertexColors: true,
-            transparent: true,
-            opacity: 0.9,
-            map: new THREE.TextureLoader().load('https://threejs.org/examples/textures/sprites/disc.png'),
-            alphaTest: 0.5,
-            emissive: CONFIG.colorBlue,
-            emissiveIntensity: 0.3
-        });
-
-        const particles = new THREE.Points(geometry, material);
-        scene.add(particles);
-
-        // --- ANİMASYON DÖNGÜSÜ (STATE MACHINE) ---
-        function animate() {
-            requestAnimationFrame(animate);
-            controls.update();
-
-            const now = Date.now();
-            const elapsed = now - stateStartTime;
-            const positionsArray = particles.geometry.attributes.position.array;
-
-            // Durum Kontrolü
-            switch(currentState) {
-                case 'TO_ARM':
-                    if (elapsed > CONFIG.transitionDuration) {
-                        currentState = 'IN_ARM';
-                        stateStartTime = now;
-                        currentTargets = armTargets; // Hedefi sabitle
-                    } else {
-                        currentTargets = armTargets;
-                    }
-                    break;
-                case 'IN_ARM':
-                    // Robot kolu şeklinde bekle, belki hafif bir hareket eklenebilir
-                    if (elapsed > CONFIG.armDuration) {
-                        currentState = 'TO_STB';
-                        stateStartTime = now;
-                        // Geçiş öncesi parçacıkları biraz dağıtmak dramatik etki yaratır
-                        for(let i=0; i<CONFIG.particleCount * 3; i+=3) {
-                             positionsArray[i] += (Math.random()-0.5)*2;
-                             positionsArray[i+1] += (Math.random()-0.5)*2;
-                             positionsArray[i+2] += (Math.random()-0.5)*2;
-                        }
-                    }
-                    break;
-                case 'TO_STB':
-                    if (elapsed > CONFIG.transitionDuration) {
-                        currentState = 'IN_STB';
-                        stateStartTime = now;
-                        currentTargets = stbTargets; // Hedefi sabitle
-                    } else {
-                        currentTargets = stbTargets;
-                    }
-                    break;
-                case 'IN_STB':
-                    if (elapsed > CONFIG.stbDuration) {
-                        currentState = 'TO_ARM';
-                        stateStartTime = now;
-                         // Döngü başa dönüyor, tekrar dağıt
-                        for(let i=0; i<CONFIG.particleCount * 3; i++) {
-                            positionsArray[i] += (Math.random() - 0.5) * 30;
-                        }
-                    }
-                    break;
-            }
-
-            // Hareket Mantığı (Lerp)
-            for(let i=0; i<CONFIG.particleCount; i++) {
-                const target = currentTargets[i];
-                // Hız durumuna göre değişebilir, geçişlerde daha hızlı
-                let currentSpeed = CONFIG.speed;
-                if (currentState === 'IN_ARM' || currentState === 'IN_STB') {
-                    currentSpeed = CONFIG.speed * 0.5; // Beklerken daha yavaş süzül
-                     // Hafif bir dalgalanma ekle
-                    target.y += Math.sin(now * 0.001 + positionsArray[i]) * 0.003;
-                }
-
-                positionsArray[i*3]   += (target.x - positionsArray[i*3]) * currentSpeed;
-                positionsArray[i*3+1] += (target.y - positionsArray[i*3+1]) * currentSpeed;
-                positionsArray[i*3+2] += (target.z - positionsArray[i*3+2]) * currentSpeed;
-            }
-
-            particles.geometry.attributes.position.needsUpdate = true;
-            renderer.render(scene, camera);
-        }
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        animate();
-</script>
-</body>
-</html>
 
 <body>
   <header>
@@ -335,12 +77,14 @@
       </div>
 
       <div class="hero-right">
+        <!-- Robotic arm ↔ STB particle animation lives here -->
         <div id="stb-anim-box" class="stb-anim-box"></div>
       
         <span class="hero-badge">Reinforcement Learning</span>
         <h2>Policies that converge instead of just exploring</h2>
         <p>
-          STB particle animation: points explode, then assemble into “STB” — a small visual for my RL and robotics-oriented work.
+          Particle field morphing between a robotic arm silhouette and “STB” —
+          a small visual for my RL and robotics-oriented work.
         </p>
       
         <ul class="list">
@@ -350,23 +94,21 @@
         </ul>
       </div>
 
-        <div class="hero-panel">
-          <h2>Currently</h2>
-          <ul>
-            <li>🎓 B.E. Electrical and Electronics Engineering @ Bilkent University (2027 expected)</li>
-            <li>📍 Visiting Student in CS @ Stanford University '25</li>
-            <li>📍 Visiting Student in EECS @ UC Berkeley '24</li>
-            <li>🤖 Exploring research at the intersection of robotics, signal processing, optimization and ML</li>
-          </ul>
-        </div>
+      <div class="hero-panel">
+        <h2>Currently</h2>
+        <ul>
+          <li>🎓 B.E. Electrical and Electronics Engineering @ Bilkent University (2027 expected)</li>
+          <li>📍 Visiting Student in CS @ Stanford University '25</li>
+          <li>📍 Visiting Student in EECS @ UC Berkeley '24</li>
+          <li>🤖 Exploring research at the intersection of robotics, signal processing, optimization and ML</li>
+        </ul>
       </div>
     </section>
 
     <!-- QUICK LINKS -->
     <section class="reveal">
       <h2>Explore</h2>
-      <p class="section-subtitle">
-      </p>
+      <p class="section-subtitle"></p>
       <div class="quick-links">
         <a href="education.html" class="ql-card">
           <h3>Education</h3>
@@ -419,6 +161,7 @@
     </span>
   </footer>
 
+  <!-- Year + reveal-on-scroll -->
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -435,6 +178,298 @@
       { threshold: 0.12 }
     );
     reveals.forEach((el) => observer.observe(el));
+  </script>
+
+  <!-- Robotic arm ↔ STB particle animation, scoped to #stb-anim-box -->
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    const container = document.getElementById('stb-anim-box');
+    if (container) {
+      // ---- CONFIG ----
+      const CONFIG = {
+        particleCount: 4000,
+        particleSize: 0.35,
+        colorBlue: new THREE.Color(0x2563EB),
+        colorDark: new THREE.Color(0x1E293B),
+        speed: 0.03,
+        holdDuration: 3000
+      };
+
+      const STATES = { ARM: 0, TO_STB: 1, STB: 2, TO_ARM: 3 };
+      let currentState = STATES.ARM;
+      let lastStateChangeTime = Date.now();
+
+      function getSize() {
+        const rect = container.getBoundingClientRect();
+        const w = rect.width || 340;
+        const h = rect.height || 260;
+        return { width: w, height: h };
+      }
+
+      // ---- SCENE ----
+      const scene = new THREE.Scene();
+
+      let { width, height } = getSize();
+      const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+      camera.position.set(0, 5, 28);
+
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setClearColor(0x000000, 0); // fully transparent
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(width, height);
+      container.appendChild(renderer.domElement);
+
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+      scene.add(ambientLight);
+      const blueLight = new THREE.PointLight(CONFIG.colorBlue, 2, 100);
+      blueLight.position.set(15, 10, 10);
+      scene.add(blueLight);
+      const darkLight = new THREE.PointLight(CONFIG.colorDark, 1.5, 100);
+      darkLight.position.set(-15, -5, 10);
+      scene.add(darkLight);
+
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 0.6;
+      controls.enableZoom = false;
+      controls.target.set(0, 3, 0);
+
+      // ---- TARGET COORDS ----
+      const stbTargets = [];
+      const armTargets = [];
+      const stbColors = [];
+      const armColors = [];
+
+      let currentTargetPositions = [];
+      let currentTargetColors = [];
+
+      function createSTBTargets() {
+        const letters = {
+          S: [[0,1,1,1,1],[1,1,0,0,0],[1,1,1,1,0],[0,0,0,1,1],[1,1,1,1,0]],
+          T: [[1,1,1,1,1],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0]],
+          B: [[1,1,1,1,0],[1,0,0,0,1],[1,1,1,1,0],[1,0,0,0,1],[1,1,1,1,0]]
+        };
+        let xOffset = -7;
+        ['S', 'T', 'B'].forEach((key, index) => {
+          const matrix = letters[key];
+          for (let r = 0; r < matrix.length; r++) {
+            for (let c = 0; c < matrix[0].length; c++) {
+              if (matrix[r][c]) {
+                for (let i = 0; i < 35; i++) {
+                  stbTargets.push(new THREE.Vector3(
+                    xOffset + c + Math.random() * 0.5,
+                    (4 - r) * 1.2 + Math.random() * 0.5,
+                    (Math.random() - 0.5) * 2.5
+                  ));
+                  const mix = index / 2;
+                  const col = CONFIG.colorBlue.clone().lerp(CONFIG.colorDark, mix);
+                  stbColors.push(col);
+                }
+              }
+            }
+          }
+          xOffset += 5.5;
+        });
+      }
+
+      function createArmTargets() {
+        function addPointsToZone(count, xRange, yRange, zRange, colorMix) {
+          for (let i = 0; i < count; i++) {
+            armTargets.push(new THREE.Vector3(
+              xRange[0] + Math.random() * (xRange[1] - xRange[0]),
+              yRange[0] + Math.random() * (yRange[1] - yRange[0]),
+              zRange[0] + Math.random() * (zRange[1] - zRange[0])
+            ));
+            const col = CONFIG.colorDark.clone().lerp(CONFIG.colorBlue, colorMix);
+            armColors.push(col);
+          }
+        }
+
+        // Base
+        for (let i = 0; i < 800; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const r = Math.random() * 3.5;
+          armTargets.push(new THREE.Vector3(
+            Math.cos(angle) * r,
+            Math.random() * 1.5 - 6,
+            Math.sin(angle) * r
+          ));
+          armColors.push(CONFIG.colorDark.clone());
+        }
+
+        // Lower arm
+        for (let i = 0; i < 1200; i++) {
+          const t = Math.random();
+          const x = t * 2 - 1;
+          const y = t * 6 - 4.5;
+          const z = t * 2 - 1;
+          armTargets.push(new THREE.Vector3(
+            x + (Math.random() - 0.5) * 2,
+            y + (Math.random() - 0.5) * 1.5,
+            z + (Math.random() - 0.5) * 2
+          ));
+          armColors.push(CONFIG.colorDark.clone().lerp(CONFIG.colorBlue, t * 0.5));
+        }
+
+        // Upper arm
+        for (let i = 0; i < 1000; i++) {
+          const t = Math.random();
+          const x = 1 + t * 5;
+          const y = 1.5 + t * 3;
+          const z = (Math.random() - 0.5) * 1.8;
+          armTargets.push(new THREE.Vector3(
+            x + (Math.random() - 0.5) * 1.5,
+            y + (Math.random() - 0.5) * 1.5,
+            z
+          ));
+          armColors.push(CONFIG.colorDark.clone().lerp(CONFIG.colorBlue, 0.5 + t * 0.5));
+        }
+
+        // Gripper
+        addPointsToZone(300, [6, 8], [4, 5.5], [0.8, 1.5], 1.0);
+        addPointsToZone(300, [6, 8], [4, 5.5], [-1.5, -0.8], 1.0);
+
+        // Equalize counts
+        while (armTargets.length < CONFIG.particleCount) {
+          const idx = Math.floor(Math.random() * armTargets.length);
+          armTargets.push(armTargets[idx].clone());
+          armColors.push(armColors[idx].clone());
+        }
+        while (stbTargets.length < CONFIG.particleCount) {
+          const idx = Math.floor(Math.random() * stbTargets.length);
+          stbTargets.push(stbTargets[idx].clone());
+          stbColors.push(stbColors[idx].clone());
+        }
+
+        currentTargetPositions = armTargets;
+        currentTargetColors = armColors;
+      }
+
+      createSTBTargets();
+      createArmTargets();
+
+      // ---- PARTICLE SYSTEM ----
+      const geometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(CONFIG.particleCount * 3);
+      const colors = new Float32Array(CONFIG.particleCount * 3);
+
+      for (let i = 0; i < CONFIG.particleCount; i++) {
+        positions[i * 3]     = armTargets[i].x;
+        positions[i * 3 + 1] = armTargets[i].y;
+        positions[i * 3 + 2] = armTargets[i].z;
+
+        colors[i * 3]     = armColors[i].r;
+        colors[i * 3 + 1] = armColors[i].g;
+        colors[i * 3 + 2] = armColors[i].b;
+      }
+
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+      const texture = new THREE.TextureLoader().load(
+        'https://threejs.org/examples/textures/sprites/disc.png'
+      );
+
+      const material = new THREE.PointsMaterial({
+        size: CONFIG.particleSize,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.95,
+        map: texture,
+        alphaTest: 0.5
+      });
+
+      const particles = new THREE.Points(geometry, material);
+      scene.add(particles);
+
+      // ---- ANIMATION LOOP ----
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+
+        const now = Date.now();
+        const elapsed = now - lastStateChangeTime;
+
+        const posAttr = particles.geometry.attributes.position;
+        const colAttr = particles.geometry.attributes.color;
+        const pArr = posAttr.array;
+        const cArr = colAttr.array;
+
+        switch (currentState) {
+          case STATES.ARM:
+            if (elapsed > CONFIG.holdDuration) {
+              currentState = STATES.TO_STB;
+              lastStateChangeTime = now;
+              currentTargetPositions = stbTargets;
+              currentTargetColors = stbColors;
+            }
+            break;
+          case STATES.TO_STB:
+            if (elapsed > CONFIG.holdDuration * 0.8) {
+              currentState = STATES.STB;
+              lastStateChangeTime = now;
+            }
+            break;
+          case STATES.STB:
+            if (elapsed > CONFIG.holdDuration) {
+              currentState = STATES.TO_ARM;
+              lastStateChangeTime = now;
+              currentTargetPositions = armTargets;
+              currentTargetColors = armColors;
+            }
+            break;
+          case STATES.TO_ARM:
+            if (elapsed > CONFIG.holdDuration * 0.8) {
+              currentState = STATES.ARM;
+              lastStateChangeTime = now;
+            }
+            break;
+        }
+
+        for (let i = 0; i < CONFIG.particleCount; i++) {
+          const targetPos = currentTargetPositions[i];
+          const targetCol = currentTargetColors[i];
+          const idx = i * 3;
+
+          let moveSpeed = CONFIG.speed;
+          let colorSpeed = CONFIG.speed * 0.5;
+          let noise = 0;
+
+          if (currentState === STATES.ARM || currentState === STATES.STB) {
+            moveSpeed *= 0.2;
+            noise = Math.sin(now * 0.002 + pArr[idx]) * 0.005;
+          }
+
+          pArr[idx]     += (targetPos.x - pArr[idx]) * moveSpeed + noise;
+          pArr[idx + 1] += (targetPos.y - pArr[idx + 1]) * moveSpeed + noise;
+          pArr[idx + 2] += (targetPos.z - pArr[idx + 2]) * moveSpeed;
+
+          cArr[idx]     += (targetCol.r - cArr[idx]) * colorSpeed;
+          cArr[idx + 1] += (targetCol.g - cArr[idx + 1]) * colorSpeed;
+          cArr[idx + 2] += (targetCol.b - cArr[idx + 2]) * colorSpeed;
+        }
+
+        posAttr.needsUpdate = true;
+        colAttr.needsUpdate = true;
+        renderer.render(scene, camera);
+      }
+
+      function onResize() {
+        const s = getSize();
+        width = s.width;
+        height = s.height;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+      }
+
+      window.addEventListener('resize', onResize);
+      onResize();
+      animate();
+    }
   </script>
 </body>
 </html>
