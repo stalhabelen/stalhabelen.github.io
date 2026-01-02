@@ -75,13 +75,13 @@
         </div>
       </div>
 
-      <!-- Right: animation + currently info -->
+      <!-- Right side: animation + Currently panel -->
       <div class="hero-right">
-        <!-- animation box: moved slightly up with negative margin-top -->
+        <!-- animation card; a bit bigger and slightly higher -->
         <div
           id="stb-anim-box"
           class="stb-anim-box"
-          style="background: transparent; box-shadow: none; width: 460px; height: 280px; margin-top: -14px; margin-bottom: 18px;"
+          style="background: transparent; box-shadow: none; width: 500px; height: 310px; margin-top: -18px; margin-bottom: 18px;"
         ></div>
 
         <div class="hero-panel">
@@ -152,7 +152,7 @@
     </span>
   </footer>
 
-  <!-- Year + reveal-on-scroll -->
+  <!-- year + reveal-on-scroll -->
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -171,7 +171,7 @@
     reveals.forEach((el) => observer.observe(el));
   </script>
 
-  <!-- Robotic Arm → STB → Labyrinth animation mounted into #stb-anim-box -->
+  <!-- High-Fidelity Robotic Arm / STB / Maze animation mounted only in #stb-anim-box -->
   <script type="module">
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -179,13 +179,14 @@
     const container = document.getElementById('stb-anim-box');
 
     if (container) {
-      // ---- CONFIG ----
+      // --- CONFIG ---
       const CONFIG = {
-        totalParticles: 7000,
+        totalParticles: 8500,
         boxParticleCount: 1000,
-        particleSize: 0.25,
+        armParticleCount: 6000,
+        particleSize: 0.22,
         colorBlue: new THREE.Color(0x2563EB),
-        colorDark: new THREE.Color(0x0f172a),
+        colorDark: new THREE.Color(0x1E293B),
         colorMetallic: new THREE.Color(0x94a3b8),
         colorBox: new THREE.Color(0xf59e0b),
         colorAgent: new THREE.Color(0xe11d48),
@@ -209,8 +210,8 @@
       function getSize() {
         const rect = container.getBoundingClientRect();
         return {
-          width: rect.width || 460,
-          height: rect.height || 280
+          width: rect.width || 500,
+          height: rect.height || 310
         };
       }
 
@@ -218,7 +219,7 @@
       let { width, height } = getSize();
 
       const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
-      camera.position.set(0, 12, 35); // same as your code, just using container size
+      camera.position.set(0, 10, 32);
 
       const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
       renderer.setClearColor(0x000000, 0);
@@ -228,15 +229,18 @@
 
       scene.add(new THREE.AmbientLight(0xffffff, 0.6));
       const light = new THREE.PointLight(CONFIG.colorBlue, 2, 60);
-      light.position.set(10, 20, 15);
+      light.position.set(15, 20, 15);
       scene.add(light);
+      const rimLight = new THREE.PointLight(CONFIG.colorMetallic, 1, 40);
+      rimLight.position.set(-10, 5, -10);
+      scene.add(rimLight);
 
       const controls = new OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
       controls.autoRotate = true;
-      controls.autoRotateSpeed = 0.5;
+      controls.autoRotateSpeed = 0.4;
       controls.enableZoom = false;
-      controls.target.set(0, 2, 0);
+      controls.target.set(0, 3, 0);
 
       // --- TARGET ARRAYS ---
       const armLowTargets = [], armLowColors = [];
@@ -252,99 +256,224 @@
         cArr.push(col.clone());
       }
 
-      // --- ROBOTIC ARM (GRAB & LIFT) ---
+      // ROBOTIC ARM MODEL
       function createRoboticScene(targetArr, colorArr, isLifting) {
         let pCount = 0;
+        const armParts = CONFIG.armParticleCount;
 
         // Base
-        for (let i = 0; i < 600; i++) {
+        const baseCount = Math.floor(armParts * 0.12);
+        for (let i = 0; i < baseCount; i++) {
+          const t = Math.random();
+          const r = 4.0 - t * 1.5;
           const a = Math.random() * Math.PI * 2;
-          const r = Math.random() * 3.5;
+          const h = t * 2.0 - 5.0;
+          addTarget(
+            targetArr,
+            colorArr,
+            new THREE.Vector3(Math.cos(a) * r, h, Math.sin(a) * r),
+            CONFIG.colorDark
+          );
+          pCount++;
+        }
+        // Base ring
+        for (let i = 0; i < Math.floor(armParts * 0.03); i++) {
+          const a = Math.random() * Math.PI * 2;
+          addTarget(
+            targetArr,
+            colorArr,
+            new THREE.Vector3(Math.cos(a) * 2.8, -3.0, Math.sin(a) * 2.8),
+            CONFIG.colorMetallic
+          );
+          pCount++;
+        }
+
+        const lowerArmAngle = isLifting ? Math.PI / 2.2 : Math.PI / 5;
+        const elbowAngle = isLifting ? -Math.PI / 1.8 : Math.PI / 1.5;
+        const shoulderY = -2.5;
+
+        // Shoulder joint
+        const shoulderCount = Math.floor(armParts * 0.08);
+        for (let i = 0; i < shoulderCount; i++) {
+          const a1 = Math.random() * Math.PI * 2;
+          const a2 = Math.random() * Math.PI;
+          const r = 2.0;
           addTarget(
             targetArr,
             colorArr,
             new THREE.Vector3(
-              Math.cos(a) * r,
-              (Math.random() - 0.5) * 1.5 - 4,
-              Math.sin(a) * r
+              Math.cos(a1) * Math.sin(a2) * r,
+              shoulderY + Math.cos(a2) * r,
+              Math.sin(a1) * Math.sin(a2) * r
+            ),
+            CONFIG.colorDark
+          );
+          pCount++;
+        }
+        for (let side = -1; side <= 1; side += 2) {
+          for (let i = 0; i < Math.floor(armParts * 0.02); i++) {
+            const a = Math.random() * Math.PI * 2;
+            const r = 1.2;
+            addTarget(
+              targetArr,
+              colorArr,
+              new THREE.Vector3(
+                Math.cos(a) * r,
+                shoulderY + Math.sin(a) * r,
+                side * 2.2
+              ),
+              CONFIG.colorMetallic
+            );
+            pCount++;
+          }
+        }
+
+        // Lower arm
+        const lowerArmLen = 10;
+        const lowerArmCount = Math.floor(armParts * 0.25);
+        for (let i = 0; i < lowerArmCount; i++) {
+          const t = Math.random();
+          const cx = Math.cos(lowerArmAngle) * (t * lowerArmLen);
+          const cy = shoulderY + Math.sin(lowerArmAngle) * (t * lowerArmLen);
+          const a = Math.random() * Math.PI * 2;
+          const rMain = 1.8 - t * 0.3;
+          const rSide = 2.2 - t * 0.4;
+          const px = Math.cos(a) * rMain;
+          const pz = Math.sin(a) * rSide;
+          const rotX = cx + px * Math.cos(lowerArmAngle);
+          const rotY = cy + px * Math.sin(lowerArmAngle);
+          addTarget(
+            targetArr,
+            colorArr,
+            new THREE.Vector3(rotX, rotY, pz),
+            CONFIG.colorDark.clone().lerp(CONFIG.colorBlue, t * 0.7)
+          );
+          pCount++;
+        }
+
+        const elbowX = Math.cos(lowerArmAngle) * lowerArmLen;
+        const elbowY = shoulderY + Math.sin(lowerArmAngle) * lowerArmLen;
+
+        // Elbow joint
+        const elbowCount = Math.floor(armParts * 0.08);
+        for (let i = 0; i < elbowCount; i++) {
+          const a1 = Math.random() * Math.PI * 2;
+          const a2 = Math.random() * Math.PI;
+          const r = 1.7;
+          addTarget(
+            targetArr,
+            colorArr,
+            new THREE.Vector3(
+              elbowX + Math.cos(a1) * Math.sin(a2) * r,
+              elbowY + Math.cos(a2) * r,
+              Math.sin(a1) * Math.sin(a2) * r
+            ),
+            CONFIG.colorDark
+          );
+          pCount++;
+        }
+        for (let side = -1; side <= 1; side += 2) {
+          for (let i = 0; i < Math.floor(armParts * 0.015); i++) {
+            const a = Math.random() * Math.PI * 2;
+            const r = 1.0;
+            addTarget(
+              targetArr,
+              colorArr,
+              new THREE.Vector3(
+                elbowX + Math.cos(a) * r * Math.cos(lowerArmAngle),
+                elbowY + Math.cos(a) * r * Math.sin(lowerArmAngle),
+                side * 1.9
+              ),
+              CONFIG.colorMetallic
+            );
+            pCount++;
+          }
+        }
+
+        // Upper arm
+        const upperArmLen = 8;
+        const upperArmCount = Math.floor(armParts * 0.20);
+        for (let i = 0; i < upperArmCount; i++) {
+          const t = Math.random();
+          const cx = elbowX + Math.cos(lowerArmAngle + elbowAngle) * (t * upperArmLen);
+          const cy = elbowY + Math.sin(lowerArmAngle + elbowAngle) * (t * upperArmLen);
+          const rMain = 1.6 - t * 0.2;
+          const rSide = 1.9 - t * 0.3;
+          const a = Math.random() * Math.PI * 2;
+          const px = Math.cos(a) * rMain;
+          const pz = Math.sin(a) * rSide;
+          const rotX = cx + px * Math.cos(lowerArmAngle + elbowAngle);
+          const rotY = cy + px * Math.sin(lowerArmAngle + elbowAngle);
+          addTarget(
+            targetArr,
+            colorArr,
+            new THREE.Vector3(rotX, rotY, pz),
+            CONFIG.colorBlue.clone().lerp(CONFIG.colorDark, t * 0.2)
+          );
+          pCount++;
+        }
+
+        const wristX = elbowX + Math.cos(lowerArmAngle + elbowAngle) * upperArmLen;
+        const wristY = elbowY + Math.sin(lowerArmAngle + elbowAngle) * upperArmLen;
+
+        // Wrist
+        const wristCount = Math.floor(armParts * 0.05);
+        for (let i = 0; i < wristCount; i++) {
+          const a1 = Math.random() * Math.PI * 2;
+          const a2 = Math.random() * Math.PI;
+          const r = 1.3;
+          addTarget(
+            targetArr,
+            colorArr,
+            new THREE.Vector3(
+              wristX + Math.cos(a1) * Math.sin(a2) * r,
+              wristY + Math.cos(a2) * r,
+              Math.sin(a1) * Math.sin(a2) * r
             ),
             CONFIG.colorDark
           );
           pCount++;
         }
 
-        const lowerArmLen = 10, upperArmLen = 8;
-        const lowerArmAngle = isLifting ? Math.PI / 2.2 : Math.PI / 6;
-        const elbowAngle = isLifting ? -Math.PI / 1.8 : Math.PI / 1.5;
-
-        const shoulderY = -2.5;
-        const elbowX = Math.cos(lowerArmAngle) * lowerArmLen;
-        const elbowY = shoulderY + Math.sin(lowerArmAngle) * lowerArmLen;
-        const wristX = elbowX + Math.cos(lowerArmAngle + elbowAngle) * upperArmLen;
-        const wristY = elbowY + Math.sin(lowerArmAngle + elbowAngle) * upperArmLen;
-
-        // Lower arm
-        for (let i = 0; i < 1500; i++) {
+        // Gripper body
+        const gripperBodyCount = Math.floor(armParts * 0.06);
+        for (let i = 0; i < gripperBodyCount; i++) {
           const t = Math.random();
-          const cx = Math.cos(lowerArmAngle) * (t * lowerArmLen);
-          const cy = shoulderY + Math.sin(lowerArmAngle) * (t * lowerArmLen);
-          const r = 1.8;
-          const a = Math.random() * Math.PI * 2;
-          const pt = new THREE.Vector3(
-            cx + Math.cos(a) * r * 0.2,
-            cy + Math.cos(a) * r * 0.2,
-            Math.sin(a) * r
-          );
+          const gx = wristX + 1.5 + t * 1.5;
+          const gy = wristY + (Math.random() - 0.5) * 1.5;
+          const gz = (Math.random() - 0.5) * 2.0;
           addTarget(
             targetArr,
             colorArr,
-            pt,
-            CONFIG.colorDark.clone().lerp(CONFIG.colorBlue, t)
+            new THREE.Vector3(gx, gy, gz),
+            CONFIG.colorDark
           );
           pCount++;
         }
 
-        // Upper arm
-        for (let i = 0; i < 1300; i++) {
-          const t = Math.random();
-          const cx = elbowX + Math.cos(lowerArmAngle + elbowAngle) * (t * upperArmLen);
-          const cy = elbowY + Math.sin(lowerArmAngle + elbowAngle) * (t * upperArmLen);
-          const r = 1.5;
-          const a = Math.random() * Math.PI * 2;
-          const pt = new THREE.Vector3(
-            cx,
-            cy + Math.cos(a) * r,
-            Math.sin(a) * r
-          );
-          addTarget(
-            targetArr,
-            colorArr,
-            pt,
-            CONFIG.colorBlue.clone().lerp(CONFIG.colorDark, t * 0.3)
-          );
-          pCount++;
-        }
-
-        // Gripper
-        const gripCount = CONFIG.totalParticles - CONFIG.boxParticleCount - pCount;
-        for (let i = 0; i < gripCount; i++) {
+        // Gripper fingers
+        const gripFingerCount = armParts - pCount;
+        for (let i = 0; i < gripFingerCount; i++) {
           const side = i % 2 === 0 ? 1 : -1;
           const t = Math.random();
-          let gy = wristY + side * (isLifting ? 0.8 + t * 0.2 : 2.0);
+          const openAmount = isLifting ? 0.8 : 2.2;
+          let gy = wristY + side * (openAmount + t * 0.5);
+          let gx = wristX + 3.0 + t * 2.5;
+          let gz = (Math.random() - 0.5) * (1.5 - t * 0.5);
+          if (t > 0.7) {
+            gy -= side * (t - 0.7) * 1.5;
+            gx -= (t - 0.7) * 0.5;
+          }
           addTarget(
             targetArr,
             colorArr,
-            new THREE.Vector3(
-              wristX + 2 + t * 3,
-              gy,
-              (Math.random() - 0.5) * 2
-            ),
+            new THREE.Vector3(gx, gy, gz),
             CONFIG.colorMetallic
           );
         }
 
         // Box
-        const bx = isLifting ? wristX + 3.5 : 14;
+        const bx = isLifting ? wristX + 4.5 : 14;
         const by = isLifting ? wristY : -3;
         for (let i = 0; i < CONFIG.boxParticleCount; i++) {
           addTarget(
@@ -363,7 +492,7 @@
       createRoboticScene(armLowTargets, armLowColors, false);
       createRoboticScene(armHighTargets, armHighColors, true);
 
-      // --- STB TEXT ---
+      // STB targets
       function createSTBTargets() {
         const letters = {
           S: [[0,1,1,1,1],[1,1,0,0,0],[1,1,1,1,0],[0,0,0,1,1],[1,1,1,1,0]],
@@ -376,7 +505,7 @@
           for (let r = 0; r < matrix.length; r++) {
             for (let c = 0; c < matrix[0].length; c++) {
               if (matrix[r][c]) {
-                const pp = Math.floor(CONFIG.totalParticles / 45);
+                const pp = Math.floor((CONFIG.totalParticles - CONFIG.boxParticleCount) / 45);
                 for (let i = 0; i < pp; i++) {
                   addTarget(
                     stbTargets,
@@ -397,7 +526,7 @@
       }
       createSTBTargets();
 
-      // --- LABYRINTH ---
+      // Maze targets
       function createMazeTargets() {
         const mazeMap = [
           [1,1,1,1,1,1,1,1,1],
@@ -414,15 +543,13 @@
         const cols = mazeMap[0].length;
         const cellSize = 2.5;
         const wallHeight = 2.0;
-
         const startX = -(cols * cellSize) / 2;
         const startZ = -(rows * cellSize) / 2;
 
         let particlesUsed = 0;
-        const wallParticlesTotal = 4500;
+        const wallParticlesTotal = Math.floor((CONFIG.totalParticles - CONFIG.boxParticleCount) * 0.7);
         const walls = [];
         const paths = [];
-
         for (let r = 0; r < rows; r++) {
           for (let c = 0; c < cols; c++) {
             if (mazeMap[r][c] === 1) walls.push({ r, c });
@@ -430,38 +557,38 @@
           }
         }
 
-        // walls
         for (let i = 0; i < wallParticlesTotal; i++) {
           const cell = walls[Math.floor(Math.random() * walls.length)];
-          const x = startX + cell.c * cellSize + (Math.random() * cellSize);
-          const z = startZ + cell.r * cellSize + (Math.random() * cellSize);
-          const y = (Math.random() - 0.5) * wallHeight;
           addTarget(
             mazeTargets,
             mazeColors,
-            new THREE.Vector3(x, y, z),
+            new THREE.Vector3(
+              startX + cell.c * cellSize + (Math.random() * cellSize),
+              (Math.random() - 0.5) * wallHeight,
+              startZ + cell.r * cellSize + (Math.random() * cellSize)
+            ),
             CONFIG.colorBlue
           );
           particlesUsed++;
         }
 
-        // agents
-        for (let i = 0; i < CONFIG.totalParticles - particlesUsed; i++) {
+        for (let i = 0; i < (CONFIG.totalParticles - CONFIG.boxParticleCount) - particlesUsed; i++) {
           const cell = paths[Math.floor(Math.random() * paths.length)];
-          const x = startX + cell.c * cellSize + (Math.random() * cellSize);
-          const z = startZ + cell.r * cellSize + (Math.random() * cellSize);
-          const y = (Math.random() - 0.5) * 1.0;
           addTarget(
             mazeTargets,
             mazeColors,
-            new THREE.Vector3(x, y, z),
+            new THREE.Vector3(
+              startX + cell.c * cellSize + (Math.random() * cellSize),
+              (Math.random() - 0.5) * 1.0,
+              startZ + cell.r * cellSize + (Math.random() * cellSize)
+            ),
             CONFIG.colorAgent
           );
         }
       }
       createMazeTargets();
 
-      // Ensure STB & maze arrays have enough particles
+      // make sure all target sets have >= totalParticles
       function ensureLength(targets, colors) {
         while (targets.length < CONFIG.totalParticles && targets.length > 0) {
           const idx = Math.floor(Math.random() * targets.length);
@@ -469,18 +596,22 @@
           colors.push(colors[idx].clone());
         }
       }
+      ensureLength(armLowTargets, armLowColors);
+      ensureLength(armHighTargets, armHighColors);
       ensureLength(stbTargets, stbColors);
       ensureLength(mazeTargets, mazeColors);
 
-      // --- GEOMETRY INITIALIZATION ---
+      // --- GEOMETRY INIT ---
       const geometry = new THREE.BufferGeometry();
       const positions = new Float32Array(CONFIG.totalParticles * 3);
       const colors = new Float32Array(CONFIG.totalParticles * 3);
 
+      // Start scattered for dramatic entrance
       for (let i = 0; i < CONFIG.totalParticles; i++) {
-        positions[i * 3]     = armLowTargets[i].x;
-        positions[i * 3 + 1] = armLowTargets[i].y;
-        positions[i * 3 + 2] = armLowTargets[i].z;
+        positions[i * 3]     = (Math.random() - 0.5) * 50;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 50;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 50;
+
         colors[i * 3]     = armLowColors[i].r;
         colors[i * 3 + 1] = armLowColors[i].g;
         colors[i * 3 + 2] = armLowColors[i].b;
@@ -489,7 +620,7 @@
       geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
       geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-      const spriteTex = new THREE.TextureLoader().load(
+      const sprite = new THREE.TextureLoader().load(
         'https://threejs.org/examples/textures/sprites/disc.png'
       );
 
@@ -498,7 +629,7 @@
         vertexColors: true,
         transparent: true,
         opacity: 0.9,
-        map: spriteTex,
+        map: sprite,
         alphaTest: 0.1,
         blending: THREE.AdditiveBlending
       });
@@ -519,12 +650,11 @@
         const pArr = particles.geometry.attributes.position.array;
         const cArr = particles.geometry.attributes.color.array;
 
-        // state machine
         switch (currentState) {
           case STATES.ARM_GRAB:
             currentTargetPositions = armLowTargets;
             currentTargetColors = armLowColors;
-            if (elapsed > 1500) {
+            if (elapsed > 2000) {
               currentState = STATES.ARM_LIFT;
               lastStateChangeTime = now;
             }
@@ -532,7 +662,7 @@
           case STATES.ARM_LIFT:
             currentTargetPositions = armHighTargets;
             currentTargetColors = armHighColors;
-            if (elapsed > 3000) {
+            if (elapsed > 3500) {
               currentState = STATES.TO_STB;
               lastStateChangeTime = now;
               currentTargetPositions = stbTargets;
@@ -540,13 +670,13 @@
             }
             break;
           case STATES.TO_STB:
-            if (elapsed > 2000) {
+            if (elapsed > 2500) {
               currentState = STATES.STB;
               lastStateChangeTime = now;
             }
             break;
           case STATES.STB:
-            if (elapsed > 3000) {
+            if (elapsed > 3500) {
               currentState = STATES.TO_MAZE;
               lastStateChangeTime = now;
               currentTargetPositions = mazeTargets;
@@ -554,13 +684,13 @@
             }
             break;
           case STATES.TO_MAZE:
-            if (elapsed > 2000) {
+            if (elapsed > 2500) {
               currentState = STATES.MAZE;
               lastStateChangeTime = now;
             }
             break;
           case STATES.MAZE:
-            if (elapsed > 4000) {
+            if (elapsed > 4500) {
               currentState = STATES.TO_ARM;
               lastStateChangeTime = now;
               currentTargetPositions = armLowTargets;
@@ -568,14 +698,13 @@
             }
             break;
           case STATES.TO_ARM:
-            if (elapsed > 2500) {
+            if (elapsed > 3000) {
               currentState = STATES.ARM_GRAB;
               lastStateChangeTime = now;
             }
             break;
         }
 
-        // motion
         for (let i = 0; i < CONFIG.totalParticles; i++) {
           const idx = i * 3;
           const tPos = currentTargetPositions[i];
@@ -588,11 +717,10 @@
           let noise = 0;
 
           if (currentState === STATES.ARM_LIFT) {
-            speed = 0.045;
+            speed = 0.04;
           } else if (currentState === STATES.MAZE) {
             speed = 0.02;
-            // agent “thinking/moving” effect (approx color check)
-            if (cArr[idx] > 0.5 && cArr[idx + 2] < 0.5) {
+            if (cArr[idx] > 0.6 && cArr[idx + 2] < 0.4) {
               noise = Math.sin(now * 0.005 + pArr[idx] * 0.5) * 0.02;
               if (i % 2 === 0) pArr[idx] += Math.sin(now * 0.002) * 0.01;
               else pArr[idx + 2] += Math.cos(now * 0.002) * 0.01;
