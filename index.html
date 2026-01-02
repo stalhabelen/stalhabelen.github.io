@@ -18,204 +18,267 @@
   />
   <link rel="stylesheet" href="styles.css" />
 </head>
-
-<script type="module">
-  import * as THREE from 'three';
-  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-  const CONFIG = {
-    particleCount: 4000,
-    particleSize: 0.4,
-    color1: 0x2563EB,
-    color2: 0x1E293B,
-    spread: 25,
-    speed: 0.015
-  };
-
-  const container = document.getElementById('stb-anim-box');
-
-  if (!container) {
-    console.warn('stb-anim-box not found');
-  } else {
-    // --- boyutlar ---
-    function getSize() {
-      const r = container.getBoundingClientRect();
-      return {
-        width: r.width || 320,
-        height: r.height || 260,
-      };
-    }
-
-    const scene = new THREE.Scene();
-
-    // devre kartı dokusu
-    const textureLoader = new THREE.TextureLoader();
-    textureLoader.load('https://i.imgur.com/9aE6mFq.png', (texture) => {
-      scene.background = texture;
-    });
-
-    let { width, height } = getSize();
-
-    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
-    camera.position.set(0, 0, 25);
-
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    container.appendChild(renderer.domElement);
-
-    // ışıklar
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
-    const pointLight = new THREE.PointLight(0x2563EB, 1, 100);
-    pointLight.position.set(0, 5, 10);
-    scene.add(pointLight);
-
-    // kontroller
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.5;
-
-    // --- STB harfleri ---
-    const letters = {
-      S: [
-        [0, 1, 1, 1, 1],
-        [1, 1, 0, 0, 0],
-        [1, 1, 1, 1, 0],
-        [0, 0, 0, 1, 1],
-        [1, 1, 1, 1, 0],
-      ],
-      T: [
-        [1, 1, 1, 1, 1],
-        [0, 0, 1, 0, 0],
-        [0, 0, 1, 0, 0],
-        [0, 0, 1, 0, 0],
-        [0, 0, 1, 0, 0],
-      ],
-      B: [
-        [1, 1, 1, 1, 0],
-        [1, 0, 0, 0, 1],
-        [1, 1, 1, 1, 0],
-        [1, 0, 0, 0, 1],
-        [1, 1, 1, 1, 0],
-      ],
-    };
-
-    const targets = [];
-    const colors = [];
-    const colorObj1 = new THREE.Color(CONFIG.color1);
-    const colorObj2 = new THREE.Color(CONFIG.color2);
-
-    function createTargetPoints() {
-      let xOffset = -5.5;
-      const letterKeys = ['S', 'T', 'B'];
-      const spacing = 4.5;
-
-      letterKeys.forEach((key, index) => {
-        const matrix = letters[key];
-        const rows = matrix.length;
-        const cols = matrix[0].length;
-
-        for (let r = 0; r < rows; r++) {
-          for (let c = 0; c < cols; c++) {
-            if (matrix[r][c] === 1) {
-              const density = 35;
-              for (let i = 0; i < density; i++) {
-                const x = xOffset + c + (Math.random() - 0.5) * 0.5;
-                const y = (rows - r) - 2.5 + (Math.random() - 0.5) * 0.5;
-                const z = (Math.random() - 0.5) * 2.5;
-
-                targets.push(new THREE.Vector3(x, y, z));
-
-                const mixFactor = index / 2;
-                const mixedColor = colorObj1.clone().lerp(colorObj2, mixFactor * 0.7);
-                colors.push(mixedColor.r, mixedColor.g, mixedColor.b);
-              }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotic Arm to STB Loop Animation</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: transparent; }
+        canvas { display: block; }
+    </style>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
             }
-          }
         }
-        xOffset += spacing;
-      });
-    }
+    </script>
+</head>
+<body>
+<script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-    createTargetPoints();
+        // --- AYARLAR ---
+        const CONFIG = {
+            particleCount: 3500,   // Yeterli yoğunluk için
+            particleSize: 0.35,    // Belirgin noktalar
+            colorBlue: 0x2563EB,   // Sitenizdeki Mavi
+            colorDark: 0x1E293B,   // Sitenizdeki Koyu Gri
+            speed: 0.04,           // Geçiş hızı
+            armDuration: 4000,     // Robot kolunun durma süresi (ms)
+            stbDuration: 4000,     // STB yazısının durma süresi (ms)
+            transitionDuration: 3000 // İki şekil arası geçiş süresi (ms)
+        };
 
-    const geometry = new THREE.BufferGeometry();
-    const currentPositions = new Float32Array(targets.length * 3);
-    const colorArray = new Float32Array(colors);
+        let currentState = 'TO_ARM'; // Başlangıç durumu
+        let stateStartTime = Date.now();
+        let currentTargets = []; // Şu anki hedef noktalar
 
-    // başlangıçta robot kolu vibe
-    for (let i = 0; i < targets.length; i++) {
-      let x, y, z;
-      if (i < targets.length / 2) {
-        // ilk kol segmenti
-        x = (Math.random() - 0.5) * 2 - 10;
-        y = (Math.random() - 0.5) * 10;
-        z = (Math.random() - 0.5) * 2;
-      } else {
-        // ikinci kol segmenti
-        x = (Math.random() - 0.5) * 10;
-        y = (Math.random() - 0.5) * 2 + 5;
-        z = (Math.random() - 0.5) * 2;
-      }
-      currentPositions[i * 3] = x;
-      currentPositions[i * 3 + 1] = y;
-      currentPositions[i * 3 + 2] = z;
-    }
+        // Sahne Kurulumu
+        const scene = new THREE.Scene();
+        // Arka plan tamamen şeffaf
 
-    geometry.setAttribute('position', new THREE.BufferAttribute(currentPositions, 3));
-    geometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 5, 25);
 
-    const material = new THREE.PointsMaterial({
-      size: CONFIG.particleSize,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.95,
-      sizeAttenuation: true,
-      map: new THREE.TextureLoader().load(
-        'https://threejs.org/examples/textures/sprites/disc.png'
-      ),
-      alphaTest: 0.5,
-      blending: THREE.AdditiveBlending,
-    });
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.body.appendChild(renderer.domElement);
 
-    const particles = new THREE.Points(geometry, material);
-    scene.add(particles);
+        // Işıklandırma
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(CONFIG.colorBlue, 1.5, 100);
+        pointLight.position.set(10, 10, 10);
+        scene.add(pointLight);
+        const pointLight2 = new THREE.PointLight(CONFIG.colorDark, 1.0, 100);
+        pointLight2.position.set(-10, -5, 10);
+        scene.add(pointLight2);
 
-    function animate() {
-      requestAnimationFrame(animate);
+        // Kontroller
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.8;
+        controls.target.set(0, 2, 0); // Dönme merkezini biraz yukarı al
 
-      const positionsAttribute = particles.geometry.attributes.position;
-      const positionsArray = positionsAttribute.array;
+        // --- HEDEF NOKTALARI OLUŞTURMA ---
+        const stbTargets = [];
+        const armTargets = [];
+        const colors = [];
+        const colorBlueObj = new THREE.Color(CONFIG.colorBlue);
+        const colorDarkObj = new THREE.Color(CONFIG.colorDark);
 
-      for (let i = 0; i < targets.length; i++) {
-        const t = targets[i];
-        positionsArray[i * 3]     += (t.x - positionsArray[i * 3])     * CONFIG.speed;
-        positionsArray[i * 3 + 1] += (t.y - positionsArray[i * 3 + 1]) * CONFIG.speed;
-        positionsArray[i * 3 + 2] += (t.z - positionsArray[i * 3 + 2]) * CONFIG.speed;
-      }
+        // 1. STB Hedefleri
+        function createSTBTargets() {
+            const letters = {
+                S: [[0,1,1,1,1],[1,1,0,0,0],[1,1,1,1,0],[0,0,0,1,1],[1,1,1,1,0]],
+                T: [[1,1,1,1,1],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0]],
+                B: [[1,1,1,1,0],[1,0,0,0,1],[1,1,1,1,0],[1,0,0,0,1],[1,1,1,1,0]]
+            };
+            let xOffset = -6;
+            ['S', 'T', 'B'].forEach((key, index) => {
+                const matrix = letters[key];
+                for(let r=0; r<matrix.length; r++) {
+                    for(let c=0; c<matrix[0].length; c++) {
+                        if(matrix[r][c]) {
+                            for(let i=0; i<30; i++) { // Yoğunluk
+                                stbTargets.push(new THREE.Vector3(
+                                    xOffset + c + Math.random()*0.4,
+                                    (4-r) + Math.random()*0.4,
+                                    (Math.random()-0.5)*2
+                                ));
+                                // Renk ataması (S=Mavi, T=Geçiş, B=Koyu)
+                                const mix = index / 2;
+                                const col = colorBlueObj.clone().lerp(colorDarkObj, mix);
+                                colors.push(col.r, col.g, col.b);
+                            }
+                        }
+                    }
+                }
+                xOffset += 5;
+            });
+        }
 
-      positionsAttribute.needsUpdate = true;
-      controls.update();
-      renderer.render(scene, camera);
-    }
+        // 2. Robot Kolu Hedefleri
+        function createArmTargets() {
+            // Taban (Base)
+            for(let i=0; i<800; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const radius = Math.random() * 3;
+                armTargets.push(new THREE.Vector3(Math.cos(angle)*radius, Math.random()*1 - 4, Math.sin(angle)*radius));
+            }
+            // Alt Kol (Lower Arm)
+            for(let i=0; i<1000; i++) {
+                armTargets.push(new THREE.Vector3((Math.random()-0.5)*1.5, Math.random()*6 - 3, (Math.random()-0.5)*1.5));
+            }
+            // Üst Kol (Upper Arm - Açılı)
+            for(let i=0; i<1000; i++) {
+                const t = Math.random();
+                armTargets.push(new THREE.Vector3(t*5, t*3 + 3, (Math.random()-0.5)*1.2));
+            }
+             // Kıskaç (Gripper)
+            for(let i=0; i<700; i++) {
+                const side = Math.random() > 0.5 ? 1 : -1;
+                armTargets.push(new THREE.Vector3(5 + Math.random()*2, 6 + Math.random()*1.5, side * (0.5 + Math.random()*0.5)));
+            }
 
-    function onResize() {
-      const s = getSize();
-      width = s.width;
-      height = s.height;
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height);
-    }
+            // Eksik kalanları tamamla veya fazlalıkları kırp
+            while(armTargets.length < CONFIG.particleCount) {
+                 armTargets.push(armTargets[Math.floor(Math.random() * armTargets.length)].clone());
+            }
+            // STB hedeflerini de ana sayıya eşitle
+            while(stbTargets.length < CONFIG.particleCount) {
+                stbTargets.push(stbTargets[Math.floor(Math.random() * stbTargets.length)].clone());
+                // Renkleri de eşitle
+                colors.push(colors[Math.floor(Math.random() * colors.length)], colors[Math.floor(Math.random() * colors.length)+1], colors[Math.floor(Math.random() * colors.length)+2]);
 
-    window.addEventListener('resize', onResize);
-    onResize();
-    animate();
-  }
+            }
+        }
+
+        createSTBTargets();
+        createArmTargets();
+        
+        // İlk hedef Robot Kolu
+        currentTargets = armTargets;
+
+        // Parçacık Sistemi
+        const geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(CONFIG.particleCount * 3);
+        const colorArray = new Float32Array(colors.slice(0, CONFIG.particleCount * 3));
+
+        // Başlangıçta rastgele dağıt
+        for(let i=0; i<CONFIG.particleCount * 3; i++) {
+            positions[i] = (Math.random() - 0.5) * 50;
+        }
+
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+
+        const material = new THREE.PointsMaterial({
+            size: CONFIG.particleSize,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.9,
+            map: new THREE.TextureLoader().load('https://threejs.org/examples/textures/sprites/disc.png'),
+            alphaTest: 0.5,
+            emissive: CONFIG.colorBlue,
+            emissiveIntensity: 0.3
+        });
+
+        const particles = new THREE.Points(geometry, material);
+        scene.add(particles);
+
+        // --- ANİMASYON DÖNGÜSÜ (STATE MACHINE) ---
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+
+            const now = Date.now();
+            const elapsed = now - stateStartTime;
+            const positionsArray = particles.geometry.attributes.position.array;
+
+            // Durum Kontrolü
+            switch(currentState) {
+                case 'TO_ARM':
+                    if (elapsed > CONFIG.transitionDuration) {
+                        currentState = 'IN_ARM';
+                        stateStartTime = now;
+                        currentTargets = armTargets; // Hedefi sabitle
+                    } else {
+                        currentTargets = armTargets;
+                    }
+                    break;
+                case 'IN_ARM':
+                    // Robot kolu şeklinde bekle, belki hafif bir hareket eklenebilir
+                    if (elapsed > CONFIG.armDuration) {
+                        currentState = 'TO_STB';
+                        stateStartTime = now;
+                        // Geçiş öncesi parçacıkları biraz dağıtmak dramatik etki yaratır
+                        for(let i=0; i<CONFIG.particleCount * 3; i+=3) {
+                             positionsArray[i] += (Math.random()-0.5)*2;
+                             positionsArray[i+1] += (Math.random()-0.5)*2;
+                             positionsArray[i+2] += (Math.random()-0.5)*2;
+                        }
+                    }
+                    break;
+                case 'TO_STB':
+                    if (elapsed > CONFIG.transitionDuration) {
+                        currentState = 'IN_STB';
+                        stateStartTime = now;
+                        currentTargets = stbTargets; // Hedefi sabitle
+                    } else {
+                        currentTargets = stbTargets;
+                    }
+                    break;
+                case 'IN_STB':
+                    if (elapsed > CONFIG.stbDuration) {
+                        currentState = 'TO_ARM';
+                        stateStartTime = now;
+                         // Döngü başa dönüyor, tekrar dağıt
+                        for(let i=0; i<CONFIG.particleCount * 3; i++) {
+                            positionsArray[i] += (Math.random() - 0.5) * 30;
+                        }
+                    }
+                    break;
+            }
+
+            // Hareket Mantığı (Lerp)
+            for(let i=0; i<CONFIG.particleCount; i++) {
+                const target = currentTargets[i];
+                // Hız durumuna göre değişebilir, geçişlerde daha hızlı
+                let currentSpeed = CONFIG.speed;
+                if (currentState === 'IN_ARM' || currentState === 'IN_STB') {
+                    currentSpeed = CONFIG.speed * 0.5; // Beklerken daha yavaş süzül
+                     // Hafif bir dalgalanma ekle
+                    target.y += Math.sin(now * 0.001 + positionsArray[i]) * 0.003;
+                }
+
+                positionsArray[i*3]   += (target.x - positionsArray[i*3]) * currentSpeed;
+                positionsArray[i*3+1] += (target.y - positionsArray[i*3+1]) * currentSpeed;
+                positionsArray[i*3+2] += (target.z - positionsArray[i*3+2]) * currentSpeed;
+            }
+
+            particles.geometry.attributes.position.needsUpdate = true;
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
 </script>
+</body>
+</html>
+
 <body>
   <header>
     <div class="nav-container">
