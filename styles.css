@@ -165,7 +165,34 @@ main {
   gap: 0.4rem;
   margin-bottom: 1.2rem;
 }
+.hero-graphic {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+}
 
+.robot-gif-card {
+  padding: 0.6rem;
+  border-radius: 1.75rem;
+  border: 1px dashed rgba(148, 163, 184, 0.6);
+  background: radial-gradient(circle at top, #eff6ff, #ffffff);
+}
+
+.stb-anim-box {
+  width: 260px;
+  max-width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.35);
+  background: transparent;
+}
+
+.stb-anim-box canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
 .tag {
   font-size: 0.75rem;
   padding: 0.25rem 0.7rem;
