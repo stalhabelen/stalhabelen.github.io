@@ -1,493 +1,514 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Süleyman Talha Belen | STB</title>
+  <meta charset="UTF-8" />
+  <title>Suleyman Talha Belen | Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Personal website of Suleyman Talha Belen, Electrical and Electronics Engineering student at Bilkent University. Projects, ideas, writings, and papers on signal processing, machine learning, robotics, and optimization."
+  />
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+  <link rel="stylesheet" href="styles.css" />
 
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: transparent;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-                "Segoe UI", sans-serif;
-            color: #e5e7eb;
-        }
-
-        /* Canvas arkada full-screen */
-        canvas {
-            display: block;
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-        }
-
-        /* İçerik overlay */
-        .overlay {
-            position: relative;
-            z-index: 1;
-            min-height: 100vh;
-            padding: 2.5rem 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .overlay-inner {
-            max-width: 960px;
-            width: 100%;
-            display: grid;
-            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-            gap: 2.5rem;
-            align-items: center;
-        }
-
-        @media (max-width: 900px) {
-            .overlay-inner {
-                grid-template-columns: minmax(0, 1fr);
-                text-align: center;
-            }
-        }
-
-        .name {
-            font-size: clamp(2.2rem, 3vw, 2.8rem);
-            font-weight: 700;
-            letter-spacing: 0.03em;
-        }
-
-        .subtitle {
-            margin-top: 0.4rem;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: #9ca3af;
-        }
-
-        .tagline {
-            margin-top: 1.2rem;
-            font-size: 1rem;
-            color: #d1d5db;
-            max-width: 32rem;
-        }
-
-        .pill-row {
-            margin-top: 1.4rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .pill {
-            padding: 0.35rem 0.8rem;
-            border-radius: 999px;
-            border: 1px solid rgba(148, 163, 184, 0.6);
-            font-size: 0.75rem;
-            color: #e5e7eb;
-            backdrop-filter: blur(10px);
-            background: radial-gradient(circle at top, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.3));
-        }
-
-        .section-title {
-            margin-top: 2rem;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            color: #9ca3af;
-        }
-
-        .edu-card {
-            margin-top: 0.8rem;
-            padding: 0.85rem 1rem;
-            border-radius: 0.9rem;
-            border: 1px solid rgba(148, 163, 184, 0.4);
-            background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.4));
-            backdrop-filter: blur(16px);
-        }
-
-        .edu-title {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #f9fafb;
-        }
-
-        .edu-meta {
-            margin-top: 0.2rem;
-            font-size: 0.8rem;
-            color: #9ca3af;
-        }
-
-        .edu-desc {
-            margin-top: 0.4rem;
-            font-size: 0.85rem;
-            color: #d1d5db;
-        }
-
-        .right-note {
-            font-size: 0.8rem;
-            color: #9ca3af;
-            max-width: 18rem;
-            margin-left: auto;
-        }
-
-        @media (max-width: 900px) {
-            .right-note {
-                margin: 1.5rem auto 0;
-            }
-        }
-    </style>
-
-    <!-- three.js import map -->
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-            }
-        }
-    </script>
+  <!-- three.js importmap for animation -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
 </head>
+
 <body>
-    <!-- ÜSTTE GÖRÜNEN KISIM (EĞİTİM VS.) -->
-    <div class="overlay">
-        <div class="overlay-inner">
-            <div>
-                <div class="subtitle">STB · ROBOTICS · AI · CONTROL</div>
-                <div class="name">Süleyman Talha Belen</div>
-                <p class="tagline">
-                    Robotics, control, and learning — from radar-based perception to neural maze
-                    planning. I like building systems that actually move, sense, and decide.
-                </p>
-
-                <div class="pill-row">
-                    <div class="pill">Robotics & Control</div>
-                    <div class="pill">Machine Learning</div>
-                    <div class="pill">Computer Vision</div>
-                    <div class="pill">Embedded & Signals</div>
-                </div>
-
-                <div class="section-title">Education</div>
-
-                <div class="edu-card">
-                    <div class="edu-title">Bilkent University – B.Sc. Electrical & Electronics Engineering</div>
-                    <div class="edu-meta">Full Scholarship · 2022 – Present · Ankara, Türkiye</div>
-                    <div class="edu-desc">
-                        Focusing on signals & systems, electronics, control, and machine learning.
-                        Building a strong background for graduate studies in robotics / AI.
-                    </div>
-                </div>
-
-                <div class="edu-card">
-                    <div class="edu-title">Stanford Summer Session</div>
-                    <div class="edu-meta">CS229 – Machine Learning · EE364A – Convex Optimization</div>
-                    <div class="edu-desc">
-                        Graduate-level coursework in statistical learning and optimization, with an
-                        emphasis on practical algorithms and rigorous mathematical foundations.
-                    </div>
-                </div>
-            </div>
-
-            <div class="right-note">
-                The point cloud animation in the background transitions between an STB
-                signature and a neural-style maze, echoing my interest in intelligent
-                control, planning, and multi-agent behaviour.
-            </div>
-        </div>
+  <header>
+    <div class="nav-container">
+      <div class="logo"><a href="index.html">S. T. Belen</a></div>
+      <nav>
+        <a href="education.html">Education</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Projects</a>
+        <a href="ideas.html">Ideas</a>
+        <a href="writings.html">Writings</a>
+        <a href="research.html">Research</a>
+        <a href="#contact">Contact</a>
+      </nav>
     </div>
+  </header>
 
-    <!-- SENİN SON GÖNDERDİĞİN ANİMASYON KODU (AYNEN) -->
-    <script type="module">
-        import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+  <main>
+    <!-- HERO -->
+    <section class="hero reveal" id="hero">
+      <div class="hero-left">
+        <!-- hover-tilt profile card -->
+        <div class="profile-wrapper">
+          <div class="profile-card">
+            <img src="talha-photo.jpg" alt="Photo of Suleyman Talha Belen" class="profile-photo" />
+            <div class="profile-glow"></div>
+          </div>
+        </div>
 
-        // --- AYARLAR ---
-        const CONFIG = {
-            particleCount: 6500,
-            particleSize: 0.25,     // Görünürlüğü artırmak için biraz büyüttüm
-            
-            // RENKLER (Site Uyumu)
-            colBlue: new THREE.Color(0x2563EB),   // Parlak Mavi
-            colDark: new THREE.Color(0x1e293b),   // Koyu Mavi/Gri
-            colHighlight: new THREE.Color(0x93c5fd), // Açık Mavi
-            colAgent: new THREE.Color(0xf43f5e),  // Ajan Kırmızısı
-            
-            speed: 0.025,
-        };
+        <h1>
+          Suleyman Talha Belen<br />
+          <span>EEE Student, ML and Robotics Enthusiast</span>
+        </h1>
+        <p class="hero-subtitle">
+          Electrical and Electronics Engineering student at Bilkent University, interested in
+          signal processing, machine learning, robotics, reinforcement learning, and optimization.
+        </p>
 
-        const STATES = {
-            FORM_STB: 0,
-            HOLD_STB: 1,
-            TO_MAZE: 2,
-            MAZE_FLOW: 3,
-            TO_RESET: 4
-        };
+        <div class="hero-buttons">
+          <a class="btn" href="projects.html">View Projects</a>
+          <a class="btn btn-outline" href="ideas.html">Read Ideas</a>
+        </div>
 
-        let currentState = STATES.FORM_STB;
-        let lastStateTime = Date.now();
+        <p class="hero-note">
+          This site will gradually host technical notes, project logs, and personal reflections.
+        </p>
 
-        // --- SAHNE KURULUMU ---
-        const scene = new THREE.Scene();
-        // Arka planı boş bırakıyoruz (Transparent)
-        
-        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 5, 28); // Kamerayı biraz daha geri çektim
+        <div class="school-logos">
+          <span>Studied at:</span>
+          <img src="bilkent-logo.png" alt="Bilkent University logo" class="school-logo" />
+          <img src="stanford-logo.png" alt="Stanford University logo" class="school-logo" />
+          <img src="berkeley-logo.png" alt="UC Berkeley logo" class="school-logo" />
+        </div>
+      </div>
 
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setClearColor(0x000000, 0); 
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        document.body.appendChild(renderer.domElement);
+      <div class="hero-right">
+        <!-- ANIMATION CONTAINER -->
+        <div id="stb-anim-box" class="stb-anim-box" style="width:100%; height:260px;"></div>
 
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.autoRotate = true;
-        controls.autoRotateSpeed = 0.6;
-        controls.target.set(0, 2, 0);
+        <span class="hero-badge">Reinforcement Learning</span>
+        <h2>Policies that converge instead of just exploring</h2>
+        <p>
+          Particle field morphing between an “STB” signature and a neural-style maze — a small visual
+          for my RL and robotics-oriented work.
+        </p>
 
-        // --- HEDEF POZİSYONLAR ---
-        const stbTargets = [];  const stbColors = [];
-        const mazeTargets = []; const mazeColors = [];
-        let currentTargetPositions = [];
-        let currentTargetColors = [];
+        <ul class="list">
+          <li>Focus: PPO-MAML for fast adaptation on Meta-World Assembly-v3.</li>
+          <li>Projects on seismic NeRF-style imaging and Doppler radar classification.</li>
+          <li>Image restoration experiments with SwinIR and transformer-based models.</li>
+        </ul>
+      </div>
 
-        // --- DOKU OLUŞTURUCU (TEXTURE GENERATOR) ---
-        // Dışarıdan resim yüklemek yerine, kodu kendimiz çiziyoruz.
-        function getSprite() {
-            const canvas = document.createElement('canvas');
-            canvas.width = 32;
-            canvas.height = 32;
-            const context = canvas.getContext('2d');
-            const gradient = context.createRadialGradient(16, 16, 0, 16, 16, 16);
-            gradient.addColorStop(0, 'rgba(255,255,255,1)');
-            gradient.addColorStop(0.2, 'rgba(240,240,255,1)');
-            gradient.addColorStop(0.4, 'rgba(128,128,255,0.2)');
-            gradient.addColorStop(1, 'rgba(0,0,0,0)');
-            context.fillStyle = gradient;
-            context.fillRect(0, 0, 32, 32);
-            const texture = new THREE.CanvasTexture(canvas);
-            return texture;
-        }
+      <div class="hero-panel">
+        <h2>Currently</h2>
+        <ul>
+          <li>🎓 B.E. Electrical and Electronics Engineering @ Bilkent University (2027 expected)</li>
+          <li>📍 Visiting Student in CS @ Stanford University '25</li>
+          <li>📍 Visiting Student in EECS @ UC Berkeley '24</li>
+          <li>🤖 Exploring research at the intersection of robotics, signal processing, optimization and ML</li>
+        </ul>
+      </div>
+    </section>
 
-        // --- 1. AKIŞKAN STB YAZISI ---
-        function createFlowingSTB() {
-            let points = [];
-            // Harf çizim fonksiyonları (Matematiksel eğriler)
-            // S
-            for(let i=0; i<120; i++) {
-                const t = i/120; 
-                const a = t * Math.PI * 2 - Math.PI/2;
-                const x = Math.cos(a)*1.5 - 6.5; 
-                let y = Math.sin(a*1.5)*2.5;
-                if(t<0.5) y+=1; else y-=1;
-                points.push({x,y,z:0});
-            }
-            // T
-            for(let i=0; i<60; i++) points.push({x: -1.5+(i/60)*3, y:3.5, z:0}); // Üst
-            for(let i=0; i<100; i++) points.push({x: 0, y:3.5-(i/100)*5.5, z:0}); // Alt
-            // B
-            const bOff = 5.0;
-            for(let i=0; i<100; i++) points.push({x: bOff, y:3.5-(i/100)*5.5, z:0}); // Direk
-            for(let i=0; i<60; i++) { const a=(i/60)*Math.PI-Math.PI/2; points.push({x:bOff+Math.cos(a)*1.5, y:2.0+Math.sin(a)*1.5, z:0}); } // Üst yay
-            for(let i=0; i<60; i++) { const a=(i/60)*Math.PI-Math.PI/2; points.push({x:bOff+Math.cos(a)*1.8, y:-0.8+Math.sin(a)*1.8, z:0}); } // Alt yay
+    <!-- QUICK LINKS -->
+    <section class="reveal">
+      <h2>Explore</h2>
+      <p class="section-subtitle"></p>
+      <div class="quick-links">
+        <a href="education.html" class="ql-card">
+          <h3>Education</h3>
+          <p>Bilkent EE, and visiting student experiences at Stanford and UC Berkeley.</p>
+        </a>
+        <a href="experience.html" class="ql-card">
+          <h3>Experience</h3>
+          <p>Applied research internship on seismic data visualization at SDT.</p>
+        </a>
+        <a href="projects.html" class="ql-card">
+          <h3>Projects</h3>
+          <p>Reinforcement learning, neural fields, and study experiments.</p>
+        </a>
+        <a href="ideas.html" class="ql-card">
+          <h3>Ideas</h3>
+          <p>Future directions, concept notes, and open questions.</p>
+        </a>
+        <a href="research.html" class="ql-card">
+          <h3>Research</h3>
+          <p>Reading list and future work I would like to publish.</p>
+        </a>
+        <a href="writings.html" class="ql-card">
+          <h3>Writings</h3>
+          <p>Personal and technical posts, written mainly for my future self.</p>
+        </a>
+      </div>
+    </section>
 
-            // Parçacıkları bu noktalara dağıt
-            for(let i=0; i<CONFIG.particleCount; i++) {
-                const base = points[Math.floor(Math.random()*points.length)];
-                // Akışkanlık için rastgele saçılma (Scatter)
-                const spread = 0.4;
-                stbTargets.push(new THREE.Vector3(
-                    base.x + (Math.random()-0.5)*spread,
-                    base.y + (Math.random()-0.5)*spread,
-                    base.z + (Math.random()-0.5)*spread*2
-                ));
-                // Mavi ve Highlight karışımı
-                stbColors.push(Math.random()>0.85 ? CONFIG.colHighlight.clone() : CONFIG.colBlue.clone());
-            }
-        }
-        createFlowingSTB();
+    <!-- CONTACT -->
+    <section id="contact" class="reveal">
+      <h2>Contact</h2>
+      <p class="section-subtitle">
+        Feel free to reach out about collaborations, internships, or just to say hello.
+      </p>
+      <ul class="contact-list">
+        <li>📧 Email: <a href="mailto:talha.belen@ug.bilkent.edu.tr">talha.belen@ug.bilkent.edu.tr</a></li>
+        <li>💼 LinkedIn: <a href="https://www.linkedin.com/in/suleyman-talha-belen-b0645a2a5" target="_blank" rel="noreferrer">linkedin.com/in/suleyman-talha-belen-b0645a2a5</a></li>
+        <li>🐙 GitHub: <a href="https://github.com/stalhabelen" target="_blank" rel="noreferrer">github.com/stalhabelen</a></li>
+      </ul>
+    </section>
+  </main>
 
-        // --- 2. NEURAL MAZE (DEVRE KARTI LABİRENTİ) ---
-        function createNeuralMaze() {
-            // Labirent yolları ve blokları
-            const layers = 4;
-            const size = 16;
-            
-            let pathNodes = [];
-            let wallNodes = [];
+  <footer>
+    <span>© <span id="year"></span> Suleyman Talha Belen.</span>
+    <span
+      class="back-to-top"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    >
+      ↑ Back to top
+    </span>
+  </footer>
 
-            // Procedural Grid Üretimi
-            for(let y=0; y<layers; y++) {
-                const levelY = (y-1.5) * 3.5;
-                for(let x=-size/2; x<size/2; x+=1.0) {
-                    for(let z=-size/2; z<size/2; z+=1.0) {
-                        // Perlin Noise benzeri desen
-                        const val = Math.sin(x*0.4) * Math.cos(z*0.4) + Math.sin(y*1.2);
-                        
-                        if(val > 0.3) {
-                            if(Math.random() > 0.4) wallNodes.push(new THREE.Vector3(x, levelY + (Math.random()-0.5)*1.5, z));
-                        } else if (val > -0.2) {
-                             if(Math.random() > 0.8) pathNodes.push(new THREE.Vector3(x, levelY, z));
-                        }
-                    }
-                }
-            }
+  <!-- Scroll reveal + year -->
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-            // Hedefleri ata
-            let wIdx = 0;
-            let pIdx = 0;
-            
-            for(let i=0; i<CONFIG.particleCount; i++) {
-                // Son %15 kısım Ajan (Kırmızı) olsun
-                const isAgent = i > CONFIG.particleCount * 0.85;
-
-                if (isAgent && pathNodes.length > 0) {
-                    const p = pathNodes[pIdx % pathNodes.length];
-                    // Yol üzerinde gezinen nokta
-                    mazeTargets.push(new THREE.Vector3(p.x + (Math.random()-0.5)*0.5, p.y, p.z + (Math.random()-0.5)*0.5));
-                    mazeColors.push(CONFIG.colAgent.clone());
-                    pIdx++;
-                } else if (wallNodes.length > 0) {
-                    const w = wallNodes[wIdx % wallNodes.length];
-                    mazeTargets.push(new THREE.Vector3(w.x, w.y, w.z));
-                    // Derinlik efekti için rengi karart
-                    const dist = Math.sqrt(w.x*w.x + w.z*w.z);
-                    const fade = Math.min(1, dist/12);
-                    mazeColors.push(CONFIG.colBlue.clone().lerp(CONFIG.colDark, fade));
-                    wIdx++;
-                } else {
-                    mazeTargets.push(new THREE.Vector3(0,0,0));
-                    mazeColors.push(CONFIG.colDark.clone());
-                }
-            }
-        }
-        createNeuralMaze();
-
-        // --- PARÇACIK SİSTEMİ ---
-        const geometry = new THREE.BufferGeometry();
-        const positions = new Float32Array(CONFIG.particleCount * 3);
-        const colors = new Float32Array(CONFIG.particleCount * 3);
-        const phases = new Float32Array(CONFIG.particleCount); // Titreşim için
-
-        for(let i=0; i<CONFIG.particleCount; i++) {
-            // Başlangıç konumu (Patlama efekti gibi rastgele)
-            positions[i*3] = (Math.random()-0.5)*30;
-            positions[i*3+1] = (Math.random()-0.5)*30;
-            positions[i*3+2] = (Math.random()-0.5)*30;
-            
-            colors[i*3] = CONFIG.colBlue.r;
-            colors[i*3+1] = CONFIG.colBlue.g;
-            colors[i*3+2] = CONFIG.colBlue.b;
-
-            phases[i] = Math.random() * Math.PI * 2;
-        }
-
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-        geometry.setAttribute('phase', new THREE.BufferAttribute(phases, 1));
-
-        const material = new THREE.PointsMaterial({
-            size: CONFIG.particleSize,
-            map: getSprite(), // Kendi ürettiğimiz dokuyu kullanıyoruz
-            vertexColors: true,
-            transparent: true,
-            opacity: 0.9,
-            blending: THREE.AdditiveBlending, // Parlama efekti
-            depthWrite: false
+    const reveals = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            observer.unobserve(entry.target);
+          }
         });
+      },
+      { threshold: 0.12 }
+    );
+    reveals.forEach((el) => observer.observe(el));
+  </script>
 
-        const particles = new THREE.Points(geometry, material);
-        scene.add(particles);
+  <!-- FLUID STB & NEURAL MAZE ANIMATION (ONLY INSIDE stb-anim-box) -->
+  <script type="module">
+    import * as THREE from "three";
+    import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
-        // --- ANIMASYON DÖNGÜSÜ ---
-        function animate() {
-            requestAnimationFrame(animate);
-            controls.update();
+    const CONFIG = {
+      particleCount: 6500,
+      particleSize: 0.25,
+      colBlue: new THREE.Color(0x2563eb),
+      colDark: new THREE.Color(0x1e293b),
+      colHighlight: new THREE.Color(0x93c5fd),
+      colAgent: new THREE.Color(0xf43f5e),
+      speed: 0.025,
+    };
 
-            const now = Date.now();
-            const elapsed = now - lastStateTime;
-            
-            const positions = particles.geometry.attributes.position.array;
-            const colors = particles.geometry.attributes.color.array;
-            const phases = particles.geometry.attributes.phase.array;
+    const STATES = {
+      FORM_STB: 0,
+      HOLD_STB: 1,
+      TO_MAZE: 2,
+      MAZE_FLOW: 3,
+      TO_RESET: 4,
+    };
 
-            // STATE MACHINE (DURUM MAKİNESİ)
-            switch(currentState) {
-                case STATES.FORM_STB:
-                    currentTargetPositions = stbTargets; currentTargetColors = stbColors;
-                    if(elapsed > 3000) { currentState = STATES.HOLD_STB; lastStateTime = now; }
-                    break;
-                case STATES.HOLD_STB:
-                    if(elapsed > 4000) { currentState = STATES.TO_MAZE; lastStateTime = now; }
-                    break;
-                case STATES.TO_MAZE:
-                    currentTargetPositions = mazeTargets; currentTargetColors = mazeColors;
-                    if(elapsed > 3000) { currentState = STATES.MAZE_FLOW; lastStateTime = now; }
-                    break;
-                case STATES.MAZE_FLOW:
-                    if(elapsed > 6000) { currentState = STATES.TO_RESET; lastStateTime = now; }
-                    break;
-                case STATES.TO_RESET:
-                    currentTargetPositions = stbTargets; currentTargetColors = stbColors;
-                    if(elapsed > 2500) { currentState = STATES.HOLD_STB; lastStateTime = now; }
-                    break;
+    let currentState = STATES.FORM_STB;
+    let lastStateTime = Date.now();
+
+    const container = document.getElementById("stb-anim-box");
+    const getSize = () => {
+      const w = container.clientWidth || 480;
+      const h = container.clientHeight || 260;
+      return { w, h };
+    };
+    let { w, h } = getSize();
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
+    camera.position.set(0, 5, 28);
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setClearColor(0x000000, 0);
+    renderer.setSize(w, h);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.6;
+    controls.target.set(0, 2, 0);
+
+    const stbTargets = [];
+    const stbColors = [];
+    const mazeTargets = [];
+    const mazeColors = [];
+    let currentTargetPositions = [];
+    let currentTargetColors = [];
+
+    function getSprite() {
+      const canvas = document.createElement("canvas");
+      canvas.width = 32;
+      canvas.height = 32;
+      const context = canvas.getContext("2d");
+      const gradient = context.createRadialGradient(16, 16, 0, 16, 16, 16);
+      gradient.addColorStop(0, "rgba(255,255,255,1)");
+      gradient.addColorStop(0.2, "rgba(240,240,255,1)");
+      gradient.addColorStop(0.4, "rgba(128,128,255,0.2)");
+      gradient.addColorStop(1, "rgba(0,0,0,0)");
+      context.fillStyle = gradient;
+      context.fillRect(0, 0, 32, 32);
+      return new THREE.CanvasTexture(canvas);
+    }
+
+    function createFlowingSTB() {
+      const points = [];
+      // S
+      for (let i = 0; i < 120; i++) {
+        const t = i / 120;
+        const a = t * Math.PI * 2 - Math.PI / 2;
+        const x = Math.cos(a) * 1.5 - 6.5;
+        let y = Math.sin(a * 1.5) * 2.5;
+        if (t < 0.5) y += 1;
+        else y -= 1;
+        points.push({ x, y, z: 0 });
+      }
+      // T
+      for (let i = 0; i < 60; i++)
+        points.push({ x: -1.5 + (i / 60) * 3, y: 3.5, z: 0 });
+      for (let i = 0; i < 100; i++)
+        points.push({ x: 0, y: 3.5 - (i / 100) * 5.5, z: 0 });
+      // B
+      const bOff = 5.0;
+      for (let i = 0; i < 100; i++)
+        points.push({ x: bOff, y: 3.5 - (i / 100) * 5.5, z: 0 });
+      for (let i = 0; i < 60; i++) {
+        const a = (i / 60) * Math.PI - Math.PI / 2;
+        points.push({
+          x: bOff + Math.cos(a) * 1.5,
+          y: 2.0 + Math.sin(a) * 1.5,
+          z: 0,
+        });
+      }
+      for (let i = 0; i < 60; i++) {
+        const a = (i / 60) * Math.PI - Math.PI / 2;
+        points.push({
+          x: bOff + Math.cos(a) * 1.8,
+          y: -0.8 + Math.sin(a) * 1.8,
+          z: 0,
+        });
+      }
+
+      for (let i = 0; i < CONFIG.particleCount; i++) {
+        const base = points[Math.floor(Math.random() * points.length)];
+        const spread = 0.4;
+        stbTargets.push(
+          new THREE.Vector3(
+            base.x + (Math.random() - 0.5) * spread,
+            base.y + (Math.random() - 0.5) * spread,
+            base.z + (Math.random() - 0.5) * spread * 2
+          )
+        );
+        stbColors.push(
+          Math.random() > 0.85
+            ? CONFIG.colHighlight.clone()
+            : CONFIG.colBlue.clone()
+        );
+      }
+    }
+
+    function createNeuralMaze() {
+      const layers = 4;
+      const size = 16;
+      const pathNodes = [];
+      const wallNodes = [];
+      for (let y = 0; y < layers; y++) {
+        const levelY = (y - 1.5) * 3.5;
+        for (let x = -size / 2; x < size / 2; x += 1.0) {
+          for (let z = -size / 2; z < size / 2; z += 1.0) {
+            const val = Math.sin(x * 0.4) * Math.cos(z * 0.4) + Math.sin(y * 1.2);
+            if (val > 0.3) {
+              if (Math.random() > 0.4)
+                wallNodes.push(
+                  new THREE.Vector3(
+                    x,
+                    levelY + (Math.random() - 0.5) * 1.5,
+                    z
+                  )
+                );
+            } else if (val > -0.2) {
+              if (Math.random() > 0.8)
+                pathNodes.push(new THREE.Vector3(x, levelY, z));
             }
+          }
+        }
+      }
 
-            // FİZİK VE HAREKET
-            const time = now * 0.001;
+      let wIdx = 0;
+      let pIdx = 0;
+      for (let i = 0; i < CONFIG.particleCount; i++) {
+        const isAgent = i > CONFIG.particleCount * 0.85;
+        if (isAgent && pathNodes.length > 0) {
+          const p = pathNodes[pIdx % pathNodes.length];
+          mazeTargets.push(
+            new THREE.Vector3(
+              p.x + (Math.random() - 0.5) * 0.5,
+              p.y,
+              p.z + (Math.random() - 0.5) * 0.5
+            )
+          );
+          mazeColors.push(CONFIG.colAgent.clone());
+          pIdx++;
+        } else if (wallNodes.length > 0) {
+          const w = wallNodes[wIdx % wallNodes.length];
+          mazeTargets.push(new THREE.Vector3(w.x, w.y, w.z));
+          const dist = Math.sqrt(w.x * w.x + w.z * w.z);
+          const fade = Math.min(1, dist / 12);
+          mazeColors.push(CONFIG.colBlue.clone().lerp(CONFIG.colDark, fade));
+          wIdx++;
+        } else {
+          mazeTargets.push(new THREE.Vector3(0, 0, 0));
+          mazeColors.push(CONFIG.colDark.clone());
+        }
+      }
+    }
 
-            for(let i=0; i<CONFIG.particleCount; i++) {
-                const ix = i*3;
-                const tx = currentTargetPositions[i].x;
-                const ty = currentTargetPositions[i].y;
-                const tz = currentTargetPositions[i].z;
-                
-                let speed = CONFIG.speed;
-                let noiseX=0, noiseY=0, noiseZ=0;
+    createFlowingSTB();
+    createNeuralMaze();
 
-                // Modlara göre efektler
-                if(currentState === STATES.MAZE_FLOW || currentState === STATES.TO_MAZE) {
-                    // Kırmızı ajanlar çok hızlı hareket etsin (Veri akışı gibi)
-                    if(colors[ix] > 0.8 && colors[ix+1] < 0.4) {
-                        speed = 0.05;
-                        noiseX = Math.sin(time*20 + i)*0.2; // Titreşim
-                    } else {
-                        // Duvarlar yavaşça nefes alsın
-                        noiseY = Math.sin(time + phases[i])*0.05;
-                    }
-                } else {
-                    // STB modunda akışkanlık (Dalgalanma)
-                    noiseX = Math.sin(time*2 + phases[i]) * 0.05;
-                    noiseY = Math.cos(time*3 + phases[i]) * 0.05;
-                }
+    const geometry = new THREE.BufferGeometry();
+    const posArray = new Float32Array(CONFIG.particleCount * 3);
+    const colArray = new Float32Array(CONFIG.particleCount * 3);
+    const phaseArray = new Float32Array(CONFIG.particleCount);
 
-                // Pozisyon güncelleme (Lerp)
-                positions[ix] += (tx - positions[ix]) * speed + noiseX;
-                positions[ix+1] += (ty - positions[ix+1]) * speed + noiseY;
-                positions[ix+2] += (tz - positions[ix+2]) * speed + noiseZ;
+    for (let i = 0; i < CONFIG.particleCount; i++) {
+      posArray[i * 3] = (Math.random() - 0.5) * 30;
+      posArray[i * 3 + 1] = (Math.random() - 0.5) * 30;
+      posArray[i * 3 + 2] = (Math.random() - 0.5) * 30;
 
-                // Renk güncelleme
-                colors[ix] += (currentTargetColors[i].r - colors[ix]) * speed;
-                colors[ix+1] += (currentTargetColors[i].g - colors[ix+1]) * speed;
-                colors[ix+2] += (currentTargetColors[i].b - colors[ix+2]) * speed;
-            }
+      colArray[i * 3] = CONFIG.colBlue.r;
+      colArray[i * 3 + 1] = CONFIG.colBlue.g;
+      colArray[i * 3 + 2] = CONFIG.colBlue.b;
 
-            particles.geometry.attributes.position.needsUpdate = true;
-            particles.geometry.attributes.color.needsUpdate = true;
-            renderer.render(scene, camera);
+      phaseArray[i] = Math.random() * Math.PI * 2;
+    }
+
+    geometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(posArray, 3)
+    );
+    geometry.setAttribute("color", new THREE.BufferAttribute(colArray, 3));
+    geometry.setAttribute("phase", new THREE.BufferAttribute(phaseArray, 1));
+
+    const material = new THREE.PointsMaterial({
+      size: CONFIG.particleSize,
+      map: getSprite(),
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.9,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+
+      const now = Date.now();
+      const elapsed = now - lastStateTime;
+
+      const pArr = particles.geometry.attributes.position.array;
+      const cArr = particles.geometry.attributes.color.array;
+      const phArr = particles.geometry.attributes.phase.array;
+
+      switch (currentState) {
+        case STATES.FORM_STB:
+          currentTargetPositions = stbTargets;
+          currentTargetColors = stbColors;
+          if (elapsed > 3000) {
+            currentState = STATES.HOLD_STB;
+            lastStateTime = now;
+          }
+          break;
+        case STATES.HOLD_STB:
+          if (elapsed > 4000) {
+            currentState = STATES.TO_MAZE;
+            lastStateTime = now;
+          }
+          break;
+        case STATES.TO_MAZE:
+          currentTargetPositions = mazeTargets;
+          currentTargetColors = mazeColors;
+          if (elapsed > 3000) {
+            currentState = STATES.MAZE_FLOW;
+            lastStateTime = now;
+          }
+          break;
+        case STATES.MAZE_FLOW:
+          if (elapsed > 6000) {
+            currentState = STATES.TO_RESET;
+            lastStateTime = now;
+          }
+          break;
+        case STATES.TO_RESET:
+          currentTargetPositions = stbTargets;
+          currentTargetColors = stbColors;
+          if (elapsed > 2500) {
+            currentState = STATES.HOLD_STB;
+            lastStateTime = now;
+          }
+          break;
+      }
+
+      const time = now * 0.001;
+
+      for (let i = 0; i < CONFIG.particleCount; i++) {
+        const ix = i * 3;
+        const tx = currentTargetPositions[i].x;
+        const ty = currentTargetPositions[i].y;
+        const tz = currentTargetPositions[i].z;
+
+        const trg = currentTargetColors[i];
+
+        let speed = CONFIG.speed;
+        let noiseX = 0,
+          noiseY = 0,
+          noiseZ = 0;
+
+        if (
+          currentState === STATES.MAZE_FLOW ||
+          currentState === STATES.TO_MAZE
+        ) {
+          if (cArr[ix] > 0.8 && cArr[ix + 1] < 0.4) {
+            speed = 0.05;
+            noiseX = Math.sin(time * 20 + i) * 0.2;
+          } else {
+            noiseY = Math.sin(time + phArr[i]) * 0.05;
+          }
+        } else {
+          noiseX = Math.sin(time * 2 + phArr[i]) * 0.05;
+          noiseY = Math.cos(time * 3 + phArr[i]) * 0.05;
         }
 
-        // Pencere boyutu değişirse
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
+        pArr[ix] += (tx - pArr[ix]) * speed + noiseX;
+        pArr[ix + 1] += (ty - pArr[ix + 1]) * speed + noiseY;
+        pArr[ix + 2] += (tz - pArr[ix + 2]) * speed + noiseZ;
 
-        animate();
-    </script>
+        cArr[ix] += (trg.r - cArr[ix]) * speed;
+        cArr[ix + 1] += (trg.g - cArr[ix + 1]) * speed;
+        cArr[ix + 2] += (trg.b - cArr[ix + 2]) * speed;
+      }
+
+      particles.geometry.attributes.position.needsUpdate = true;
+      particles.geometry.attributes.color.needsUpdate = true;
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener("resize", () => {
+      const size = getSize();
+      w = size.w;
+      h = size.h;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    });
+
+    animate();
+  </script>
 </body>
 </html>
