@@ -2,88 +2,114 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Suleyman Talha Belen | Research</title>
+  <title>Research – S. T. Belen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <div class="nav-container">
-      <div class="logo"><a href="index.html">S. T. Belen</a></div>
-      <nav>
-        <a href="education.html">Education</a>
-        <a href="experience.html">Experience</a>
-        <a href="projects.html">Projects</a>
-        <a href="ideas.html">Ideas</a>
-        <a href="writings.html">Writings</a>
-        <a href="research.html">Research</a>
-        <a href="index.html#contact">Contact</a>
-      </nav>
+<header>
+  <div class="nav-container">
+    <div class="logo">
+      <a href="index.html">S. T. BELEN</a>
     </div>
-  </header>
+    <nav>
+      <a href="index.html#education">Education</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#ideas">Ideas</a>
+      <a href="writings.html">Writings</a>
+      <a href="research.html">Research</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
 
-  <main>
-    <section class="reveal">
-      <h1>Research</h1>
-      <p class="page-subtitle">
-        Papers I have read or want to read carefully, and eventually papers I would like to write.
-      </p>
+<main>
+  <section id="research">
+    <h1>Research</h1>
+    <p class="page-subtitle">
+      Papers and books I’m reading or have really spent time with – mostly around RL, control,
+      and optimization.
+    </p>
 
-      <div class="grid">
-        <article class="card">
-          <h3>Reading List</h3>
-          <p class="meta">ML, RL, and Neural Fields</p>
-          <ul class="list">
-            <li>Neural Radiance Fields (NeRF) and follow-up work on fast rendering and large scenes.</li>
-            <li>Key papers in meta reinforcement learning and model-agnostic meta-learning (MAML).</li>
-            <li>Convex optimization classics connected to ML and signal processing.</li>
-          </ul>
-          <p class="meta">
-            I plan to turn this into a public reading log with short summaries.
-          </p>
-        </article>
+    <div class="grid">
+      <article class="card">
+        <h2>Reading List</h2>
+        <p class="meta">ML, RL, Optimization, and Linear Algebra</p>
 
-        <article class="card">
-          <h3>Future Work</h3>
-          <p class="meta">Ideas for my own papers</p>
-          <p>
-            The long-term goal is to develop robust, data-efficient models for physical systems:
-            from subsurface imaging to robotics. This section will eventually list my own papers and preprints.
-          </p>
-        </article>
-      </div>
-    </section>
+        <h3 style="margin-top:0.6rem;">Recommendations</h3>
+        <ul class="list">
+          <li>
+            <strong>Reinforcement Learning: An Introduction (Sutton &amp; Barto)</strong><br />
+            My go-to RL textbook. I like how it builds intuition step by step – returns, value
+            functions, TD methods – with small examples instead of jumping straight into
+            deep RL.
+          </li>
 
-    <section id="contact" class="reveal" style="margin-top:2.5rem;">
-      <h2>Contact</h2>
-      <ul class="contact-list">
-        <li>📧 Email: <a href="mailto:talha.belen@ug.bilkent.edu.tr">talha.belen@ug.bilkent.edu.tr</a></li>
-        <li>💼 LinkedIn: <a href="https://www.linkedin.com/in/suleyman-talha-belen-b0645a2a5" target="_blank" rel="noreferrer">linkedin.com/in/suleyman-talha-belen-b0645a2a5</a></li>
-        <li>🐙 GitHub: <a href="https://github.com/stalhabelen" target="_blank" rel="noreferrer">github.com/stalhabelen</a></li>
-      </ul>
-    </section>
-  </main>
+          <li>
+            <strong>Convex Optimization (Boyd &amp; Vandenberghe)</strong><br />
+            I enjoy the geometric view of optimization here – why problems are convex, how
+            constraints change the shape, and how this connects to things like regression and
+            SVMs. Feels very close to how we actually model real problems.
+          </li>
 
-  <footer>
-    <span>© <span id="year"></span> Suleyman Talha Belen.</span>
-    <span class="back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">↑ Back to top</span>
-  </footer>
+          <li>
+            <strong>Introduction to Applied Linear Algebra (Boyd &amp; Vandenberghe)</strong><br />
+            Super clean introduction to vectors, matrices, and least squares, with lots of
+            computational thinking. I like it as a bridge between theory and “how you would
+            actually code this in practice.”
+          </li>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-    const reveals = document.querySelectorAll(".reveal");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("active");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    reveals.forEach((el) => observer.observe(el));
-  </script>
+          <li>
+            <strong>Multi-Agent Reinforcement Learning: Foundations and Modern Approaches</strong><br />
+            A big-picture book on agents that learn and interact together. I like how it
+            mixes classic game-theoretic ideas (cooperation, competition) with modern deep RL
+            tricks, without getting lost in notation.
+          </li>
+        </ul>
+
+        <h3 style="margin-top:1.1rem;">Already read / working through</h3>
+        <ul class="list">
+          <li>
+            <strong>Proximal Policy Optimization Algorithms (Schulman et al., 2017)</strong><br />
+            Paper that introduces PPO – a simple clipping trick that makes policy-gradient
+            updates much more stable. I like it because it gives a very practical recipe:
+            collect rollouts, do several epochs of clipped updates, and you already get
+            strong results on MuJoCo and Atari without crazy tuning.
+          </li>
+
+          <li>
+            <strong>Domain Randomization for Transferring Deep Neural Networks from Simulation
+              to the Real World (Tobin et al., 2017)</strong><br />
+            Idea: instead of making the simulator perfectly realistic, you deliberately
+            randomize textures, lighting, and camera parameters so much that the network
+            learns to be robust. I like this as a very “engineering” way to reduce the
+            sim-to-real gap for robotic perception.
+          </li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section id="contact" style="margin-top:3rem;">
+    <h2>Contact</h2>
+    <ul class="contact-list">
+      <li>📧 Email: <a href="mailto:talha.belen@ug.bilkent.edu.tr">talha.belen@ug.bilkent.edu.tr</a></li>
+      <li>📌 LinkedIn: <a href="https://www.linkedin.com/in/suleyman-talha-belen-b0645a2a5" target="_blank" rel="noopener">suleyman-talha-belen</a></li>
+      <li>🐙 GitHub: <a href="https://github.com/stalhabelen" target="_blank" rel="noopener">stalhabelen</a></li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <span>© <span id="year"></span> S. T. Belen</span>
+  <span class="back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
+    Back to top ↑
+  </span>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
