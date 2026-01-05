@@ -88,28 +88,39 @@
             that interpretation becomes faster, more robust, and potentially more data-efficient than classic workflows.
           </p>
         </article>
+        <article class="card">
 
-        <!-- Radar -->
-        <article class="card" id="radar-ml">
           <img
-          src="dopler.png"
-          alt="Range–Doppler maps from the RAD-DAR dataset"
+          src="saliency_map.png"
+          alt="Agent view and value-based attention map for the Domain-Invariant Racer"
           class="project-image"
         />
-          <h2>Doppler Radar Classification (People / Car / Drone)</h2>
-          <p class="meta">Signal Processing · CNN Baseline · RAD-DAR dataset</p>
+      
+        <img
+          src="robustness_curve.png"
+          alt="Robustness analysis: average cumulative reward vs visual noise"
+          class="project-image"
+          style="margin-top: 0.6rem;"
+        />
+          <h3>Domain-Invariant Racer</h3>
+          <p class="meta">Reinforcement learning · domain randomization · sim-to-real</p>
           <p>
-            I built an end-to-end Doppler radar ML pipeline to classify people, cars, and drones from
-            range–Doppler maps. Using the RAD-DAR dataset (11 × 61 matrices), the project focuses on clean
-            preprocessing and a clear baseline rather than a huge model.
+            A small RL project where I train a racing agent to drive robustly under heavy
+            visual and physics randomization. Instead of memorizing one fixed track, the
+            policy has to deal with changing textures, lighting, and environment parameters.
           </p>
+          <ul class="list">
+            <li>Custom racing environment with configurable track layouts and dynamics.</li>
+            <li>Domain randomization on visuals and physics to avoid overfitting.</li>
+            <li>Deep RL training (e.g. PPO-style) and evaluation on unseen track variants.</li>
+          </ul>
           <p>
-            The pipeline includes normalisation, balanced train/validation/test splits, and a compact CNN
-            architecture with evaluation and visualisation tools to inspect predictions and common confusions.
-            The model reaches around 93% test accuracy, and the setup is structured so new architectures can
-            easily be plugged in.
+            <a href="https://github.com/stalhabelen/Domain-Invariant-Racer" target="_blank" rel="noopener">
+              View code & README →
+            </a>
           </p>
         </article>
+
 
         <!-- SwinIR -->
         <article class="card" id="swinir-sr">
@@ -151,6 +162,27 @@
             <a href="SwinIRAblition.pdf" target="_blank" rel="noopener">
               View project report (PDF)
             </a>
+          </p>
+        </article>
+                <!-- Radar -->
+        <article class="card" id="radar-ml">
+          <img
+          src="dopler.png"
+          alt="Range–Doppler maps from the RAD-DAR dataset"
+          class="project-image"
+        />
+          <h2>Doppler Radar Classification (People / Car / Drone)</h2>
+          <p class="meta">Signal Processing · CNN Baseline · RAD-DAR dataset</p>
+          <p>
+            I built an end-to-end Doppler radar ML pipeline to classify people, cars, and drones from
+            range–Doppler maps. Using the RAD-DAR dataset (11 × 61 matrices), the project focuses on clean
+            preprocessing and a clear baseline rather than a huge model.
+          </p>
+          <p>
+            The pipeline includes normalisation, balanced train/validation/test splits, and a compact CNN
+            architecture with evaluation and visualisation tools to inspect predictions and common confusions.
+            The model reaches around 93% test accuracy, and the setup is structured so new architectures can
+            easily be plugged in.
           </p>
         </article>
       </div>
