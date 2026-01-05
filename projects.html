@@ -105,15 +105,13 @@
           <h3>Domain-Invariant Racer</h3>
           <p class="meta">Reinforcement learning · domain randomization · sim-to-real</p>
           <p>
-            A small RL project where I train a racing agent to drive robustly under heavy
+            RL (PPO) project where I train a racing agent to drive robustly under heavy
             visual and physics randomization. Instead of memorizing one fixed track, the
             policy has to deal with changing textures, lighting, and environment parameters.
+            So instead of relying on “this exact shade of green/gray means grass/road”, 
+            it learns the structure that actually matters for control. This is exactly the 
+            kind of behavior we want when trying to reduce the visual sim-to-reality gap.
           </p>
-          <ul class="list">
-            <li>Custom racing environment with configurable track layouts and dynamics.</li>
-            <li>Domain randomization on visuals and physics to avoid overfitting.</li>
-            <li>Deep RL training (e.g. PPO-style) and evaluation on unseen track variants.</li>
-          </ul>
           <p>
             <a href="https://github.com/stalhabelen/Domain-Invariant-Racer" target="_blank" rel="noopener">
               View code & README →
