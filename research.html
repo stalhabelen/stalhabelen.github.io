@@ -28,80 +28,99 @@
   <section id="research">
     <h1>Research</h1>
     <p class="page-subtitle">
-      Papers and books I’m reading or have really spent time with – mostly around RL, control,
-      and optimization.
+      Books and papers I’ve spent real time with — mostly around RL, control, optimization,
+      and linear algebra.
     </p>
 
     <div class="grid">
+      <!-- ALREADY READ -->
       <article class="card">
-        <h2>Reading List</h2>
-        <p class="meta">ML, RL, optimization, and linear algebra</p>
-
-        <!-- OKUDUKLARIM -->
-        <h3 style="margin-top:0.6rem;">Okuduklarım</h3>
+        <h2>Already read</h2>
+        <p class="meta">Things I’ve gone through carefully</p>
         <ul class="list">
           <li>
-            <strong>Convex Optimization (Stephen Boyd &amp; Lieven Vandenberghe)</strong><br />
-            Modern optimization rehberi gibi: hangi problemin neden konveks olduğunu, geometrik
-            olarak ne ifade ettiğini ve pratikte buna nasıl algoritma tasarladığımızı çok net
-            anlatıyor. Bence ML, kontrol ve sinyal işleme tarafını birleştiren temel kitaplardan.
+            <strong>Convex Optimization — Stephen Boyd &amp; Lieven Vandenberghe</strong><br />
+            Feels like a modern handbook for optimization. It explains why a problem is convex,
+            what that means geometrically, and how we actually design algorithms for it.
+            For me it’s the bridge between math and the kind of optimization used in ML,
+            control, and signal processing.
           </li>
 
           <li>
-            <strong>Introduction to Applied Linear Algebra (Boyd &amp; Vandenberghe)</strong><br />
-            Vektörler, matrisler ve least squares’i hem teorik hem de “bunu koda nasıl dökerim?”
-            bakışıyla veriyor. Ders notu gibi temiz; mühendislik öğrencisi için tam köprü kitap.
+            <strong>Introduction to Applied Linear Algebra — Boyd &amp; Vandenberghe</strong><br />
+            Very clean “engineering” view of vectors, matrices, and least squares. It’s both
+            theoretical and very code-friendly, so it’s perfect as a student who wants to really
+            understand linear algebra and also implement things.
           </li>
 
           <li>
-            <strong>Proximal Policy Optimization Algorithms (Schulman et al., 2017)</strong><br />
-            PPO’yu tanıtan makale. Politika gradyanlarını çok karmaşık hale getirmeden, “clipping”
-            fikriyle güncellemeleri stabil tutuyor. Rolout topla, birkaç epoch clipped update yap
-            ve iyi sonuç al – pratik RL için güzel bir temel reçete.
+            <strong>Proximal Policy Optimization Algorithms — Schulman et al., 2017</strong><br />
+            The classic PPO paper. It keeps policy gradients from becoming too crazy by using
+            a simple clipping idea to stabilize updates. Roll out, collect data, run a few
+            clipped epochs, and you usually get something that actually works — a very practical
+            recipe for RL.
           </li>
 
           <li>
             <strong>Domain Randomization for Transferring Deep Neural Networks from Simulation
-              to the Real World (Tobin et al., 2017)</strong><br />
-            Simülasyonu mükemmel gerçekçi yapmak yerine, ortamı bilinçli olarak rastgeleleştirip
-            ağı dayanıklı hale getirme fikri. Özellikle robotik algı tarafında sim-to-real boşluğunu
-            kapatmak için hoş, mühendislik odaklı bir yaklaşım.
+              to the Real World — Tobin et al., 2017</strong><br />
+            Instead of making the simulator perfectly realistic, you purposely randomize it so
+            the network becomes robust. I really like this engineering mindset for closing
+            the sim-to-real gap, especially for perception in robotics.
           </li>
         </ul>
+      </article>
 
-        <!-- OKUMAKTA OLDUKLARIM -->
-        <h3 style="margin-top:1.1rem;">Okumakta olduklarım</h3>
+      <!-- CURRENTLY READING -->
+      <article class="card">
+        <h2>Currently reading</h2>
+        <p class="meta">Going through slowly, with notes</p>
         <ul class="list">
           <li>
-            <strong>Reinforcement Learning: An Introduction (Sutton &amp; Barto)</strong><br />
-            Şu an yavaş yavaş sindirerek gidiyorum. Dönüşler, değer fonksiyonları, TD öğrenme
-            gibi kavramları çok adım adım kuruyor; not çıkararak okuduğum bir kitap. Deep RL
-            tarafına geçmeden önce temel sezgiyi oturtmak için birebir.
+            <strong>Reinforcement Learning: An Introduction — Richard S. Sutton &amp; Andrew G. Barto</strong><br />
+            I’m working through this one at a slower pace. It builds up returns, value functions,
+            TD learning, and control in a very step-by-step way. I’m treating it as my “core
+            intuition” book before going deeper into modern deep RL.
           </li>
 
           <li>
             <strong>Multi-Agent Reinforcement Learning: Foundations and Modern Approaches</strong><br />
-            Bunu da parça parça okuyorum. Tek ajan RL’den çok ajanlı dünyaya geçişi — işbirliği,
-            rekabet, oyun kuramı ve modern deep RL teknikleriyle birlikte — güzel çerçeveliyor.
-            Henüz bitirmedim ama özellikle multi-agent kontrol / robotik için ufuk açıcı duruyor.
+            I’m reading this in pieces. It extends the single-agent RL story to multi-agent
+            settings: cooperation, competition, game-theoretic ideas, and how they connect to
+            modern deep RL. I haven’t finished it yet, but it already feels very relevant for
+            multi-robot and multi-agent control.
           </li>
         </ul>
+      </article>
 
-        <!-- TAVSİYE ETTİKLERİM -->
-        <h3 style="margin-top:1.1rem;">Tavsiye ettiklerim</h3>
+      <!-- RECOMMENDATIONS -->
+      <article class="card">
+        <h2>Recommendations</h2>
+        <p class="meta">If you want to follow a similar path</p>
         <ul class="list">
           <li>
-            <strong>Başlangıç hattı:</strong> 
-            <em>Introduction to Applied Linear Algebra</em> ile lineer cebiri sağlamlaştırıp,
-            ardından <em>Convex Optimization</em> ile optimizasyon bakış açısını oturtmak;
-            sonrasında da <em>Reinforcement Learning: An Introduction</em> ile RL dünyasına
-            girmek, benim için en mantıklı ve zevkli yol oldu/oluyor.
+            <strong>1. Build the math backbone.</strong><br />
+            I’d start with <em>Introduction to Applied Linear Algebra</em> to get comfortable with
+            vectors, matrices, and least-squares problems in a very hands-on way. After that,
+            <em>Convex Optimization</em> is perfect for learning how to model real problems and
+            reason about algorithms beyond “just run gradient descent”.
           </li>
+
           <li>
-            <strong>RL tarafında derinleşmek isteyen için:</strong>
-            PPO makalesi (Schulman et al.) pratik policy gradient dünyasına yumuşak bir giriş,
-            devamında ise okudukça <em>Multi-Agent Reinforcement Learning: Foundations and Modern Approaches</em>
-            çok ajanlı senaryolar için güzel bir vizyon veriyor.
+            <strong>2. Add the RL foundations.</strong><br />
+            Then I’d go into <em>Reinforcement Learning: An Introduction</em> (Sutton &amp; Barto).
+            It gives you the core ideas — returns, value functions, TD-learning, policy vs value
+            methods — in a clean, almost textbook-story style that makes everything else in RL
+            much easier to absorb.
+          </li>
+
+          <li>
+            <strong>3. Connect to modern RL practice.</strong><br />
+            Once the basics feel solid, the PPO paper is a great first step into deep RL that
+            practitioners actually use. From there, <em>Multi-Agent Reinforcement Learning:
+            Foundations and Modern Approaches</em> is a nice way to see how these ideas scale to
+            many interacting agents, which is where a lot of fun robotics and planning problems
+            live.
           </li>
         </ul>
       </article>
