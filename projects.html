@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Projects by Suleyman Talha Belen on reinforcement learning, neural rendering for seismic imaging, radar signal processing, and image super-resolution with SwinIR."
+    content="Projects by Suleyman Talha Belen on reinforcement learning, multi-agent safety, neural rendering for seismic imaging, radar signal processing, and image super-resolution."
   />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -30,10 +30,12 @@
     <section class="reveal">
       <h1>Projects</h1>
       <p class="page-subtitle">
-        Selected hands-on projects and experiments, mostly around reinforcement learning, neural fields, radar, and image restoration.
+        Selected hands-on projects and experiments, mostly around reinforcement learning,
+        multi-agent systems, neural fields, radar, and image restoration.
       </p>
 
       <div class="grid">
+
         <!-- PPO-MAML -->
         <article class="card">
           <img
@@ -43,94 +45,129 @@
           />
           <h2>PPO-MAML for Meta-World Assembly-v3</h2>
           <p class="meta">
-            Reinforcement Learning · Meta RL · Robotic Manipulation
+            Reinforcement Learning · Meta-RL · Robotic Manipulation
           </p>
           <p>
-            A compact PyTorch implementation that combines Model-Agnostic Meta-Learning (MAML) with a PPO inner loop
-            on the Meta-World ML1 <code>assembly-v3</code> benchmark. The goal is fast policy adaptation for a
-            robotic arm assembling a peg and socket under task variations.
+            A compact PyTorch implementation that combines Model-Agnostic Meta-Learning (MAML)
+            with a PPO inner loop on the Meta-World ML1 <code>assembly-v3</code> benchmark.
+            The goal is fast policy adaptation for a robotic arm under task variations.
           </p>
           <ul class="list">
-            <li>Single ~200-line script with fixed seeds, CSV logging, and GIF rollout for visualizing adaptation.</li>
-            <li>“Simple but solid” ingredients: reward normalisation, entropy regularisation, gradient clipping.</li>
-            <li>Runs on CPU (MacBook Pro M2) and can be ported to GPU for larger sweeps.</li>
+            <li>Single ~200-line script with fixed seeds, CSV logging, and GIF rollouts.</li>
+            <li>Stable PPO updates using clipping, entropy regularization, and gradient clipping.</li>
+            <li>Runs on CPU (MacBook Pro M2), easily portable to GPU.</li>
           </ul>
           <p class="meta">
-            Code and details:
             <a
               href="https://github.com/stbelen-st/Hands-on-Experiment-Fast-Adaptation-on-Meta-World-Assembly-v3-with-PPO-MAML"
               target="_blank"
               rel="noreferrer"
             >
-              GitHub repository
+              GitHub repository →
             </a>
           </p>
         </article>
 
-        <!-- Seismic / NeRF -->
-        <article class="card" id="seismic-nerf">
+        <!-- Domain-Invariant Racer -->
+        <article class="card">
           <img
-            src="nerf.png"
-            alt="Marine seismic acquisition and subsurface illustration"
+            src="saliency_map.png"
+            alt="Value-based attention map for Domain-Invariant Racer"
             class="project-image"
           />
-          <h2>Seismic NeRF-inspired Subsurface Imaging</h2>
-          <p class="meta">Neural Rendering · Seismic Imaging</p>
-          <p>
-            I explored how Neural Radiance Fields (NeRF) ideas can transfer from multi-view camera rendering
-            to marine seismic acquisition. The focus was on understanding seismic data structure
-            (CMP gathers / SEG-Y) and designing a concept pipeline that treats offset and azimuth as “view”
-            parameters in a NeRF-like framework.
-          </p>
-          <p>
-            Beyond geometry, I experimented with the idea of tokenising seismic traces using time–frequency
-            features plus vector quantisation. The goal is to learn CMP-level patterns with transformer models so
-            that interpretation becomes faster, more robust, and potentially more data-efficient than classic workflows.
-          </p>
-        </article>
-        <article class="card">
-
           <img
-          src="saliency_map.png"
-          alt="Agent view and value-based attention map for the Domain-Invariant Racer"
-          class="project-image"
-        />
-      
-        <img
-          src="robustness_curve.png"
-          alt="Robustness analysis: average cumulative reward vs visual noise"
-          class="project-image"
-          style="margin-top: 0.6rem;"
-        />
-          <h3>Domain-Invariant Racer</h3>
-          <p class="meta">Reinforcement learning · domain randomization · sim-to-real</p>
-          <p>
-            RL (PPO) project where I train a racing agent to drive robustly under heavy
-            visual and physics randomization. Instead of memorizing one fixed track, the
-            policy has to deal with changing textures, lighting, and environment parameters.
-            So instead of relying on “this exact shade of green/gray means grass/road”, 
-            it learns the structure that actually matters for control. This is exactly the 
-            kind of behavior we want when trying to reduce the visual sim-to-reality gap.
+            src="robustness_curve.png"
+            alt="Robustness analysis under visual noise"
+            class="project-image"
+            style="margin-top: 0.6rem;"
+          />
+          <h2>Domain-Invariant Racer</h2>
+          <p class="meta">
+            Reinforcement Learning · Domain Randomization · Sim-to-Real
           </p>
           <p>
+            A PPO-based racing agent trained under heavy visual and physics randomization.
+            Instead of memorizing a single environment, the policy learns domain-invariant
+            representations that remain stable under changing textures, lighting, and noise.
+          </p>
+          <p>
+            The project focuses on robustness analysis and attention visualization to
+            understand which parts of the observation space the agent relies on as conditions degrade.
+          </p>
+          <p class="meta">
             <a href="https://github.com/stalhabelen/Domain-Invariant-Racer" target="_blank" rel="noopener">
               View code & README →
             </a>
           </p>
         </article>
 
+        <!-- Safe Swarm Control -->
+        <article class="card">
+          <img
+            src="centralized_double_int.gif"
+            alt="Centralized safety filter with double integrator dynamics"
+            class="project-image"
+          />
+          <img
+            src="decentralized_swarm.gif"
+            alt="Decentralized multi-agent safety using distributed CBFs"
+            class="project-image"
+            style="margin-top: 0.6rem;"
+          />
+          <h2>Safe Swarm Control with HOCBFs</h2>
+          <p class="meta">
+            Multi-Agent Systems · Control · Safety · Control Barrier Functions
+          </p>
+          <p>
+            A study of safety-critical control for multi-agent systems using
+            High-Order Control Barrier Functions (HOCBFs).
+            I compare centralized safety filtering for double-integrator dynamics
+            with decentralized, distributed CBF formulations.
+          </p>
+          <p>
+            The focus is on guaranteeing collision avoidance while minimally
+            modifying nominal control inputs, highlighting the trade-offs between
+            centralized and decentralized safety enforcement.
+          </p>
+          <p class="meta">
+            <a href="https://github.com/stalhabelen/Safe-Swarm-Control-HOCBF" target="_blank" rel="noopener">
+              GitHub repository →
+            </a>
+          </p>
+        </article>
+
+        <!-- Seismic NeRF -->
+        <article class="card" id="seismic-nerf">
+          <img
+            src="nerf.png"
+            alt="Marine seismic acquisition and subsurface illustration"
+            class="project-image"
+          />
+          <h2>NeRF-inspired Seismic Subsurface Imaging</h2>
+          <p class="meta">Neural Rendering · Seismic Imaging</p>
+          <p>
+            An exploratory project on transferring Neural Radiance Fields (NeRF) ideas
+            from multi-view camera rendering to marine seismic acquisition.
+            Offset and azimuth are treated as view parameters in a NeRF-like formulation.
+          </p>
+          <p>
+            I also experimented with tokenizing seismic traces using time–frequency features
+            and vector quantization, aiming to learn CMP-level structure with transformer models
+            for faster and more data-efficient interpretation.
+          </p>
+        </article>
 
         <!-- SwinIR -->
         <article class="card" id="swinir-sr">
           <div class="project-image-row">
             <img
               src="swinir-lr.png"
-              alt="Low-resolution input image for SwinIR"
+              alt="Low-resolution input image"
               class="project-image-half"
             />
             <img
               src="swinir-hr.png"
-              alt="High-resolution reconstruction by SwinIR"
+              alt="High-resolution SwinIR output"
               class="project-image-half"
             />
           </div>
@@ -140,21 +177,11 @@
             class="project-image-arch"
           />
           <h2>Image Super-Resolution with SwinIR</h2>
-          <p class="meta">Image Restoration · Swin Transformer · Super-Resolution</p>
+          <p class="meta">Image Restoration · Swin Transformer</p>
           <p>
-            Implemented and trained SwinIR, a Transformer-based model for Single-Image Super-Resolution (SISR),
-            to reconstruct high-resolution images from low-resolution inputs. The model was trained from scratch
-            on the <code>LSDIR</code> dataset and evaluated on the <code>Manga109</code> benchmark for ×2 scaling.
-          </p>
-          <p>
-            The implementation achieved about <strong>36.18 dB PSNR (×2)</strong>, outperforming a standard
-            CNN-based baseline (<code>RCAN</code>) in both reconstruction quality and parameter efficiency.
-            The codebase is set up for ablations on window size, depth, and attention configurations.
-          </p>
-          <p class="meta">
-            Based on:
-            J. Liang, J. Cao, G. Sun, K. Zhang, L. Van Gool, and Y. Timofte,
-            “SwinIR: Image Restoration Using Swin Transformer,” ICCV Workshops (AIM Workshop), 2021.
+            Implemented and trained SwinIR for single-image super-resolution.
+            Trained on <code>LSDIR</code> and evaluated on <code>Manga109</code> (×2),
+            achieving ~36.18 dB PSNR and outperforming a CNN baseline (RCAN).
           </p>
           <p class="meta">
             <a href="SwinIRAblition.pdf" target="_blank" rel="noopener">
@@ -162,27 +189,27 @@
             </a>
           </p>
         </article>
-                <!-- Radar -->
+
+        <!-- Radar -->
         <article class="card" id="radar-ml">
           <img
-          src="dopler.png"
-          alt="Range–Doppler maps from the RAD-DAR dataset"
-          class="project-image"
-        />
-          <h2>Doppler Radar Classification (People / Car / Drone)</h2>
-          <p class="meta">Signal Processing · CNN Baseline · RAD-DAR dataset</p>
+            src="dopler.png"
+            alt="Range–Doppler maps from RAD-DAR dataset"
+            class="project-image"
+          />
+          <h2>Doppler Radar Classification</h2>
+          <p class="meta">Signal Processing · CNN · RAD-DAR</p>
           <p>
-            I built an end-to-end Doppler radar ML pipeline to classify people, cars, and drones from
-            range–Doppler maps. Using the RAD-DAR dataset (11 × 61 matrices), the project focuses on clean
-            preprocessing and a clear baseline rather than a huge model.
+            End-to-end Doppler radar pipeline to classify people, cars, and drones
+            from range–Doppler maps. Emphasis on clean preprocessing, balanced splits,
+            and interpretable baselines rather than large models.
           </p>
           <p>
-            The pipeline includes normalisation, balanced train/validation/test splits, and a compact CNN
-            architecture with evaluation and visualisation tools to inspect predictions and common confusions.
-            The model reaches around 93% test accuracy, and the setup is structured so new architectures can
-            easily be plugged in.
+            The CNN baseline reaches ~93% test accuracy and is structured for
+            easy extension with alternative architectures.
           </p>
         </article>
+
       </div>
     </section>
   </main>
