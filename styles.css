@@ -454,7 +454,6 @@ h2 {
   box-shadow: 0 8px 20px rgba(148, 163, 184, 0.25);
 }
 
-
 .card:hover {
   transform: translateY(-3px);
   box-shadow: 0 14px 32px rgba(148, 163, 184, 0.35);
