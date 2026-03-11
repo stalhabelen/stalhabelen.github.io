@@ -649,3 +649,31 @@ footer {
     display: none;
   }
 }
+
+/* Research page */
+
+.research-entry{
+margin-bottom:2rem;
+}
+
+.research-header{
+display:flex;
+justify-content:space-between;
+align-items:baseline;
+margin-bottom:0.3rem;
+}
+
+.research-title{
+font-weight:600;
+}
+
+.research-date{
+color:#666;
+font-size:0.9rem;
+}
+
+.research-description{
+font-size:0.95rem;
+color:#333;
+max-width:750px;
+}
