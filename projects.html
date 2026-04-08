@@ -45,41 +45,6 @@
 
       <div class="grid">
 
-        <!-- Seismic NeRF (Featured) -->
-        <article class="card" id="seismic-nerf" style="grid-column: 1 / -1; border: 2px solid #2563eb; background: linear-gradient(135deg, #ffffff, #eff6ff);">
-          <img
-            src="nerf.png"
-            alt="Marine seismic acquisition and subsurface illustration"
-            class="project-image"
-          />
-          <h2>NeRF-inspired Seismic Subsurface Imaging</h2>
-          <p class="meta">Neural Rendering · Seismic Imaging · Tokenization · Transformer Architecture</p>
-          <p>
-            A research project on transferring Neural Radiance Fields (NeRF) ideas
-            from multi-view camera rendering to marine seismic acquisition.
-            Offset and azimuth are treated as view parameters in a NeRF-like formulation,
-            and the network learns subsurface reflectivity as a continuous neural field.
-          </p>
-          <p>
-            <strong>Proposed Architecture:</strong> An end-to-end tokenized seismic rendering pipeline.
-            Seismic traces are first transformed into time–frequency representations (spectrograms / scalograms),
-            then discretized via vector quantization into compact token sequences. A transformer-based decoder
-            reconstructs CMP-level subsurface structure by learning cross-offset consistency through attention,
-            analogous to how NeRF learns cross-view consistency in 3D rendering. This design enables generalization
-            across different acquisition geometries and handles sparse or irregular sampling.
-          </p>
-          <p>
-            The tokenization methodology builds directly on the
-            <a href="#audio-tokenizer">Multimodal Audio Tokenizer</a> project:
-            both seismic traces and audio signals are 1-D time-series with rich spectral structure,
-            so the same vector-quantized encoding and codebook learning techniques transfer naturally.
-            This connection between audio and seismic tokenization is a key architectural insight.
-          </p>
-          <p>
-            Current research directions include physics-informed priors (wave-equation constraints)
-            and self-supervised pre-training on unlabeled seismic data.
-          </p>
-        </article>
 
         <!-- PPO-MAML -->
         <article class="card">
