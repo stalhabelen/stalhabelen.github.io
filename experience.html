@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Experience of Suleyman Talha Belen on neural rendering, seismic imaging, radar signal processing, and teaching convex optimization."
+    content="Experience of Suleyman Talha Belen on neural rendering, seismic subsurface imaging, and teaching convex optimization."
   />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -30,51 +30,64 @@
     <section class="reveal">
       <h1>Experience</h1>
       <p class="page-subtitle">
-        Hands-on work at the intersection of neural rendering, seismic and radar data, and teaching in optimization.
+        Hands-on work at the intersection of neural rendering, seismic subsurface imaging, and teaching in optimization.
       </p>
 
       <div class="grid">
-        <!-- SDT / Seismic & Radar work -->
-        <article class="card">
+        <!-- SDT / Seismic Rendering work -->
+        <article class="card" style="grid-column: 1 / -1; border: 2px solid #2563eb; background: linear-gradient(135deg, #ffffff, #eff6ff);">
           <img
             src="nerf.png"
             alt="Seismic acquisition and subsurface imaging illustration"
             class="experience-photo"
           />
-          <img
-            src="dopler.png"
-            alt="Radar Range-Doppler maps for cars, drones, and people"
-            class="experience-photo"
-          />
           <h2>Space Defense Technologies – SDT</h2>
           <p class="meta">Applied research internship · 2025</p>
           <p>
-            Exploratory work on bringing ideas from neural rendering and modern ML into wave-based sensing domains
-            such as marine seismic acquisition and FMCW radar.
+            Focused on bringing neural rendering ideas into seismic subsurface imaging,
+            designing a novel architecture that bridges NeRF-style volumetric rendering with
+            marine seismic acquisition for faster and more data-efficient interpretation.
           </p>
+
           <ul class="list">
             <li>
-              <strong>Neural Rendering and NeRF.</strong>
+              <strong>Neural Rendering for Seismic Imaging.</strong>
               Implemented a compact Neural Radiance Fields (NeRF) pipeline from scratch in PyTorch, using COLMAP
-              for structure-from-motion. Investigated how multi-view consistency and volumetric rendering ideas
-              could be adapted to seismic CMP gathers for subsurface imaging.
+              for structure-from-motion. Adapted the core idea of multi-view consistency and volumetric rendering
+              to seismic CMP gathers: instead of camera poses, offset and azimuth serve as the "view" parameters,
+              and the network learns to predict subsurface reflectivity as a continuous neural field.
             </li>
             <li>
-              <strong>Radar Signal Processing.</strong>
-              Developed a supervised CNN pipeline to classify objects (Drones, Cars, People) using range–Doppler
-              maps from the Real Doppler RAD-DAR dataset, reaching about 93 percent test accuracy with careful
-              preprocessing and regularisation.
+              <strong>Proposed Architecture: Tokenized Seismic Rendering.</strong>
+              Designed an end-to-end pipeline where seismic traces are first transformed into time–frequency
+              representations (spectrograms / scalograms), then discretized into compact token sequences via
+              vector quantization. These tokens feed into a transformer-based decoder that reconstructs
+              CMP-level subsurface structure. The architecture treats each seismic gather as a "scene" and
+              learns cross-offset consistency through attention, analogous to how NeRF learns cross-view
+              consistency in 3D rendering. This approach enables the model to generalize across acquisition
+              geometries and handle sparse or irregular sampling.
             </li>
             <li>
-              <strong>Research directions.</strong>
-              Explored speech-inspired tokenisation and sequence-style representations for detecting patterns
-              in seismic signals, reusing ideas from automatic speech recognition and self-supervised audio models.
+              <strong>Audio Tokenization as a Foundation.</strong>
+              The tokenization stage of this pipeline directly builds on my
+              <a href="projects.html#audio-tokenizer">Multimodal Audio Tokenizer</a> project,
+              which explores how continuous waveforms can be converted into discrete, reusable token
+              representations. The same vector-quantized encoding and codebook learning techniques
+              developed for audio signals transfer naturally to seismic traces, since both are 1-D
+              time-series with rich spectral structure. This connection between audio and seismic
+              tokenization is a key insight of the proposed architecture.
+            </li>
+            <li>
+              <strong>Research Directions.</strong>
+              Exploring physics-informed priors (wave-equation constraints) to regularize the neural field,
+              and investigating how self-supervised pre-training on unlabeled seismic data can improve
+              generalization with limited labeled surveys.
             </li>
           </ul>
           <p class="meta">
-            Related technical write-ups live on the
-            <a href="projects.html#seismic-nerf">seismic NeRF</a>,
-            <a href="projects.html#radar-ml">radar classification</a>, and
+            Related technical details on the
+            <a href="projects.html#seismic-nerf">seismic rendering</a>,
+            <a href="projects.html#audio-tokenizer">audio tokenizer</a>, and
             <a href="projects.html#swinir-sr">SwinIR</a> sections of the projects page.
           </p>
         </article>

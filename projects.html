@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Projects by Suleyman Talha Belen on reinforcement learning, multi-agent safety, neural rendering for seismic imaging, radar signal processing, and image super-resolution."
+    content="Projects by Suleyman Talha Belen on neural rendering for seismic imaging, multimodal audio tokenization, reinforcement learning, multi-agent safety, and image super-resolution."
   />
   <!-- GLOBAL CSS -->
   <link rel="stylesheet" href="styles.css?v=2" />
@@ -39,11 +39,47 @@
     <section class="reveal">
       <h1>Projects</h1>
       <p class="page-subtitle">
-        Selected hands-on projects and experiments, mostly around reinforcement learning,
-        multi-agent systems, neural fields, radar, and image restoration.
+        Selected hands-on projects and experiments, mostly around neural fields for seismic imaging,
+        audio tokenization, reinforcement learning, multi-agent systems, and image restoration.
       </p>
 
       <div class="grid">
+
+        <!-- Seismic NeRF (Featured) -->
+        <article class="card" id="seismic-nerf" style="grid-column: 1 / -1; border: 2px solid #2563eb; background: linear-gradient(135deg, #ffffff, #eff6ff);">
+          <img
+            src="nerf.png"
+            alt="Marine seismic acquisition and subsurface illustration"
+            class="project-image"
+          />
+          <h2>NeRF-inspired Seismic Subsurface Imaging</h2>
+          <p class="meta">Neural Rendering · Seismic Imaging · Tokenization · Transformer Architecture</p>
+          <p>
+            A research project on transferring Neural Radiance Fields (NeRF) ideas
+            from multi-view camera rendering to marine seismic acquisition.
+            Offset and azimuth are treated as view parameters in a NeRF-like formulation,
+            and the network learns subsurface reflectivity as a continuous neural field.
+          </p>
+          <p>
+            <strong>Proposed Architecture:</strong> An end-to-end tokenized seismic rendering pipeline.
+            Seismic traces are first transformed into time–frequency representations (spectrograms / scalograms),
+            then discretized via vector quantization into compact token sequences. A transformer-based decoder
+            reconstructs CMP-level subsurface structure by learning cross-offset consistency through attention,
+            analogous to how NeRF learns cross-view consistency in 3D rendering. This design enables generalization
+            across different acquisition geometries and handles sparse or irregular sampling.
+          </p>
+          <p>
+            The tokenization methodology builds directly on the
+            <a href="#audio-tokenizer">Multimodal Audio Tokenizer</a> project:
+            both seismic traces and audio signals are 1-D time-series with rich spectral structure,
+            so the same vector-quantized encoding and codebook learning techniques transfer naturally.
+            This connection between audio and seismic tokenization is a key architectural insight.
+          </p>
+          <p>
+            Current research directions include physics-informed priors (wave-equation constraints)
+            and self-supervised pre-training on unlabeled seismic data.
+          </p>
+        </article>
 
         <!-- PPO-MAML -->
         <article class="card">
@@ -145,63 +181,47 @@
           </p>
         </article>
 
-        <article class="card">
-            <img
-  src="training_results.png"
-  alt="Training loss, spectrogram reconstructions, and discrete token usage for the multimodal audio tokenizer"
-  class="project-image"
-/>
-  <h2>Multimodal Audio Tokenizer</h2>
-  <p class="meta">
-    Audio Representation Learning · Tokenization · Multimodal ML
-  </p>
-
-  <p>
-    A research-oriented project exploring how raw audio signals can be
-    converted into compact, discrete token representations suitable for
-    multimodal learning setups. The goal is to bridge continuous audio
-    waveforms with sequence-based models in a way that is efficient,
-    expressive, and reusable across tasks.
-  </p>
-
-  <p>
-    The tokenizer is designed as a modular pipeline, making it easy to plug
-    audio tokens into downstream models such as transformers, multimodal
-    encoders, or generative architectures alongside text or vision tokens.
-  </p>
-
-  <p class="meta">
-    Code and experiments:
-    <a
-      href="https://github.com/stalhabelen/Multimodal-audio-tokenizer"
-      target="_blank"
-      rel="noopener"
-    >
-      GitHub repository
-    </a>
-  </p>
-</article>
-
-        <!-- Seismic NeRF -->
-        <article class="card" id="seismic-nerf">
+        <article class="card" id="audio-tokenizer">
           <img
-            src="nerf.png"
-            alt="Marine seismic acquisition and subsurface illustration"
+            src="training_results.png"
+            alt="Training loss, spectrogram reconstructions, and discrete token usage for the multimodal audio tokenizer"
             class="project-image"
           />
-          <h2>NeRF-inspired Seismic Subsurface Imaging</h2>
-          <p class="meta">Neural Rendering · Seismic Imaging</p>
-          <p>
-            An exploratory project on transferring Neural Radiance Fields (NeRF) ideas
-            from multi-view camera rendering to marine seismic acquisition.
-            Offset and azimuth are treated as view parameters in a NeRF-like formulation.
+          <h2>Multimodal Audio Tokenizer</h2>
+          <p class="meta">
+            Audio Representation Learning · Tokenization · Multimodal ML
           </p>
           <p>
-            I also experimented with tokenizing seismic traces using time–frequency features
-            and vector quantization, aiming to learn CMP-level structure with transformer models
-            for faster and more data-efficient interpretation.
+            A research-oriented project exploring how raw audio signals can be
+            converted into compact, discrete token representations suitable for
+            multimodal learning setups. The goal is to bridge continuous audio
+            waveforms with sequence-based models in a way that is efficient,
+            expressive, and reusable across tasks.
+          </p>
+          <p>
+            The tokenizer is designed as a modular pipeline, making it easy to plug
+            audio tokens into downstream models such as transformers, multimodal
+            encoders, or generative architectures alongside text or vision tokens.
+          </p>
+          <p>
+            This project also serves as a foundation for the
+            <a href="#seismic-nerf">Seismic Subsurface Imaging</a> work:
+            the vector-quantized encoding and codebook learning techniques developed here
+            for audio waveforms transfer directly to seismic trace tokenization,
+            since both are 1-D time-series with rich spectral structure.
+          </p>
+          <p class="meta">
+            Code and experiments:
+            <a
+              href="https://github.com/stalhabelen/Multimodal-audio-tokenizer"
+              target="_blank"
+              rel="noopener"
+            >
+              GitHub repository
+            </a>
           </p>
         </article>
+
 
         <!-- SwinIR -->
         <article class="card" id="swinir-sr">
@@ -236,25 +256,6 @@
           </p>
         </article>
 
-        <!-- Radar -->
-        <article class="card" id="radar-ml">
-          <img
-            src="dopler.png"
-            alt="Range–Doppler maps from RAD-DAR dataset"
-            class="project-image"
-          />
-          <h2>Doppler Radar Classification</h2>
-          <p class="meta">Signal Processing · CNN · RAD-DAR</p>
-          <p>
-            End-to-end Doppler radar pipeline to classify people, cars, and drones
-            from range–Doppler maps. Emphasis on clean preprocessing, balanced splits,
-            and interpretable baselines rather than large models.
-          </p>
-          <p>
-            The CNN baseline reaches ~93% test accuracy and is structured for
-            easy extension with alternative architectures.
-          </p>
-        </article>
 
       </div>
     </section>
