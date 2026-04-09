@@ -8,6 +8,14 @@
     name="description"
     content="Ideas and rough concept notes by Suleyman Talha Belen on neural fields, curiosity in AI, and the social impact of algorithms."
   />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Suleyman Talha Belen | Ideas" />
+  <meta property="og:description" content="Concept notes on neural fields for seismic imaging, curiosity mechanisms in AI, and the social impact of recommendation algorithms." />
+  <meta property="og:image" content="talha-photo.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Suleyman Talha Belen | Ideas" />
+  <meta name="twitter:description" content="Concept notes on neural fields, curiosity in AI, and the social impact of algorithms." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -21,7 +29,7 @@
         <a href="ideas.html">Ideas</a>
         <a href="writings.html">Writings</a>
         <a href="research.html">Research</a>
-        <a href="#contact">Contact</a>
+        <a href="index.html#contact">Contact</a>
       </nav>
     </div>
   </header>
@@ -34,14 +42,25 @@
       </p>
 
       <div class="grid">
-        <!-- Idea 1: Seismic + Neural Fields -->
-        <article class="card">
+        <!-- Idea 1: Seismic + Neural Fields — now an active project -->
+        <article class="card" style="border: 2px solid #2563eb;">
           <h2>Bridging Seismic Imaging and Neural Fields</h2>
-          <p class="meta">Concept note</p>
+          <p class="meta">Active project — originally a concept note</p>
           <p>
             How far can NeRF-style models go for underground imaging when measurements are limited and noisy?
             I am interested in representations that respect underlying physics, not just black box models,
             and in how priors from wave propagation can be folded into neural field architectures.
+          </p>
+          <p>
+            <strong>Update:</strong> This idea turned into an active research project during my internship at SDT.
+            I designed a tokenized seismic rendering pipeline that adapts NeRF-style volumetric rendering
+            to marine seismic acquisition, using vector-quantized tokens from my
+            <a href="projects.html#audio-tokenizer">Multimodal Audio Tokenizer</a>
+            to represent seismic traces.
+          </p>
+          <p class="meta">
+            See the full project: <a href="projects.html#seismic-nerf">NeRF-inspired Seismic Subsurface Imaging</a>
+            &middot; <a href="experience.html">Experience at SDT</a>
           </p>
         </article>
 

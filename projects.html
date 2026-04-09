@@ -8,6 +8,14 @@
     name="description"
     content="Projects by Suleyman Talha Belen on neural rendering for seismic imaging, multimodal audio tokenization, reinforcement learning, multi-agent safety, and image super-resolution."
   />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Suleyman Talha Belen | Projects" />
+  <meta property="og:description" content="Neural rendering for seismic imaging, multimodal audio tokenization, reinforcement learning, multi-agent safety, and image super-resolution." />
+  <meta property="og:image" content="talha-photo.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Suleyman Talha Belen | Projects" />
+  <meta name="twitter:description" content="Neural rendering for seismic imaging, multimodal audio tokenization, reinforcement learning, and more." />
   <!-- GLOBAL CSS -->
   <link rel="stylesheet" href="styles.css?v=2" />
 
@@ -45,6 +53,61 @@
 
       <div class="grid">
 
+        <!-- Seismic NeRF -->
+        <article class="card" id="seismic-nerf">
+          <img
+            src="nerf.png"
+            alt="Marine seismic acquisition and subsurface illustration"
+            class="project-image"
+          />
+          <h2>NeRF-inspired Seismic Subsurface Imaging</h2>
+          <p class="meta">Neural Rendering · Seismic Imaging · Tokenization · Transformer Architecture</p>
+          <p>
+            A research project on transferring Neural Radiance Fields (NeRF) ideas
+            from multi-view camera rendering to marine seismic acquisition.
+            Offset and azimuth are treated as view parameters in a NeRF-like formulation,
+            and the network learns subsurface reflectivity as a continuous neural field.
+          </p>
+          <p>
+            <strong>Proposed Architecture:</strong> An end-to-end tokenized seismic rendering pipeline.
+            Seismic traces are first transformed into time–frequency representations (spectrograms / scalograms),
+            then discretized via vector quantization into compact token sequences. A transformer-based decoder
+            reconstructs CMP-level subsurface structure by learning cross-offset consistency through attention,
+            analogous to how NeRF learns cross-view consistency in 3D rendering. This design enables generalization
+            across different acquisition geometries and handles sparse or irregular sampling.
+          </p>
+          <p>
+            The tokenization methodology builds directly on the
+            <a href="#audio-tokenizer">Multimodal Audio Tokenizer</a> project:
+            both seismic traces and audio signals are 1-D time-series with rich spectral structure,
+            so the same vector-quantized encoding and codebook learning techniques transfer naturally.
+          </p>
+        </article>
+
+        <!-- Tool Selection for Robotic Manipulation -->
+        <article class="card" id="tool-selection">
+          <img
+            src="tool-selection.png"
+            alt="Franka Panda robot arm with objects on a table for tool selection task"
+            class="project-image"
+          />
+          <h2>Tool Selection for Robotic Manipulation</h2>
+          <p class="meta">Robot Learning · Affordance · Dexterous Manipulation</p>
+          <p>
+            Affordance-guided tool selection for dexterous robotic manipulation.
+            The system learns to identify which object to grasp and how to use it
+            based on visual affordance cues, enabling a robot arm to reason about
+            object properties and task requirements before acting.
+          </p>
+          <p>
+            Part of ongoing research at NYU CILVR, advised by Lerrel Pinto and Irmak Guzey.
+          </p>
+          <p class="meta">
+            <a href="Final Proposal.pdf" target="_blank" rel="noopener" class="paper-link">
+              📄 Proposal (PDF)
+            </a>
+          </p>
+        </article>
 
         <!-- PPO-MAML -->
         <article class="card">

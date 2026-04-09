@@ -8,6 +8,14 @@
     name="description"
     content="Experience of Suleyman Talha Belen on neural rendering, seismic subsurface imaging, and teaching convex optimization."
   />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Suleyman Talha Belen | Experience" />
+  <meta property="og:description" content="Neural rendering for seismic imaging at SDT and teaching convex optimization at Stanford." />
+  <meta property="og:image" content="talha-photo.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Suleyman Talha Belen | Experience" />
+  <meta name="twitter:description" content="Neural rendering for seismic imaging at SDT and teaching convex optimization at Stanford." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -35,7 +43,7 @@
 
       <div class="grid">
         <!-- SDT / Seismic Rendering work -->
-        <article class="card" style="grid-column: 1 / -1; border: 2px solid #2563eb; background: linear-gradient(135deg, #ffffff, #eff6ff);">
+        <article class="card">
           <img
             src="nerf.png"
             alt="Seismic acquisition and subsurface imaging illustration"
@@ -48,47 +56,27 @@
             designing a novel architecture that bridges NeRF-style volumetric rendering with
             marine seismic acquisition for faster and more data-efficient interpretation.
           </p>
-
           <ul class="list">
             <li>
               <strong>Neural Rendering for Seismic Imaging.</strong>
-              Implemented a compact Neural Radiance Fields (NeRF) pipeline from scratch in PyTorch, using COLMAP
-              for structure-from-motion. Adapted the core idea of multi-view consistency and volumetric rendering
-              to seismic CMP gathers: instead of camera poses, offset and azimuth serve as the "view" parameters,
-              and the network learns to predict subsurface reflectivity as a continuous neural field.
+              Implemented a NeRF pipeline from scratch in PyTorch. Adapted multi-view consistency
+              to seismic CMP gathers, using offset and azimuth as view parameters.
             </li>
             <li>
-              <strong>Proposed Architecture: Tokenized Seismic Rendering.</strong>
-              Designed an end-to-end pipeline where seismic traces are first transformed into time–frequency
-              representations (spectrograms / scalograms), then discretized into compact token sequences via
-              vector quantization. These tokens feed into a transformer-based decoder that reconstructs
-              CMP-level subsurface structure. The architecture treats each seismic gather as a "scene" and
-              learns cross-offset consistency through attention, analogous to how NeRF learns cross-view
-              consistency in 3D rendering. This approach enables the model to generalize across acquisition
-              geometries and handle sparse or irregular sampling.
+              <strong>Tokenized Seismic Rendering Architecture.</strong>
+              Designed an end-to-end pipeline: seismic traces to time–frequency representations,
+              then vector quantization into tokens, fed into a transformer decoder for subsurface reconstruction.
             </li>
             <li>
               <strong>Audio Tokenization as a Foundation.</strong>
-              The tokenization stage of this pipeline directly builds on my
-              <a href="projects.html#audio-tokenizer">Multimodal Audio Tokenizer</a> project,
-              which explores how continuous waveforms can be converted into discrete, reusable token
-              representations. The same vector-quantized encoding and codebook learning techniques
-              developed for audio signals transfer naturally to seismic traces, since both are 1-D
-              time-series with rich spectral structure. This connection between audio and seismic
-              tokenization is a key insight of the proposed architecture.
-            </li>
-            <li>
-              <strong>Research Directions.</strong>
-              Exploring physics-informed priors (wave-equation constraints) to regularize the neural field,
-              and investigating how self-supervised pre-training on unlabeled seismic data can improve
-              generalization with limited labeled surveys.
+              Built on the <a href="projects.html#audio-tokenizer">Multimodal Audio Tokenizer</a> project —
+              same VQ encoding transfers naturally to seismic traces.
             </li>
           </ul>
           <p class="meta">
-            Related technical details on the
-            <a href="projects.html#seismic-nerf">seismic rendering</a>,
-            <a href="projects.html#audio-tokenizer">audio tokenizer</a>, and
-            <a href="projects.html#swinir-sr">SwinIR</a> sections of the projects page.
+            See the
+            <a href="projects.html#seismic-nerf">seismic rendering</a> and
+            <a href="projects.html#audio-tokenizer">audio tokenizer</a> projects.
           </p>
         </article>
 
