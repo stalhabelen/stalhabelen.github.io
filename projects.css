@@ -155,7 +155,7 @@ body {
   /* ============================= */
 
   html.dark body {
-    background: #0f172a;
+    background: #0f172a !important;
   }
 
   html.dark section h1 { color: #f1f5f9; }
