@@ -8,14 +8,14 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="S. T. Belen | Research" />
-<meta property="og:description" content="Research at NYU CILVR on robotic manipulation and Stanford CVXPY on disciplined nonlinear programming." />
+<meta property="og:description" content="Research at Bilkent on robotic manipulation and Stanford CVXPY on disciplined nonlinear programming." />
 <meta property="og:image" content="talha-photo.jpg" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="S. T. Belen | Research" />
-<meta name="twitter:description" content="Research at NYU CILVR on robotic manipulation and Stanford CVXPY." />
+<meta name="twitter:description" content="Research at Bilkent on robotic manipulation and Stanford CVXPY." />
 
 <link rel="stylesheet" href="styles.css">
-
+<script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark');</script>
 </head>
 
 
@@ -36,6 +36,7 @@
         <a href="writings.html">Writings</a>
         <a href="research.html">Research</a>
         <a href="index.html#contact">Contact</a>
+        <button id="dark-toggle" aria-label="Toggle dark mode">🌙</button>
       </nav>
 
 </div>
@@ -55,42 +56,6 @@ optimization, and decision-making systems.
 
 
 <div class="research-grid">
-
-
-<!-- NYU -->
-
-<div class="research-card">
-
-<div class="research-logo">
-<img src="nyu.png">
-</div>
-
-<div class="research-content">
-
-<h3>
-UG Research Intern — Robotics — NYU, CILVR 
-</h3>
-
-<p class="research-date">
-Jan 2026 – Present
-</p>
-
-<p>
-Advised by <em>Lerrel Pinto</em> and <em>Irmak Guzey</em>.
-Working on affordance-guided world models for dexterous robotic manipulation.
-Remote collaboration with on-site research planned for Summer 2026.
-</p>
-
-<a href="Final Proposal.pdf"
-   class="paper-link"
-   target="_blank">
-   📄 Proposal (PDF)
-</a>
-
-</div>
-
-</div>
-
 
 
 
@@ -187,6 +152,17 @@ Back to top ↑
 
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
+
+const toggle = document.getElementById('dark-toggle');
+function updateToggle() {
+  toggle.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+}
+updateToggle();
+toggle.addEventListener('click', function() {
+  document.documentElement.classList.toggle('dark');
+  localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+  updateToggle();
+});
 </script>
 
 </body>

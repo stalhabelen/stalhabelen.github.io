@@ -154,39 +154,37 @@ body {
   /* DARK MODE (projects page)     */
   /* ============================= */
 
-  @media (prefers-color-scheme: dark) {
-    body {
-      background: #0f172a;
-    }
+  html.dark body {
+    background: #0f172a;
+  }
 
-    section h1 { color: #f1f5f9; }
-    .section-subtitle { color: #64748b; }
+  html.dark section h1 { color: #f1f5f9; }
+  html.dark .section-subtitle { color: #64748b; }
 
-    .card {
-      background: #1e293b;
-      border-color: #1e293b;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    }
+  html.dark .card {
+    background: #1e293b;
+    border-color: #1e293b;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  }
 
-    .card:hover {
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
-    }
+  html.dark .card:hover {
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+  }
 
-    .card h2, .card h3 { color: #f1f5f9; }
-    .meta { color: #64748b; }
-    .card p { color: #cbd5e1; }
+  html.dark .card h2, html.dark .card h3 { color: #f1f5f9; }
+  html.dark .meta { color: #64748b; }
+  html.dark .card p { color: #cbd5e1; }
 
-    .project-image,
-    .project-image-half {
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
-    }
+  html.dark .project-image,
+  html.dark .project-image-half {
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+  }
 
-    .project-image-arch {
-      background: #020617;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6);
-    }
+  html.dark .project-image-arch {
+    background: #020617;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6);
+  }
 
-    .project-gif {
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
-    }
+  html.dark .project-gif {
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
   }

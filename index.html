@@ -18,6 +18,7 @@
   <meta name="twitter:description" content="EEE student at Bilkent University. Projects on neural rendering, seismic imaging, reinforcement learning, robotics, and optimization." />
   <meta name="twitter:image" content="talha-photo.jpg" />
   <link rel="stylesheet" href="styles.css" />
+  <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark');</script>
 </head>
 <body>
   <header>
@@ -31,6 +32,7 @@
         <a href="writings.html">Writings</a>
         <a href="research.html">Research</a>
         <a href="#contact">Contact</a>
+        <button id="dark-toggle" aria-label="Toggle dark mode">🌙</button>
       </nav>
     </div>
   </header>
@@ -167,6 +169,17 @@
       { threshold: 0.12 }
     );
     reveals.forEach((el) => observer.observe(el));
+
+    const toggle = document.getElementById('dark-toggle');
+    function updateToggle() {
+      toggle.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+    }
+    updateToggle();
+    toggle.addEventListener('click', function() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+      updateToggle();
+    });
   </script>
 </body>
 </html>
