@@ -55,7 +55,7 @@
 
       <div class="grid">
 
-        <!-- Seismic NeRF -->
+        <!-- Seismic NeRF 
         <article class="card" id="seismic-nerf">
           <img
             src="nerf.png"
@@ -85,28 +85,57 @@
             so the same vector-quantized encoding and codebook learning techniques transfer naturally.
           </p>
         </article>
-
-        <!-- Tool Selection for Robotic Manipulation -->
-        <article class="card" id="tool-selection">
+-->
+        <!-- ToolMind -->
+        <article class="card" id="toolmind" style="position: relative;">
+          <div style="
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.75rem;
+            border-radius: 999px;
+            box-shadow: 0 2px 8px rgba(245,158,11,0.4);
+            z-index: 2;
+          ">🏆 Best Project</div>
           <img
             src="tool-selection.png"
-            alt="Franka Panda robot arm with objects on a table for tool selection task"
+            alt="ToolMind — Franka Panda robot arm with tools on a tabletop scene"
             class="project-image"
           />
-          <h2>Tool Selection for Robotic Manipulation</h2>
-          <p class="meta">Robot Learning · Affordance · Dexterous Manipulation</p>
+          <h2>ToolMind: VLM-Guided Spatial Reasoning for Robotic Tool Use</h2>
+          <p class="meta">Robot Learning · VLM · Spatial Reasoning · Dexterous Manipulation · Bilkent University · 2026</p>
           <p>
-            Affordance-guided tool selection for dexterous robotic manipulation.
-            The system learns to identify which object to grasp and how to use it
-            based on visual affordance cues, enabling a robot arm to reason about
-            object properties and task requirements before acting.
+            A dual-modality pipeline for scenario-specific sequential robotic tool use.
+            ToolMind couples <strong>GPT-based semantic reasoning</strong> with
+            <strong>depth-based geometric refinement</strong> to drive multi-phase
+            manipulation on a Franka Emika Panda arm.
           </p>
           <p>
-            Part of ongoing research at Bilkent University.
+            The central challenge is <em>spatial myopia</em> — VLMs tend to regress keypoints
+            toward object centroids rather than task-relevant extremities. This is mitigated with
+            a Structured Chain-of-Thought JSON prompting strategy that enforces
+            geometry → grasp anchor → contact tip reasoning before any coordinate output.
+            DBSCAN cluster labels and depth back-projection convert VLM outputs into
+            actionable 3D keypoints, which then drive KOMO-based trajectory optimization
+            across three constrained scenarios: wall retrieval, screwdriver insertion, and shelf retrieval.
+          </p>
+          <p>
+            The pipeline requires no task-specific VLM retraining and operates in an open-world style,
+            with PCA geometry and antipodal search ensuring physically feasible robot actions.
           </p>
           <p class="meta">
-            <a href="Final Proposal.pdf" target="_blank" rel="noopener" class="paper-link">
-              📄 Proposal (PDF)
+            <a href="https://stalhabelen.github.io/toolmind/" target="_blank" rel="noopener">
+              Project page →
+            </a>
+            &nbsp;·&nbsp;
+            <a href="https://stalhabelen.github.io/toolmind/FinalReportCS449.pdf" target="_blank" rel="noopener">
+              📄 Paper (PDF)
             </a>
           </p>
         </article>
@@ -189,7 +218,7 @@
             class="project-image"
             style="margin-top: 0.6rem;"
           />
-          <h2>Safe Swarm Control with HOCBFs</h2>
+          <h2>Safe <!--Swarm --> Control with HOCBFs</h2>
           <p class="meta">
             Multi-Agent Systems · Control · Safety · Control Barrier Functions
           </p>
@@ -234,11 +263,11 @@
             encoders, or generative architectures alongside text or vision tokens.
           </p>
           <p>
-            This project also serves as a foundation for the
+            <!--This project also serves as a foundation for the
             <a href="#seismic-nerf">Seismic Subsurface Imaging</a> work:
             the vector-quantized encoding and codebook learning techniques developed here
             for audio waveforms transfer directly to seismic trace tokenization,
-            since both are 1-D time-series with rich spectral structure.
+            since both are 1-D time-series with rich spectral structure. -->
           </p>
           <p class="meta">
             Code and experiments:
