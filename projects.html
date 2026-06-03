@@ -150,7 +150,7 @@ footer a:hover{color:var(--teal);}
         <h1>Projects</h1>
         <p class="tagline">
           Hands-on projects and experiments around robotic tool use, reinforcement learning, multi-agent systems,
-          neural fields, radar, and image restoration.
+          neural fields, and image restoration.
         </p>
       </div>
     </div>
@@ -159,10 +159,13 @@ footer a:hover{color:var(--teal);}
   <section>
     <div class="section-label">Projects</div>
     <div class="entry">
-      <div class="entry-thumb"><img src="https://stalhabelen.github.io/tool-selection.png" alt="ToolMind project"></div>
+      <div class="entry-thumb" style="position:relative;">
+        <img src="https://stalhabelen.github.io/tool-selection.png" alt="ToolMind project">
+        <div style="position:absolute;top:6px;left:6px;font-size:20px;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4));">👑</div>
+      </div>
       <div>
         <div class="entry-title"><a href="https://stalhabelen.github.io/toolmind/" target="_blank">ToolMind — VLM-Guided Spatial Reasoning for Robotic Tool Use</a></div>
-        <div class="entry-tag">Best Project · Learning for Robotics · VLMs · Robot Tool Use</div>
+        <div class="entry-tag" style="font-weight:700;color:var(--teal);">🏆 Best Project · Learning for Robotics · VLMs · Robot Tool Use</div>
         <div class="entry-desc">A scenario-specific robotic tool-use pipeline that combines VLM reasoning, depth-based geometric refinement, and KOMO-based motion planning for wall retrieval, screwdriver insertion, and shelf retrieval. Selected as the <strong>Best Project</strong> in Bilkent University's Learning for Robotics course.</div>
         <div class="entry-links"><a href="https://stalhabelen.github.io/toolmind/" target="_blank">Project Website</a></div>
       </div>
@@ -221,15 +224,7 @@ footer a:hover{color:var(--teal);}
         <div class="entry-links"><a href="https://stalhabelen.github.io/SwinIRAblition.pdf" target=_blank>Report (PDF)</a></div>
       </div>
     </div>
-    <div class="entry">
-      <div class="entry-thumb"><img src="https://stalhabelen.github.io/dopler.png" alt="Doppler Radar Classification"></div>
-      <div>
-        <div class="entry-title">Doppler Radar Classification</div>
-        <div class="entry-tag">Signal Processing · CNN · RAD-DAR</div>
-        <div class="entry-desc">End-to-end Doppler radar pipeline classifying people, cars, and drones from range–Doppler maps, with clean preprocessing, balanced splits, and interpretable baselines. The CNN baseline reaches ~93% test accuracy and is structured for easy extension.</div>
-        <div class="entry-links"></div>
-      </div>
-    </div>
+
   </section>
   <footer>
     <div class="f-left">© 2025 Suleyman Talha Belen</div>
