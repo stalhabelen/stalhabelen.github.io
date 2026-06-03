@@ -1,162 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Suleyman Talha Belen | Ideas</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta
-    name="description"
-    content="Ideas and rough concept notes by Suleyman Talha Belen on neural fields, curiosity in AI, and the social impact of algorithms."
-  />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Suleyman Talha Belen | Ideas" />
-  <meta property="og:description" content="Concept notes on neural fields for seismic imaging, curiosity mechanisms in AI, and the social impact of recommendation algorithms." />
-  <meta property="og:image" content="talha-photo.jpg" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Suleyman Talha Belen | Ideas" />
-  <meta name="twitter:description" content="Concept notes on neural fields, curiosity in AI, and the social impact of algorithms." />
-  <link rel="stylesheet" href="styles.css" />
-  <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark');</script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Suleyman Talha Belen | Ideas</title>
+<link rel="icon" href="https://stalhabelen.github.io/favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#F7F4EF; --bg2:#EFEBE3; --ink:#1A1714; --ink2:#4A4540; --ink3:#8A837A;
+  --teal:#1B6B6B; --teal2:#2A8F8F; --rule:#D6CFC4; --rule2:#E5DFD4;
+}
+html[data-theme="dark"]{
+  --bg:#15130E; --bg2:#211E17; --ink:#ECE7DC; --ink2:#C2BBAD; --ink3:#8A8276;
+  --teal:#4FB3B3; --teal2:#6FCBCB; --rule:#332F27; --rule2:#28241D;
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:'Spectral',Georgia,serif; font-size:17px; line-height:1.75;
+  min-height:100vh; transition:background .25s,color .25s;
+}
+#wave-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;opacity:.06;z-index:0;}
+.wrapper{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:0 32px;}
+
+/* HEADER */
+header{padding:60px 0 34px;border-bottom:1.5px solid var(--rule);margin-bottom:48px;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;}
+.brand{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--ink);text-decoration:none;letter-spacing:.02em;}
+.nav{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
+.nav a{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.05em;color:var(--ink3);text-decoration:none;border-bottom:1px solid transparent;transition:color .15s,border-color .15s;}
+.nav a:hover{color:var(--teal);border-color:var(--teal);}
+.theme-btn{background:none;border:1px solid var(--rule);border-radius:4px;cursor:pointer;font-size:13px;line-height:1;padding:5px 8px;color:var(--ink2);transition:border-color .15s;}
+.theme-btn:hover{border-color:var(--teal);}
+
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;gap:36px;}
+.header-left{flex:1;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;}
+h1{font-size:clamp(36px,6vw,53px);font-weight:300;line-height:1.08;letter-spacing:-1.5px;color:var(--ink);margin-bottom:18px;}
+h1 em{font-style:italic;font-weight:300;color:var(--ink2);}
+.tagline{font-size:15.5px;color:var(--ink2);line-height:1.6;max-width:480px;font-weight:300;}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px;}
+.badge{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;color:var(--ink2);background:var(--bg2);border:1px solid var(--rule);padding:3px 11px;border-radius:2px;}
+.badge.current{color:var(--teal);border-color:var(--teal);background:rgba(27,107,107,.06);}
+
+/* ROUND PHOTO */
+.photo-slot{flex-shrink:0;width:128px;height:128px;border-radius:50%;position:relative;overflow:hidden;border:1px solid var(--rule);background:var(--bg2);box-shadow:inset 0 0 0 6px var(--bg),0 2px 8px rgba(0,0,0,.05);}
+.photo-slot img{width:100%;height:100%;object-fit:cover;filter:grayscale(12%) sepia(6%);display:block;position:relative;z-index:2;}
+.photo-slot .ph{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--ink3);font-family:'JetBrains Mono',monospace;}
+.photo-slot .ph .init{font-size:25px;letter-spacing:.06em;color:var(--teal);font-weight:500;margin-bottom:2px;}
+.photo-slot .ph .lbl{font-size:9px;letter-spacing:.14em;text-transform:uppercase;}
+
+/* SECTIONS */
+section{margin-bottom:48px;scroll-margin-top:24px;}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:22px;display:flex;align-items:center;gap:12px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--rule);}
+
+.prose{font-size:16px;color:var(--ink2);font-weight:300;max-width:660px;}
+.prose strong{color:var(--ink);font-weight:600;}
+.prose a{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(27,107,107,.3);}
+.prose a:hover{border-bottom-color:var(--teal);}
+
+.page-intro{font-size:17px;color:var(--ink2);font-weight:300;max-width:660px;margin-bottom:34px;line-height:1.6;}
+
+/* CURRENTLY list */
+.now-list{list-style:none;margin-top:18px;}
+.now-list li{font-size:15px;color:var(--ink2);padding-left:18px;position:relative;margin-bottom:6px;line-height:1.5;}
+.now-list li::before{content:'—';position:absolute;left:0;color:var(--teal);}
+.now-list li strong{color:var(--ink);font-weight:600;}
+
+/* LOGOS */
+.studied{display:flex;align-items:center;gap:16px;margin-top:24px;flex-wrap:wrap;}
+.studied .lbl{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink3);letter-spacing:.04em;}
+.studied img{height:30px;width:auto;object-fit:contain;opacity:.9;}
+html[data-theme="dark"] .studied img{filter:brightness(0) invert(1);opacity:.7;}
+
+/* ENTRY (Jon Barron-style row) */
+.entry{display:grid;grid-template-columns:160px 1fr;gap:0 24px;padding:20px 0;border-bottom:1px solid var(--rule2);align-items:start;}
+.entry:last-child{border-bottom:none;}
+.entry-thumb{width:160px;height:108px;border-radius:4px;overflow:hidden;border:1px solid var(--rule);background:var(--bg2);transition:border-color .2s,transform .2s;}
+.entry:hover .entry-thumb{border-color:var(--teal);transform:translateY(-2px);}
+.entry-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.entry-title{font-size:17px;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:3px;letter-spacing:-.2px;}
+.entry-title a{color:var(--ink);text-decoration:none;background-image:linear-gradient(var(--teal),var(--teal));background-size:0% 1.5px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .25s,color .15s;}
+.entry-title a:hover{color:var(--teal);background-size:100% 1.5px;}
+.entry-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal2);letter-spacing:.04em;margin-bottom:5px;}
+.entry-meta{font-size:13.5px;font-style:italic;color:var(--ink3);margin-bottom:7px;}
+.entry-meta b{font-style:normal;font-weight:600;color:var(--ink2);}
+.entry-desc{font-size:14px;color:var(--ink2);font-weight:300;line-height:1.6;margin-bottom:8px;}
+.entry-links{display:flex;gap:8px;flex-wrap:wrap;}
+.entry-links a{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);text-decoration:none;border:1px solid var(--rule);border-radius:2px;padding:1px 9px;transition:background .15s,border-color .15s;}
+.entry-links a:hover{background:rgba(27,107,107,.07);border-color:var(--teal);}
+
+/* IDEAS */
+.idea{padding:24px 0;border-bottom:1px solid var(--rule2);}
+.idea:last-child{border-bottom:none;}
+.idea-kind{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal2);margin-bottom:8px;}
+.idea h2{font-size:21px;font-weight:600;letter-spacing:-.4px;margin-bottom:12px;color:var(--ink);}
+.idea p{font-size:15.5px;color:var(--ink2);font-weight:300;line-height:1.7;margin-bottom:12px;max-width:680px;}
+.idea p:last-child{margin-bottom:0;}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.contact-item{display:flex;flex-direction:column;gap:2px;}
+.contact-item .c-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);}
+.contact-item a{font-size:14.5px;color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(27,107,107,.3);width:fit-content;transition:border-color .15s;}
+.contact-item a:hover{border-bottom-color:var(--teal);}
+
+footer{border-top:1px solid var(--rule);padding:24px 0 48px;display:flex;justify-content:space-between;align-items:center;}
+footer .f-left{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink3);letter-spacing:.04em;}
+footer a{color:var(--ink3);text-decoration:none;}
+footer a:hover{color:var(--teal);}
+
+@media(max-width:580px){
+  .wrapper{padding:0 20px;}
+  header{padding:32px 0 24px;}
+  .topbar{margin-bottom:28px;}
+  .nav{gap:14px;}
+  .header-top{flex-direction:column-reverse;align-items:flex-start;gap:20px;}
+  .photo-slot{width:88px;height:88px;}
+  h1{font-size:33px;}
+  .entry{grid-template-columns:1fr;gap:12px;}
+  .entry-thumb{width:100%;height:160px;}
+  .contact-grid{grid-template-columns:1fr;}
+}
+</style>
 </head>
 <body>
+<canvas id="wave-canvas"></canvas>
+<div class="wrapper">
   <header>
-    <div class="nav-container">
-      <div class="logo"><a href="index.html">S. T. Belen</a></div>
-      <nav>
-        <a href="education.html">Education</a>
-        <a href="experience.html">Experience</a>
-        <a href="projects.html">Projects</a>
-        <a href="ideas.html">Ideas</a>
-        <a href="writings.html">Writings</a>
-        <a href="research.html">Research</a>
-        <a href="index.html#contact">Contact</a>
-        <button id="dark-toggle" aria-label="Toggle dark mode">🌙</button>
-      </nav>
+  <div class="topbar">
+    <a class="brand" href="index.html">S. T. Belen</a>
+    <nav class="nav">
+      <a href="index.html#research">research</a>
+      <a href="index.html#experience">experience</a>
+      <a href="projects.html">projects</a>
+      <a href="ideas.html" style="color:var(--teal)">ideas</a>
+      <a href="index.html#contact">contact</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">🌙</button>
+    </nav>
+  </div>
+    <div class="header-top">
+      <div class="header-left">
+        <div class="eyebrow">Notes &amp; Directions</div>
+        <h1>Ideas</h1>
+        <p class="tagline">
+          Rough notes on future projects, research directions, and questions I am thinking about.
+        </p>
+      </div>
     </div>
   </header>
 
-  <main>
-    <section class="reveal">
-      <h1>Ideas</h1>
-      <p class="page-subtitle">
-        Rough notes on future projects, research directions, and questions I am thinking about.
-      </p>
-
-      <div class="grid">
-        <!-- Idea 1: Seismic + Neural Fields — now an active project -->
-        <article class="card" style="border: 2px solid #2563eb;">
-          <h2>Bridging Seismic Imaging and Neural Fields</h2>
-          <p class="meta">Active project — originally a concept note</p>
-          <p>
-            How far can NeRF-style models go for underground imaging when measurements are limited and noisy?
-            I am interested in representations that respect underlying physics, not just black box models,
-            and in how priors from wave propagation can be folded into neural field architectures.
-          </p>
-          <p>
-            <strong>Update:</strong> This idea turned into an active research project during my internship at SDT.
-            I designed a tokenized seismic rendering pipeline that adapts NeRF-style volumetric rendering
-            to marine seismic acquisition, using vector-quantized tokens from my
-            <a href="projects.html#audio-tokenizer">Multimodal Audio Tokenizer</a>
-            to represent seismic traces.
-          </p>
-          <p class="meta">
-            See the full project: <a href="projects.html#seismic-nerf">NeRF-inspired Seismic Subsurface Imaging</a>
-            &middot; <a href="experience.html">Experience at SDT</a>
-          </p>
-        </article>
-
-        <!-- Idea 2: Curiosity in AI -->
-        <article class="card">
-          <h2>Curiosity Mechanisms in AI</h2>
-          <p class="meta">Short thought</p>
-          <p>
-            Curiosity feels like one of the most human-looking parts of intelligence: noticing a gap,
-            being pulled toward it, and exploring until the gap turns into a map. In RL we already have
-            a small piece of this via intrinsic motivation: rewards for novelty, surprise, or learning progress,
-            which help agents explore when external rewards are sparse.
-          </p>
-          <p>
-            But being curious about a topic is more than wandering in a maze. It needs memory of what is known,
-            a model of uncertainty, and a planner that can choose actions like “read papers,” “run experiments,”
-            or “compare baselines,” under constraints so that exploration has depth instead of becoming noise.
-            If such systems tie curiosity to useful novelty – not just new, but better, simpler, or more general –
-            they might realistically discover new algorithms rather than just random variations.
-          </p>
-        </article>
-
-        <!-- Idea 3: Billions Looking The Same -->
-        <article class="card">
-          <h2>Billions Looking The Same: Why We Need to Build New Algorithms</h2>
-          <p class="meta">Short essay</p>
-          <p>
-            I grew up in Turkiye, then went abroad for education—first the UK, then the US. Before I left,
-            I expected cultural difference to feel louder: different humor, norms, and ways of seeing the world.
-            Instead, what shocked me was how little 13,000 kilometers mattered. In London, in the US, back home,
-            people reference the same viral moments, “main character” quotes, meme templates, and trending sounds.
-          </p>
-          <p>
-            As platforms optimize for engagement, they compress billions of different lives into a few dominant ways
-            of seeing, thinking, and behaving. The system does not care about diversity of content; it cares about
-            what works on most people most of the time. Feeds drift toward safe, familiar, easily digestible pieces
-            that need no context or patience. Tools like duets, remixes, and templates lower the barrier to creation,
-            but they also turn creation into filling in predefined blanks: variation without real divergence.
-          </p>
-          <p>
-            Sameness is not an accident; it is efficient. Platforms benefit from predictable content and responses.
-            Advertisers benefit from aligned desires and aesthetics. Influencers who match the “algorithm-friendly”
-            template are rewarded, sending a signal for others to imitate. Personalization quietly becomes a funnel:
-            you start from “you,” but you end at “what performs.”
-          </p>
-          <p>
-            I do not think the only answer is “use social media less.” This is a systems problem. We need to build
-            new recommendation algorithms that also optimize for cultural diversity, long-term curiosity, local context,
-            and genuine novelty. Systems that sometimes choose “interesting” over “safe,” reward original structures
-            instead of only remixable formats, and keep the world from collapsing into one global aesthetic. Otherwise,
-            “billions looking the same” will not just describe our content, but also who we become.
-          </p>
-        </article>
-      </div>
-    </section>
-  </main>
-
+  <section>
+    <div class="section-label">Ideas</div>
+    <div class="idea">
+      <div class="idea-kind">Concept note</div>
+      <h2>Bridging Seismic Imaging and Neural Fields</h2>
+      <p>How far can NeRF-style models go for underground imaging when measurements are limited and noisy? I am interested in representations that respect underlying physics, not just black-box models, and in how priors from wave propagation can be folded into neural field architectures.</p>
+    </div>
+    <div class="idea">
+      <div class="idea-kind">Short thought</div>
+      <h2>Curiosity Mechanisms in AI</h2>
+      <p>Curiosity feels like one of the most human-looking parts of intelligence: noticing a gap, being pulled toward it, and exploring until the gap turns into a map. In RL we already have a small piece of this via intrinsic motivation — rewards for novelty, surprise, or learning progress — which help agents explore when external rewards are sparse.</p><p>But being curious about a topic is more than wandering in a maze. It needs memory of what is known, a model of uncertainty, and a planner that can choose actions like &ldquo;read papers,&rdquo; &ldquo;run experiments,&rdquo; or &ldquo;compare baselines,&rdquo; under constraints so that exploration has depth instead of becoming noise. If such systems tie curiosity to useful novelty — not just new, but better, simpler, or more general — they might realistically discover new algorithms rather than just random variations.</p>
+    </div>
+    <div class="idea">
+      <div class="idea-kind">Short essay</div>
+      <h2>Billions Looking The Same: Why We Need to Build New Algorithms</h2>
+      <p>I grew up in Turkiye, then went abroad for education — first the UK, then the US. Before I left, I expected cultural difference to feel louder: different humor, norms, and ways of seeing the world. Instead, what shocked me was how little 13,000 kilometers mattered. In London, in the US, back home, people reference the same viral moments, &ldquo;main character&rdquo; quotes, meme templates, and trending sounds.</p><p>As platforms optimize for engagement, they compress billions of different lives into a few dominant ways of seeing, thinking, and behaving. The system does not care about diversity of content; it cares about what works on most people most of the time. Feeds drift toward safe, familiar, easily digestible pieces that need no context or patience. Tools like duets, remixes, and templates lower the barrier to creation, but they also turn creation into filling in predefined blanks: variation without real divergence.</p><p>Sameness is not an accident; it is efficient. Platforms benefit from predictable content and responses. Advertisers benefit from aligned desires and aesthetics. Influencers who match the &ldquo;algorithm-friendly&rdquo; template are rewarded, sending a signal for others to imitate. Personalization quietly becomes a funnel: you start from &ldquo;you,&rdquo; but you end at &ldquo;what performs.&rdquo;</p><p>I do not think the only answer is &ldquo;use social media less.&rdquo; This is a systems problem. We need to build new recommendation algorithms that also optimize for cultural diversity, long-term curiosity, local context, and genuine novelty — systems that sometimes choose &ldquo;interesting&rdquo; over &ldquo;safe,&rdquo; reward original structures instead of only remixable formats, and keep the world from collapsing into one global aesthetic. Otherwise, &ldquo;billions looking the same&rdquo; will not just describe our content, but also who we become.</p>
+    </div>
+  </section>
   <footer>
-    <span>© <span id="year"></span> Suleyman Talha Belen.</span>
-    <span
-      class="back-to-top"
-      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
-    >
-      ↑ Back to top
-    </span>
+    <div class="f-left">© 2025 Suleyman Talha Belen</div>
+    <div class="f-left"><a href="#">↑ top</a></div>
   </footer>
+</div>
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeBtn');
+  function set(t){ root.setAttribute('data-theme',t); if(btn) btn.textContent=(t==='dark'?'☀':'🌙'); waveColor=null; }
+  var saved='light'; try{ saved=localStorage.getItem('theme')||'light'; }catch(e){}
+  set(saved);
+  if(btn) btn.addEventListener('click',function(){
+    var t=root.getAttribute('data-theme')==='dark'?'light':'dark';
+    set(t); try{ localStorage.setItem('theme',t); }catch(e){}
+  });
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    const reveals = document.querySelectorAll(".reveal");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("active");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    reveals.forEach((el) => observer.observe(el));
-
-    const toggle = document.getElementById('dark-toggle');
-    function updateToggle() {
-      toggle.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
-    }
-    updateToggle();
-    toggle.addEventListener('click', function() {
-      document.documentElement.classList.toggle('dark');
-      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-      updateToggle();
-    });
-  </script>
+  // subtle signal-waveform background
+  var c=document.getElementById('wave-canvas'), x=c.getContext('2d'), t=0, waveColor=null;
+  function rs(){ c.width=innerWidth; c.height=innerHeight; }
+  function col(){ if(!waveColor) waveColor=getComputedStyle(root).getPropertyValue('--teal').trim()||'#1B6B6B'; return waveColor; }
+  function draw(){
+    x.clearRect(0,0,c.width,c.height);
+    var h=c.height,w=c.width,wv=[{f:.008,a:60,s:.003,y:h*.25},{f:.005,a:40,s:.002,y:h*.55},{f:.012,a:25,s:.004,y:h*.78}];
+    x.strokeStyle=col(); x.lineWidth=1;
+    wv.forEach(function(o){ x.beginPath(); for(var i=0;i<=w;i+=2){ var y=o.y+Math.sin(i*o.f+t*o.s*1000)*o.a; i===0?x.moveTo(i,y):x.lineTo(i,y);} x.stroke(); });
+    t++; requestAnimationFrame(draw);
+  }
+  rs(); addEventListener('resize',rs); draw();
+})();
+</script>
 </body>
 </html>

@@ -1,210 +1,336 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Suleyman Talha Belen | Home</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta
-    name="description"
-    content="Personal website of Suleyman Talha Belen, Electrical and Electronics Engineering student at Bilkent University. Projects, ideas, writings, and papers on signal processing, machine learning, robotics, and optimization."
-  />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Suleyman Talha Belen | Home" />
-  <meta property="og:description" content="EEE student at Bilkent University. Projects on neural rendering, seismic imaging, reinforcement learning, robotics, and optimization." />
-  <meta property="og:image" content="talha-photo.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Suleyman Talha Belen | Home" />
-  <meta name="twitter:description" content="EEE student at Bilkent University. Projects on neural rendering, seismic imaging, reinforcement learning, robotics, and optimization." />
-  <meta name="twitter:image" content="talha-photo.jpg" />
-  <link rel="stylesheet" href="styles.css" />
-  <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark');</script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Suleyman Talha Belen | Home</title>
+<link rel="icon" href="https://stalhabelen.github.io/favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#F7F4EF; --bg2:#EFEBE3; --ink:#1A1714; --ink2:#4A4540; --ink3:#8A837A;
+  --teal:#1B6B6B; --teal2:#2A8F8F; --rule:#D6CFC4; --rule2:#E5DFD4;
+}
+html[data-theme="dark"]{
+  --bg:#15130E; --bg2:#211E17; --ink:#ECE7DC; --ink2:#C2BBAD; --ink3:#8A8276;
+  --teal:#4FB3B3; --teal2:#6FCBCB; --rule:#332F27; --rule2:#28241D;
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:'Spectral',Georgia,serif; font-size:17px; line-height:1.75;
+  min-height:100vh; transition:background .25s,color .25s;
+}
+#wave-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;opacity:.06;z-index:0;}
+.wrapper{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:0 32px;}
+
+/* HEADER */
+header{padding:60px 0 34px;border-bottom:1.5px solid var(--rule);margin-bottom:48px;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;}
+.brand{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--ink);text-decoration:none;letter-spacing:.02em;}
+.nav{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
+.nav a{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.05em;color:var(--ink3);text-decoration:none;border-bottom:1px solid transparent;transition:color .15s,border-color .15s;}
+.nav a:hover{color:var(--teal);border-color:var(--teal);}
+.theme-btn{background:none;border:1px solid var(--rule);border-radius:4px;cursor:pointer;font-size:13px;line-height:1;padding:5px 8px;color:var(--ink2);transition:border-color .15s;}
+.theme-btn:hover{border-color:var(--teal);}
+
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;gap:36px;}
+.header-left{flex:1;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;}
+h1{font-size:clamp(36px,6vw,53px);font-weight:300;line-height:1.08;letter-spacing:-1.5px;color:var(--ink);margin-bottom:18px;}
+h1 em{font-style:italic;font-weight:300;color:var(--ink2);}
+.tagline{font-size:15.5px;color:var(--ink2);line-height:1.6;max-width:480px;font-weight:300;}
+
+/* ROUND PHOTO */
+.photo-slot{flex-shrink:0;width:128px;height:128px;border-radius:50%;position:relative;overflow:hidden;border:1px solid var(--rule);background:var(--bg2);box-shadow:inset 0 0 0 6px var(--bg),0 2px 8px rgba(0,0,0,.05);}
+.photo-slot img{width:100%;height:100%;object-fit:cover;filter:grayscale(12%) sepia(6%);display:block;position:relative;z-index:2;}
+.photo-slot .ph{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--ink3);font-family:'JetBrains Mono',monospace;}
+.photo-slot .ph .init{font-size:25px;letter-spacing:.06em;color:var(--teal);font-weight:500;margin-bottom:2px;}
+.photo-slot .ph .lbl{font-size:9px;letter-spacing:.14em;text-transform:uppercase;}
+
+/* SECTIONS */
+section{margin-bottom:48px;scroll-margin-top:24px;}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:22px;display:flex;align-items:center;gap:12px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--rule);}
+
+.prose{font-size:16px;color:var(--ink2);font-weight:300;max-width:660px;}
+.prose strong{color:var(--ink);font-weight:600;}
+.prose a{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(27,107,107,.3);}
+.prose a:hover{border-bottom-color:var(--teal);}
+
+.page-intro{font-size:17px;color:var(--ink2);font-weight:300;max-width:660px;margin-bottom:34px;line-height:1.6;}
+
+/* CURRENTLY list */
+.now-list{list-style:none;margin-top:18px;}
+.now-list li{font-size:15px;color:var(--ink2);padding-left:18px;position:relative;margin-bottom:6px;line-height:1.5;}
+.now-list li::before{content:'—';position:absolute;left:0;color:var(--teal);}
+.now-list li strong{color:var(--ink);font-weight:600;}
+
+/* SCHOOLS (with focus areas) */
+.schools{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px;}
+.school{border:1px solid var(--rule);border-radius:6px;padding:18px 14px;background:var(--bg2);display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;}
+.school-logo{height:34px;width:auto;object-fit:contain;opacity:.92;}
+html[data-theme="dark"] .school-logo{filter:brightness(0) invert(1);opacity:.78;}
+.school-name{font-size:14px;font-weight:600;color:var(--ink);line-height:1.25;}
+.school-area{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.03em;color:var(--teal2);line-height:1.5;}
+
+/* TIMELINE */
+.timeline{list-style:none;}
+.timeline-item{display:grid;grid-template-columns:104px 1fr;gap:0 20px;margin-bottom:16px;font-size:15px;position:relative;}
+.timeline-item::before{content:'';position:absolute;left:98px;top:11px;bottom:-16px;width:1px;background:var(--rule);}
+.timeline-item:last-child::before{display:none;}
+.timeline-item::after{content:'';position:absolute;left:94px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--teal);border:1.5px solid var(--bg);box-shadow:0 0 0 1.5px var(--teal);}
+.t-date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink3);padding-top:3px;text-align:right;padding-right:20px;}
+.t-body{color:var(--ink2);line-height:1.55;}
+.t-body strong{color:var(--ink);font-weight:600;}
+
+/* ENTRY (Jon Barron-style row) */
+.entry{display:grid;grid-template-columns:160px 1fr;gap:0 24px;padding:20px 0;border-bottom:1px solid var(--rule2);align-items:start;}
+.entry:last-child{border-bottom:none;}
+.entry-thumb{width:160px;height:108px;border-radius:4px;overflow:hidden;border:1px solid var(--rule);background:var(--bg2);transition:border-color .2s,transform .2s;}
+.entry:hover .entry-thumb{border-color:var(--teal);transform:translateY(-2px);}
+.entry-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.entry-title{font-size:17px;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:3px;letter-spacing:-.2px;}
+.entry-title a{color:var(--ink);text-decoration:none;background-image:linear-gradient(var(--teal),var(--teal));background-size:0% 1.5px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .25s,color .15s;}
+.entry-title a:hover{color:var(--teal);background-size:100% 1.5px;}
+.entry-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal2);letter-spacing:.04em;margin-bottom:5px;}
+.entry-meta{font-size:13.5px;font-style:italic;color:var(--ink3);margin-bottom:7px;}
+.entry-meta b{font-style:normal;font-weight:600;color:var(--ink2);}
+.entry-desc{font-size:14px;color:var(--ink2);font-weight:300;line-height:1.6;margin-bottom:8px;}
+.entry-links{display:flex;gap:8px;flex-wrap:wrap;}
+.entry-links a{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);text-decoration:none;border:1px solid var(--rule);border-radius:2px;padding:1px 9px;transition:background .15s,border-color .15s;}
+.entry-links a:hover{background:rgba(27,107,107,.07);border-color:var(--teal);}
+
+/* IDEAS */
+.idea{padding:24px 0;border-bottom:1px solid var(--rule2);}
+.idea:last-child{border-bottom:none;}
+.idea-kind{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal2);margin-bottom:8px;}
+.idea h2{font-size:21px;font-weight:600;letter-spacing:-.4px;margin-bottom:12px;color:var(--ink);}
+.idea p{font-size:15.5px;color:var(--ink2);font-weight:300;line-height:1.7;margin-bottom:12px;max-width:680px;}
+.idea p:last-child{margin-bottom:0;}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.contact-item{display:flex;flex-direction:column;gap:2px;}
+.contact-item .c-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);}
+.contact-item a{font-size:14.5px;color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(27,107,107,.3);width:fit-content;transition:border-color .15s;}
+.contact-item a:hover{border-bottom-color:var(--teal);}
+
+footer{border-top:1px solid var(--rule);padding:24px 0 48px;display:flex;justify-content:space-between;align-items:center;}
+footer .f-left{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink3);letter-spacing:.04em;}
+footer a{color:var(--ink3);text-decoration:none;}
+footer a:hover{color:var(--teal);}
+
+@media(max-width:580px){
+  .wrapper{padding:0 20px;}
+  header{padding:32px 0 24px;}
+  .topbar{margin-bottom:28px;}
+  .nav{gap:14px;}
+  .header-top{flex-direction:column-reverse;align-items:flex-start;gap:20px;}
+  .photo-slot{width:88px;height:88px;}
+  h1{font-size:33px;}
+  .entry{grid-template-columns:1fr;gap:12px;}
+  .entry-thumb{width:100%;height:160px;}
+  .schools{grid-template-columns:1fr;}
+  .timeline-item{grid-template-columns:78px 1fr;gap:0 16px;}
+  .timeline-item::before{left:72px;}
+  .timeline-item::after{left:68px;}
+  .t-date{padding-right:16px;}
+  .contact-grid{grid-template-columns:1fr;}
+}
+</style>
 </head>
 <body>
+<canvas id="wave-canvas"></canvas>
+<div class="wrapper">
   <header>
-    <div class="nav-container">
-      <div class="logo"><a href="index.html">S. T. Belen</a></div>
-      <nav id="mainNav">
-        <a href="education.html">Education</a>
-        <a href="experience.html">Experience</a>
-        <a href="projects.html">Projects</a>
-        <a href="ideas.html">Ideas</a>
-        <a href="writings.html">Writings</a>
-        <a href="research.html">Research</a>
-        <a href="#contact">Contact</a>
-        <button id="dark-toggle" aria-label="Toggle dark mode">🌙</button>
-      </nav>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+  <div class="topbar">
+    <a class="brand" href="index.html">S. T. Belen</a>
+    <nav class="nav">
+      <a href="index.html#research">research</a>
+      <a href="index.html#experience">experience</a>
+      <a href="projects.html">projects</a>
+      <a href="ideas.html">ideas</a>
+      <a href="index.html#contact">contact</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">🌙</button>
+    </nav>
+  </div>
+    <div class="header-top">
+      <div class="header-left">
+        <div class="eyebrow">EEE · Bilkent University</div>
+        <h1>Suleyman<br><em>Talha Belen</em></h1>
+        <p class="tagline">
+          EEE student at Bilkent University, interested in robotics,
+          machine learning, optimization, reinforcement learning, and signal processing.
+        </p>
+      </div>
+      <div class="photo-slot" id="photoSlot">
+        <img src="https://stalhabelen.github.io/talha-photo.jpg" alt="Suleyman Talha Belen"
+             onerror="this.style.display='none';">
+        <div class="ph"><span class="init">STB</span><span class="lbl">photo</span></div>
+      </div>
     </div>
   </header>
 
-  <main>
-    <!-- HERO -->
-    <section class="hero reveal" id="hero">
-      <div class="hero-left">
+  <section id="about">
+    <div class="section-label">About</div>
+    <div class="prose">
+      I'm an Electrical &amp; Electronics Engineering student at <strong>Bilkent University</strong>,
+      exploring research at the intersection of robotics, machine learning, optimization,
+      reinforcement learning, and signal processing.
+      <ul class="now-list">
+        <li><strong>B.E. Electrical &amp; Electronics Engineering</strong> @ Bilkent University (2027 expected)</li>
+        <li>Visiting Student in CS @ <strong>Stanford University</strong> '25</li>
+        <li>Visiting Student in EECS @ <strong>UC Berkeley</strong> '24</li>
+      </ul>
+    </div>
 
-        <!-- hover-tilt profile card -->
-        <div class="profile-wrapper">
-          <div class="profile-card">
-            <img src="talha-photo.jpg" alt="Photo of Suleyman Talha Belen" class="profile-photo" />
-            <div class="profile-glow"></div>
-          </div>
-        </div>
+    <div class="schools" aria-label="Education and focus areas">
+      <div class="school">
+        <img class="school-logo" src="https://stalhabelen.github.io/bilkent-logo.png" alt="Bilkent University">
+        <div class="school-name">Bilkent University</div>
+        <div class="school-area">EEE · Robotics · Signal Processing</div>
+      </div>
+      <div class="school">
+        <img class="school-logo" src="https://stalhabelen.github.io/stanford-logo.png" alt="Stanford University">
+        <div class="school-name">Stanford University</div>
+        <div class="school-area">CS · Optimization · Machine Learning</div>
+      </div>
+      <div class="school">
+        <img class="school-logo" src="https://stalhabelen.github.io/berkeley-logo.png" alt="UC Berkeley">
+        <div class="school-name">UC Berkeley</div>
+        <div class="school-area">EECS · Information Devices · Technology Leadership</div>
+      </div>
+    </div>
+  </section>
 
-        <h1>
-          Suleyman Talha Belen<br />
-          <span>EEE Student, Robotics and Optimization Enthusiast</span>
-        </h1>
-        <p class="hero-subtitle">
-          Electrical and Electronics Engineering student at Bilkent University, interested in
-          signal processing, machine learning, robotics, reinforcement learning, and optimization.
-        </p>
+  <section id="timeline">
+    <div class="section-label">Timeline</div>
+    <ul class="timeline">
+      <li class="timeline-item">
+        <div class="t-date">2023–2027</div>
+        <div class="t-body"><strong>Bilkent University</strong> — B.E. in Electrical &amp; Electronics Engineering, with interests in robotics, signal processing, machine learning, and optimization.</div>
+      </li>
+      <li class="timeline-item">
+        <div class="t-date">2024</div>
+        <div class="t-body"><strong>UC Berkeley</strong> — Visiting student in EECS, studying information devices, systems foundations, and technology leadership.</div>
+      </li>
+      <li class="timeline-item">
+        <div class="t-date">2025</div>
+        <div class="t-body"><strong>Stanford University</strong> — Visiting student in CS, focusing on optimization, machine learning, and reinforcement learning.</div>
+      </li>
+    </ul>
+  </section>
 
-        <div class="school-logos">
-          <span>Studied at:</span>
-          <img src="bilkent-logo.png" alt="Bilkent University logo" class="school-logo" />
-          <img src="stanford-logo.png" alt="Stanford University logo" class="school-logo" />
-          <picture><source srcset="berkeley-logo.webp" type="image/webp" /><img src="berkeley-logo.png" alt="UC Berkeley logo" class="school-logo" /></picture>
+  <section id="research">
+    <div class="section-label">Research</div>
+    <div class="prose" style="margin-bottom:22px;">
+      My research interests include robotics, machine learning, reinforcement learning,
+      optimization, and decision-making systems.
+    </div>
+
+    <div class="entry">
+      <div class="entry-thumb"><img src="https://stalhabelen.github.io/nyu.png" alt="NYU CILVR"></div>
+      <div>
+        <div class="entry-title">UG Research Intern — Robotics, NYU CILVR</div>
+        <div class="entry-tag">Robot Learning · World Models · Dexterous Manipulation</div>
+        <div class="entry-meta"><b>Jan 2026 – Present</b> · Advised by Lerrel Pinto and Irmak Guzey</div>
+        <div class="entry-desc">
+          Working on affordance-guided world models for dexterous robotic manipulation.
+          Remote collaboration with on-site research planned for Summer 2026.
         </div>
       </div>
+    </div>
 
-      <div class="hero-right">
-        <!-- robotics GIF card -->
-        <div class="hero-graphic">
-          <div class="robot-gif-card">
-            <img src="robotics.gif" alt="Robotics animation" class="robot-gif" />
-          </div>
+    <div class="entry">
+      <div class="entry-thumb"><img src="https://stalhabelen.github.io/cvxpy.png" alt="CVXPY"></div>
+      <div>
+        <div class="entry-title">Prospective DNLP Contributor — Stanford CVXPY</div>
+        <div class="entry-tag">Convex Optimization · Disciplined Nonlinear Programming</div>
+        <div class="entry-meta"><b>Dec 2025 – Present</b> · Advised by William Zhang</div>
+        <div class="entry-desc">
+          Working on optimality conditions for Disciplined Nonlinear Programming and feasibility
+          checks via maximum constraint violation across constraints during post-solve validation.
         </div>
+        <div class="entry-links"><a href="https://stalhabelen.github.io/gsoc_cvxpy_proposal.pdf">Proposal (PDF)</a></div>
+      </div>
+    </div>
+  </section>
 
-        <div class="hero-panel">
-          <h2>Currently</h2>
-          <ul>
-            <li>B.E. Electrical and Electronics Engineering @ Bilkent University (2027 expected)</li>
-            <li>Visiting Student in CS @ Stanford University '25</li>
-            <li>Visiting Student in EECS @ UC Berkeley '24</li>
-            <li>Exploring research at the intersection of robotics, signal processing, optimization and ML</li>
-          </ul>
+  <section id="experience">
+    <div class="section-label">Experience</div>
+    <div class="prose" style="margin-bottom:22px;">
+      Hands-on work at the intersection of neural rendering, seismic subsurface imaging,
+      and teaching in optimization.
+    </div>
+
+    <div class="entry">
+      <div class="entry-thumb"><img src="https://stalhabelen.github.io/nerf.png" alt="Seismic neural rendering"></div>
+      <div>
+        <div class="entry-title">Space Defense Technologies — SDT</div>
+        <div class="entry-tag">Applied Research Internship · 2025</div>
+        <div class="entry-desc">
+          Brought neural rendering ideas into seismic subsurface imaging: a compact NeRF pipeline
+          adapting multi-view consistency to seismic CMP gathers, plus a proposed tokenized seismic
+          rendering architecture using time–frequency features, vector quantization, and a transformer decoder.
+        </div>
+        <div class="entry-links"><a href="projects.html">Related projects</a></div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-thumb"><img src="https://stalhabelen.github.io/stanford-session.png" alt="Stanford EE364A study session"></div>
+      <div>
+        <div class="entry-title">Study Session Instructor, Stanford University</div>
+        <div class="entry-tag">Convex Optimization (EE 364A) · 2025</div>
+        <div class="entry-desc">
+          Co-led a final-exam review session for EE 364A with three peers, teaching and reviewing
+          key optimization concepts for the class.
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- QUICK LINKS -->
-    <section class="reveal">
-      <h2>Explore</h2>
-      <div class="quick-links">
-        <a href="education.html" class="ql-card">
-          <h3>Education</h3>
-          <p>Bilkent EE, and visiting student experiences at Stanford and UC Berkeley.</p>
-        </a>
-        <a href="experience.html" class="ql-card">
-          <h3>Experience</h3>
-          <p>Applied research internship on seismic data visualization at SDT.</p>
-        </a>
-        <a href="projects.html" class="ql-card">
-          <h3>Projects</h3>
-          <p>Reinforcement learning, neural fields, and study experiments.</p>
-        </a>
-        <a href="ideas.html" class="ql-card">
-          <h3>Ideas</h3>
-          <p>Future directions, concept notes, and open questions.</p>
-        </a>
-        <a href="research.html" class="ql-card">
-          <h3>Research</h3>
-          <p>Reading list and future work I would like to publish.</p>
-        </a>
-        <a href="writings.html" class="ql-card">
-          <h3>Writings</h3>
-          <p>Personal and technical posts, written mainly for my future self.</p>
-        </a>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="reveal">
-      <h2>Contact</h2>
-      <p class="section-subtitle">
-        Feel free to reach out about collaborations, internships, or just to say hello.
-      </p>
-      <div class="contact-links">
-        <a href="mailto:talha.belen@ug.bilkent.edu.tr" class="contact-link-card">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
-          <div>
-            <div class="contact-link-label">Email</div>
-            <div class="contact-link-value">talha.belen@ug.bilkent.edu.tr</div>
-          </div>
-        </a>
-        <a href="https://www.linkedin.com/in/suleyman-talha-belen-b0645a2a5" target="_blank" rel="noreferrer" class="contact-link-card">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-          <div>
-            <div class="contact-link-label">LinkedIn</div>
-            <div class="contact-link-value">suleyman-talha-belen</div>
-          </div>
-        </a>
-        <a href="https://github.com/stalhabelen" target="_blank" rel="noreferrer" class="contact-link-card">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-          <div>
-            <div class="contact-link-label">GitHub</div>
-            <div class="contact-link-value">stalhabelen</div>
-          </div>
-        </a>
-      </div>
-    </section>
-  </main>
-
+  <section id="contact">
+    <div class="section-label">Contact</div>
+    <div class="contact-grid">
+      <div class="contact-item"><span class="c-label">Email</span><a href="mailto:talha.belen@ug.bilkent.edu.tr">talha.belen@ug.bilkent.edu.tr</a></div>
+      <div class="contact-item"><span class="c-label">LinkedIn</span><a href="https://linkedin.com/in/suleyman-talha-belen-b0645a2a5" target="_blank">suleyman-talha-belen</a></div>
+      <div class="contact-item"><span class="c-label">GitHub</span><a href="https://github.com/stalhabelen" target="_blank">github.com/stalhabelen</a></div>
+    </div>
+  </section>
   <footer>
-    <span>© <span id="year"></span> Suleyman Talha Belen.</span>
-    <span
-      class="back-to-top"
-      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
-    >
-      ↑ Back to top
-    </span>
+    <div class="f-left">© 2025 Suleyman Talha Belen</div>
+    <div class="f-left"><a href="#">↑ top</a></div>
   </footer>
+</div>
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeBtn');
+  function set(t){ root.setAttribute('data-theme',t); if(btn) btn.textContent=(t==='dark'?'☀':'🌙'); waveColor=null; }
+  var saved='light'; try{ saved=localStorage.getItem('theme')||'light'; }catch(e){}
+  set(saved);
+  if(btn) btn.addEventListener('click',function(){
+    var t=root.getAttribute('data-theme')==='dark'?'light':'dark';
+    set(t); try{ localStorage.setItem('theme',t); }catch(e){}
+  });
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    const reveals = document.querySelectorAll(".reveal");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("active");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    reveals.forEach((el) => observer.observe(el));
-
-    // Mobile nav toggle
-    const navToggle = document.getElementById("navToggle");
-    const mainNav = document.getElementById("mainNav");
-    navToggle.addEventListener("click", () => {
-      const isOpen = mainNav.classList.toggle("open");
-      navToggle.setAttribute("aria-expanded", isOpen);
-    });
-    mainNav.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        mainNav.classList.remove("open");
-        navToggle.setAttribute("aria-expanded", "false");
-      });
-    });
-
-    // Dark mode toggle
-    const toggle = document.getElementById('dark-toggle');
-    function updateToggle() {
-      toggle.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
-    }
-    updateToggle();
-    toggle.addEventListener('click', function() {
-      document.documentElement.classList.toggle('dark');
-      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-      updateToggle();
-    });
-  </script>
+  // subtle signal-waveform background
+  var c=document.getElementById('wave-canvas'), x=c.getContext('2d'), t=0, waveColor=null;
+  function rs(){ c.width=innerWidth; c.height=innerHeight; }
+  function col(){ if(!waveColor) waveColor=getComputedStyle(root).getPropertyValue('--teal').trim()||'#1B6B6B'; return waveColor; }
+  function draw(){
+    x.clearRect(0,0,c.width,c.height);
+    var h=c.height,w=c.width,wv=[{f:.008,a:60,s:.003,y:h*.25},{f:.005,a:40,s:.002,y:h*.55},{f:.012,a:25,s:.004,y:h*.78}];
+    x.strokeStyle=col(); x.lineWidth=1;
+    wv.forEach(function(o){ x.beginPath(); for(var i=0;i<=w;i+=2){ var y=o.y+Math.sin(i*o.f+t*o.s*1000)*o.a; i===0?x.moveTo(i,y):x.lineTo(i,y);} x.stroke(); });
+    t++; requestAnimationFrame(draw);
+  }
+  rs(); addEventListener('resize',rs); draw();
+})();
+</script>
 </body>
 </html>

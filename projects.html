@@ -1,362 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Suleyman Talha Belen | Projects</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta
-    name="description"
-    content="Projects by Suleyman Talha Belen on neural rendering for seismic imaging, multimodal audio tokenization, reinforcement learning, multi-agent safety, and image super-resolution."
-  />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Suleyman Talha Belen | Projects" />
-  <meta property="og:description" content="Neural rendering for seismic imaging, multimodal audio tokenization, reinforcement learning, multi-agent safety, and image super-resolution." />
-  <meta property="og:image" content="talha-photo.jpg" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Suleyman Talha Belen | Projects" />
-  <meta name="twitter:description" content="Neural rendering for seismic imaging, multimodal audio tokenization, reinforcement learning, and more." />
-  <!-- GLOBAL CSS -->
-  <link rel="stylesheet" href="styles.css?v=2" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Suleyman Talha Belen | Projects</title>
+<link rel="icon" href="https://stalhabelen.github.io/favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#F7F4EF; --bg2:#EFEBE3; --ink:#1A1714; --ink2:#4A4540; --ink3:#8A837A;
+  --teal:#1B6B6B; --teal2:#2A8F8F; --rule:#D6CFC4; --rule2:#E5DFD4;
+}
+html[data-theme="dark"]{
+  --bg:#15130E; --bg2:#211E17; --ink:#ECE7DC; --ink2:#C2BBAD; --ink3:#8A8276;
+  --teal:#4FB3B3; --teal2:#6FCBCB; --rule:#332F27; --rule2:#28241D;
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:'Spectral',Georgia,serif; font-size:17px; line-height:1.75;
+  min-height:100vh; transition:background .25s,color .25s;
+}
+#wave-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;opacity:.06;z-index:0;}
+.wrapper{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:0 32px;}
 
-  <!-- PROJECTS PAGE ONLY -->
-  <link rel="stylesheet" href="projects.css?v=2" />
-  <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark');</script>
+/* HEADER */
+header{padding:60px 0 34px;border-bottom:1.5px solid var(--rule);margin-bottom:48px;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;}
+.brand{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--ink);text-decoration:none;letter-spacing:.02em;}
+.nav{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
+.nav a{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.05em;color:var(--ink3);text-decoration:none;border-bottom:1px solid transparent;transition:color .15s,border-color .15s;}
+.nav a:hover{color:var(--teal);border-color:var(--teal);}
+.theme-btn{background:none;border:1px solid var(--rule);border-radius:4px;cursor:pointer;font-size:13px;line-height:1;padding:5px 8px;color:var(--ink2);transition:border-color .15s;}
+.theme-btn:hover{border-color:var(--teal);}
 
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;gap:36px;}
+.header-left{flex:1;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;}
+h1{font-size:clamp(36px,6vw,53px);font-weight:300;line-height:1.08;letter-spacing:-1.5px;color:var(--ink);margin-bottom:18px;}
+h1 em{font-style:italic;font-weight:300;color:var(--ink2);}
+.tagline{font-size:15.5px;color:var(--ink2);line-height:1.6;max-width:480px;font-weight:300;}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px;}
+.badge{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;color:var(--ink2);background:var(--bg2);border:1px solid var(--rule);padding:3px 11px;border-radius:2px;}
+.badge.current{color:var(--teal);border-color:var(--teal);background:rgba(27,107,107,.06);}
 
+/* ROUND PHOTO */
+.photo-slot{flex-shrink:0;width:128px;height:128px;border-radius:50%;position:relative;overflow:hidden;border:1px solid var(--rule);background:var(--bg2);box-shadow:inset 0 0 0 6px var(--bg),0 2px 8px rgba(0,0,0,.05);}
+.photo-slot img{width:100%;height:100%;object-fit:cover;filter:grayscale(12%) sepia(6%);display:block;position:relative;z-index:2;}
+.photo-slot .ph{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--ink3);font-family:'JetBrains Mono',monospace;}
+.photo-slot .ph .init{font-size:25px;letter-spacing:.06em;color:var(--teal);font-weight:500;margin-bottom:2px;}
+.photo-slot .ph .lbl{font-size:9px;letter-spacing:.14em;text-transform:uppercase;}
 
-  
+/* SECTIONS */
+section{margin-bottom:48px;scroll-margin-top:24px;}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:22px;display:flex;align-items:center;gap:12px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--rule);}
 
+.prose{font-size:16px;color:var(--ink2);font-weight:300;max-width:660px;}
+.prose strong{color:var(--ink);font-weight:600;}
+.prose a{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(27,107,107,.3);}
+.prose a:hover{border-bottom-color:var(--teal);}
+
+.page-intro{font-size:17px;color:var(--ink2);font-weight:300;max-width:660px;margin-bottom:34px;line-height:1.6;}
+
+/* CURRENTLY list */
+.now-list{list-style:none;margin-top:18px;}
+.now-list li{font-size:15px;color:var(--ink2);padding-left:18px;position:relative;margin-bottom:6px;line-height:1.5;}
+.now-list li::before{content:'—';position:absolute;left:0;color:var(--teal);}
+.now-list li strong{color:var(--ink);font-weight:600;}
+
+/* LOGOS */
+.studied{display:flex;align-items:center;gap:16px;margin-top:24px;flex-wrap:wrap;}
+.studied .lbl{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink3);letter-spacing:.04em;}
+.studied img{height:30px;width:auto;object-fit:contain;opacity:.9;}
+html[data-theme="dark"] .studied img{filter:brightness(0) invert(1);opacity:.7;}
+
+/* ENTRY (Jon Barron-style row) */
+.entry{display:grid;grid-template-columns:160px 1fr;gap:0 24px;padding:20px 0;border-bottom:1px solid var(--rule2);align-items:start;}
+.entry:last-child{border-bottom:none;}
+.entry-thumb{width:160px;height:108px;border-radius:4px;overflow:hidden;border:1px solid var(--rule);background:var(--bg2);transition:border-color .2s,transform .2s;}
+.entry:hover .entry-thumb{border-color:var(--teal);transform:translateY(-2px);}
+.entry-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.entry-title{font-size:17px;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:3px;letter-spacing:-.2px;}
+.entry-title a{color:var(--ink);text-decoration:none;background-image:linear-gradient(var(--teal),var(--teal));background-size:0% 1.5px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .25s,color .15s;}
+.entry-title a:hover{color:var(--teal);background-size:100% 1.5px;}
+.entry-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal2);letter-spacing:.04em;margin-bottom:5px;}
+.entry-meta{font-size:13.5px;font-style:italic;color:var(--ink3);margin-bottom:7px;}
+.entry-meta b{font-style:normal;font-weight:600;color:var(--ink2);}
+.entry-desc{font-size:14px;color:var(--ink2);font-weight:300;line-height:1.6;margin-bottom:8px;}
+.entry-links{display:flex;gap:8px;flex-wrap:wrap;}
+.entry-links a{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);text-decoration:none;border:1px solid var(--rule);border-radius:2px;padding:1px 9px;transition:background .15s,border-color .15s;}
+.entry-links a:hover{background:rgba(27,107,107,.07);border-color:var(--teal);}
+
+/* IDEAS */
+.idea{padding:24px 0;border-bottom:1px solid var(--rule2);}
+.idea:last-child{border-bottom:none;}
+.idea-kind{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal2);margin-bottom:8px;}
+.idea h2{font-size:21px;font-weight:600;letter-spacing:-.4px;margin-bottom:12px;color:var(--ink);}
+.idea p{font-size:15.5px;color:var(--ink2);font-weight:300;line-height:1.7;margin-bottom:12px;max-width:680px;}
+.idea p:last-child{margin-bottom:0;}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.contact-item{display:flex;flex-direction:column;gap:2px;}
+.contact-item .c-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);}
+.contact-item a{font-size:14.5px;color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(27,107,107,.3);width:fit-content;transition:border-color .15s;}
+.contact-item a:hover{border-bottom-color:var(--teal);}
+
+footer{border-top:1px solid var(--rule);padding:24px 0 48px;display:flex;justify-content:space-between;align-items:center;}
+footer .f-left{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink3);letter-spacing:.04em;}
+footer a{color:var(--ink3);text-decoration:none;}
+footer a:hover{color:var(--teal);}
+
+@media(max-width:580px){
+  .wrapper{padding:0 20px;}
+  header{padding:32px 0 24px;}
+  .topbar{margin-bottom:28px;}
+  .nav{gap:14px;}
+  .header-top{flex-direction:column-reverse;align-items:flex-start;gap:20px;}
+  .photo-slot{width:88px;height:88px;}
+  h1{font-size:33px;}
+  .entry{grid-template-columns:1fr;gap:12px;}
+  .entry-thumb{width:100%;height:160px;}
+  .contact-grid{grid-template-columns:1fr;}
+}
+</style>
 </head>
 <body>
+<canvas id="wave-canvas"></canvas>
+<div class="wrapper">
   <header>
-    <div class="nav-container">
-      <div class="logo"><a href="index.html">S. T. Belen</a></div>
-      <nav>
-        <a href="education.html">Education</a>
-        <a href="experience.html">Experience</a>
-        <a href="projects.html">Projects</a>
-        <a href="ideas.html">Ideas</a>
-        <a href="writings.html">Writings</a>
-        <a href="research.html">Research</a>
-        <a href="index.html#contact">Contact</a>
-        <button id="dark-toggle" aria-label="Toggle dark mode">🌙</button>
-      </nav>
+  <div class="topbar">
+    <a class="brand" href="index.html">S. T. Belen</a>
+    <nav class="nav">
+      <a href="index.html#research">research</a>
+      <a href="index.html#experience">experience</a>
+      <a href="projects.html" style="color:var(--teal)">projects</a>
+      <a href="ideas.html">ideas</a>
+      <a href="index.html#contact">contact</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">🌙</button>
+    </nav>
+  </div>
+    <div class="header-top">
+      <div class="header-left">
+        <div class="eyebrow">Selected Work</div>
+        <h1>Projects</h1>
+        <p class="tagline">
+          Hands-on projects and experiments around reinforcement learning, multi-agent systems,
+          neural fields, radar, and image restoration.
+        </p>
+      </div>
     </div>
   </header>
 
-  <main>
-    <section class="reveal">
-      <h1>Projects</h1>
-      <p class="page-subtitle">
-        Selected hands-on projects and experiments, mostly around neural fields for seismic imaging,
-        audio tokenization, reinforcement learning, multi-agent systems, and image restoration.
-      </p>
-
-      <div class="grid">
-
-        <!-- Seismic NeRF 
-        <article class="card" id="seismic-nerf">
-          <img
-            src="nerf.png"
-            alt="Marine seismic acquisition and subsurface illustration"
-            class="project-image"
-          />
-          <h2>NeRF-inspired Seismic Subsurface Imaging</h2>
-          <p class="meta">Neural Rendering · Seismic Imaging · Tokenization · Transformer Architecture</p>
-          <p>
-            A research project on transferring Neural Radiance Fields (NeRF) ideas
-            from multi-view camera rendering to marine seismic acquisition.
-            Offset and azimuth are treated as view parameters in a NeRF-like formulation,
-            and the network learns subsurface reflectivity as a continuous neural field.
-          </p>
-          <p>
-            <strong>Proposed Architecture:</strong> An end-to-end tokenized seismic rendering pipeline.
-            Seismic traces are first transformed into time–frequency representations (spectrograms / scalograms),
-            then discretized via vector quantization into compact token sequences. A transformer-based decoder
-            reconstructs CMP-level subsurface structure by learning cross-offset consistency through attention,
-            analogous to how NeRF learns cross-view consistency in 3D rendering. This design enables generalization
-            across different acquisition geometries and handles sparse or irregular sampling.
-          </p>
-          <p>
-            The tokenization methodology builds directly on the
-            <a href="#audio-tokenizer">Multimodal Audio Tokenizer</a> project:
-            both seismic traces and audio signals are 1-D time-series with rich spectral structure,
-            so the same vector-quantized encoding and codebook learning techniques transfer naturally.
-          </p>
-        </article>
--->
-        <!-- ToolMind -->
-        <article class="card" id="toolmind" style="position: relative;">
-          <div style="
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #fff;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            padding: 0.3rem 0.75rem;
-            border-radius: 999px;
-            box-shadow: 0 2px 8px rgba(245,158,11,0.4);
-            z-index: 2;
-          ">🏆 Best Project</div>
-          <img
-            src="tool-selection.png"
-            alt="ToolMind — Franka Panda robot arm with tools on a tabletop scene"
-            class="project-image"
-          />
-          <h2>ToolMind: VLM-Guided Spatial Reasoning for Robotic Tool Use</h2>
-          <p class="meta">Robot Learning · VLM · Spatial Reasoning · Dexterous Manipulation · Bilkent University · 2026</p>
-          <p>
-            A dual-modality pipeline for scenario-specific sequential robotic tool use.
-            ToolMind couples <strong>GPT-based semantic reasoning</strong> with
-            <strong>depth-based geometric refinement</strong> to drive multi-phase
-            manipulation on a Franka Emika Panda arm.
-          </p>
-          <p>
-            The central challenge is <em>spatial myopia</em> — VLMs tend to regress keypoints
-            toward object centroids rather than task-relevant extremities. This is mitigated with
-            a Structured Chain-of-Thought JSON prompting strategy that enforces
-            geometry → grasp anchor → contact tip reasoning before any coordinate output.
-            DBSCAN cluster labels and depth back-projection convert VLM outputs into
-            actionable 3D keypoints, which then drive KOMO-based trajectory optimization
-            across three constrained scenarios: wall retrieval, screwdriver insertion, and shelf retrieval.
-          </p>
-          <p>
-            The pipeline requires no task-specific VLM retraining and operates in an open-world style,
-            with PCA geometry and antipodal search ensuring physically feasible robot actions.
-          </p>
-          <p class="meta">
-            <a href="https://stalhabelen.github.io/toolmind/" target="_blank" rel="noopener">
-              Project page →
-            </a>
-            &nbsp;·&nbsp;
-            <a href="https://stalhabelen.github.io/toolmind/FinalReportCS449.pdf" target="_blank" rel="noopener">
-              📄 Paper (PDF)
-            </a>
-          </p>
-        </article>
-
-        <!-- PPO-MAML -->
-        <article class="card">
-          <img
-            src="ppo-maml-assembly.gif"
-            alt="PPO-MAML adaptation on Meta-World Assembly-v3"
-            class="project-image"
-          />
-          <h2>PPO-MAML for Meta-World Assembly-v3 (Developed Version coming on 25 Feb!)</h2>
-          <p class="meta">
-            Reinforcement Learning · Meta-RL · Robotic Manipulation
-          </p>
-          <p>
-            A compact PyTorch implementation that combines Model-Agnostic Meta-Learning (MAML)
-            with a PPO inner loop on the Meta-World ML1 <code>assembly-v3</code> benchmark.
-            The goal is fast policy adaptation for a robotic arm under task variations.
-          </p>
-          <ul class="list">
-            <li>Single ~200-line script with fixed seeds, CSV logging, and GIF rollouts.</li>
-            <li>Stable PPO updates using clipping, entropy regularization, and gradient clipping.</li>
-            <li>Runs on CPU (MacBook Pro M2), easily portable to GPU.</li>
-          </ul>
-          <p class="meta">
-            <a
-              href="https://github.com/stbelen-st/Hands-on-Experiment-Fast-Adaptation-on-Meta-World-Assembly-v3-with-PPO-MAML"
-              target="_blank"
-              rel="noreferrer"
-            >
-              GitHub repository →
-            </a>
-          </p>
-        </article>
-
-        <!-- Domain-Invariant Racer -->
-        <article class="card">
-          <img
-            src="saliency_map.png"
-            alt="Value-based attention map for Domain-Invariant Racer"
-            class="project-image"
-          />
-          <img
-            src="robustness_curve.png"
-            alt="Robustness analysis under visual noise"
-            class="project-image"
-            style="margin-top: 0.6rem;"
-          />
-          <h2>Domain-Invariant Racer</h2>
-          <p class="meta">
-            Reinforcement Learning · Domain Randomization · Sim-to-Real
-          </p>
-          <p>
-            A PPO-based racing agent trained under heavy visual and physics randomization.
-            Instead of memorizing a single environment, the policy learns domain-invariant
-            representations that remain stable under changing textures, lighting, and noise.
-          </p>
-          <p>
-            The project focuses on robustness analysis and attention visualization to
-            understand which parts of the observation space the agent relies on as conditions degrade.
-          </p>
-          <p class="meta">
-            <a href="https://github.com/stalhabelen/Domain-Invariant-Racer" target="_blank" rel="noopener">
-              View code & README →
-            </a>
-          </p>
-        </article>
-
-        <!-- Safe Swarm Control -->
-        <article class="card">
-          <img
-            src="centralized_double_int.gif"
-            alt="Centralized safety filter with double integrator dynamics"
-            class="project-image"
-          />
-          <img
-            src="decentralized_swarm.gif"
-            alt="Decentralized multi-agent safety using distributed CBFs"
-            class="project-image"
-            style="margin-top: 0.6rem;"
-          />
-          <h2>Safe <!--Swarm --> Control with HOCBFs</h2>
-          <p class="meta">
-            Multi-Agent Systems · Control · Safety · Control Barrier Functions
-          </p>
-          <p>
-            A study of safety-critical control for multi-agent systems using
-            High-Order Control Barrier Functions (HOCBFs).
-            I compare centralized safety filtering for double-integrator dynamics
-            with decentralized, distributed CBF formulations. I used CVXPY for optimization.
-          </p>
-          <p>
-            The focus is on guaranteeing collision avoidance while minimally
-            modifying nominal control inputs, highlighting the trade-offs between
-            centralized and decentralized safety enforcement.
-          </p>
-          <p class="meta">
-            <a href="https://github.com/stalhabelen/Safe-Swarm-Control-HOCBF" target="_blank" rel="noopener">
-              GitHub repository →
-            </a>
-          </p>
-        </article>
-
-        <article class="card" id="audio-tokenizer">
-          <img
-            src="training_results.png"
-            alt="Training loss, spectrogram reconstructions, and discrete token usage for the multimodal audio tokenizer"
-            class="project-image"
-          />
-          <h2>Multimodal Audio Tokenizer</h2>
-          <p class="meta">
-            Audio Representation Learning · Tokenization · Multimodal ML
-          </p>
-          <p>
-            A research-oriented project exploring how raw audio signals can be
-            converted into compact, discrete token representations suitable for
-            multimodal learning setups. The goal is to bridge continuous audio
-            waveforms with sequence-based models in a way that is efficient,
-            expressive, and reusable across tasks.
-          </p>
-          <p>
-            The tokenizer is designed as a modular pipeline, making it easy to plug
-            audio tokens into downstream models such as transformers, multimodal
-            encoders, or generative architectures alongside text or vision tokens.
-          </p>
-          <p>
-            <!--This project also serves as a foundation for the
-            <a href="#seismic-nerf">Seismic Subsurface Imaging</a> work:
-            the vector-quantized encoding and codebook learning techniques developed here
-            for audio waveforms transfer directly to seismic trace tokenization,
-            since both are 1-D time-series with rich spectral structure. -->
-          </p>
-          <p class="meta">
-            Code and experiments:
-            <a
-              href="https://github.com/stalhabelen/Multimodal-audio-tokenizer"
-              target="_blank"
-              rel="noopener"
-            >
-              GitHub repository
-            </a>
-          </p>
-        </article>
-
-
-        <!-- SwinIR -->
-        <article class="card" id="swinir-sr">
-          <div class="project-image-row">
-            <img
-              src="swinir-lr.png"
-              alt="Low-resolution input image"
-              class="project-image-half"
-            />
-            <img
-              src="swinir-hr.png"
-              alt="High-resolution SwinIR output"
-              class="project-image-half"
-            />
-          </div>
-          <img
-            src="swin-arch.png"
-            alt="SwinIR architecture diagram"
-            class="project-image-arch"
-          />
-          <h2>Image Super-Resolution with SwinIR</h2>
-          <p class="meta">Image Restoration · Swin Transformer</p>
-          <p>
-            Implemented and trained SwinIR for single-image super-resolution.
-            Trained on <code>LSDIR</code> and evaluated on <code>Manga109</code> (×2),
-            achieving ~36.18 dB PSNR and outperforming a CNN baseline (RCAN).
-          </p>
-          <p class="meta">
-            <a href="SwinIRAblition.pdf" target="_blank" rel="noopener">
-              View project report (PDF)
-            </a>
-          </p>
-        </article>
-
-
+  <section>
+    <div class="section-label">Projects</div>
+    <div class="entry">
+      <div class="entry-thumb"><img src="https://stalhabelen.github.io/ppo-maml-assembly.gif" alt="PPO-MAML for Meta-World Assembly-v3"></div>
+      <div>
+        <div class="entry-title">PPO-MAML for Meta-World Assembly-v3</div>
+        <div class="entry-tag">Reinforcement Learning · Meta-RL · Robotic Manipulation</div>
+        <div class="entry-desc">A compact PyTorch implementation combining Model-Agnostic Meta-Learning (MAML) with a PPO inner loop on the Meta-World ML1 <code>assembly-v3</code> benchmark, targeting fast policy adaptation for a robotic arm under task variations. A single ~200-line script with fixed seeds, CSV logging, and GIF rollouts.</div>
+        <div class="entry-links"><a href="https://github.com/stbelen-st/Hands-on-Experiment-Fast-Adaptation-on-Meta-World-Assembly-v3-with-PPO-MAML" target=_blank>GitHub</a></div>
       </div>
-    </section>
-  </main>
-
+    </div>
+    <div class="entry">
+      <div class="entry-thumb"><img src="https://stalhabelen.github.io/saliency_map.png" alt="Domain-Invariant Racer"></div>
+      <div>
+        <div class="entry-title">Domain-Invariant Racer</div>
+        <div class="entry-tag">Reinforcement Learning · Domain Randomization · Sim-to-Real</div>
+        <div class="entry-desc">A PPO-based racing agent trained under heavy visual and physics randomization, learning domain-invariant representations that stay stable under changing textures, lighting, and noise. Focused on robustness analysis and attention visualization.</div>
+        <div class="entry-links"><a href="https://github.com/stalhabelen/Domain-Invariant-Racer" target=_blank>Code &amp; README</a></div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="entry-thumb"><img src="https://stalhabelen.github.io/decentralized_swarm.gif" alt="Safe Swarm Control with HOCBFs"></div>
+      <div>
+        <div class="entry-title">Safe Swarm Control with HOCBFs</div>
+        <div class="entry-tag">Multi-Agent Systems · Control · Control Barrier Functions</div>
+        <div class="entry-desc">Safety-critical control for multi-agent systems using High-Order Control Barrier Functions (HOCBFs), comparing centralized safety filtering for double-integrator dynamics against decentralized, distributed CBF formulations (solved with CVXPY) for collision avoidance with minimal control modification.</div>
+        <div class="entry-links"><a href="https://github.com/stalhabelen/Safe-Swarm-Control-HOCBF" target=_blank>GitHub</a></div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="entry-thumb"><img src="https://stalhabelen.github.io/training_results.png" alt="Multimodal Audio Tokenizer"></div>
+      <div>
+        <div class="entry-title">Multimodal Audio Tokenizer</div>
+        <div class="entry-tag">Audio Representation Learning · Tokenization · Multimodal ML</div>
+        <div class="entry-desc">A research-oriented project converting raw audio into compact, discrete token representations for multimodal learning. Designed as a modular pipeline so audio tokens can plug into transformers, multimodal encoders, or generative models alongside text or vision tokens.</div>
+        <div class="entry-links"><a href="https://github.com/stalhabelen/Multimodal-audio-tokenizer" target=_blank>GitHub</a></div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="entry-thumb"><img src="https://stalhabelen.github.io/nerf.png" alt="NeRF-inspired Seismic Subsurface Imaging"></div>
+      <div>
+        <div class="entry-title">NeRF-inspired Seismic Subsurface Imaging</div>
+        <div class="entry-tag">Neural Rendering · Seismic Imaging</div>
+        <div class="entry-desc">Transferring Neural Radiance Fields ideas from multi-view camera rendering to marine seismic acquisition, treating offset and azimuth as view parameters. Also experiments with tokenizing seismic traces via time–frequency features and vector quantization for CMP-level structure with transformer models.</div>
+        <div class="entry-links"></div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="entry-thumb"><img src="https://stalhabelen.github.io/swinir-hr.png" alt="Image Super-Resolution with SwinIR"></div>
+      <div>
+        <div class="entry-title">Image Super-Resolution with SwinIR</div>
+        <div class="entry-tag">Image Restoration · Swin Transformer</div>
+        <div class="entry-desc">Implemented and trained SwinIR for single-image super-resolution. Trained on <code>LSDIR</code> and evaluated on <code>Manga109</code> (×2), reaching ~36.18 dB PSNR and outperforming a CNN baseline (RCAN).</div>
+        <div class="entry-links"><a href="https://stalhabelen.github.io/SwinIRAblition.pdf" target=_blank>Report (PDF)</a></div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="entry-thumb"><img src="https://stalhabelen.github.io/dopler.png" alt="Doppler Radar Classification"></div>
+      <div>
+        <div class="entry-title">Doppler Radar Classification</div>
+        <div class="entry-tag">Signal Processing · CNN · RAD-DAR</div>
+        <div class="entry-desc">End-to-end Doppler radar pipeline classifying people, cars, and drones from range–Doppler maps, with clean preprocessing, balanced splits, and interpretable baselines. The CNN baseline reaches ~93% test accuracy and is structured for easy extension.</div>
+        <div class="entry-links"></div>
+      </div>
+    </div>
+  </section>
   <footer>
-    <span>© <span id="year"></span> Suleyman Talha Belen.</span>
-    <span
-      class="back-to-top"
-      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
-    >
-      ↑ Back to top
-    </span>
+    <div class="f-left">© 2025 Suleyman Talha Belen</div>
+    <div class="f-left"><a href="#">↑ top</a></div>
   </footer>
+</div>
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeBtn');
+  function set(t){ root.setAttribute('data-theme',t); if(btn) btn.textContent=(t==='dark'?'☀':'🌙'); waveColor=null; }
+  var saved='light'; try{ saved=localStorage.getItem('theme')||'light'; }catch(e){}
+  set(saved);
+  if(btn) btn.addEventListener('click',function(){
+    var t=root.getAttribute('data-theme')==='dark'?'light':'dark';
+    set(t); try{ localStorage.setItem('theme',t); }catch(e){}
+  });
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    const reveals = document.querySelectorAll(".reveal");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("active");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    reveals.forEach((el) => observer.observe(el));
-
-    const toggle = document.getElementById('dark-toggle');
-    function updateToggle() {
-      toggle.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
-    }
-    updateToggle();
-    toggle.addEventListener('click', function() {
-      document.documentElement.classList.toggle('dark');
-      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-      updateToggle();
-    });
-  </script>
+  // subtle signal-waveform background
+  var c=document.getElementById('wave-canvas'), x=c.getContext('2d'), t=0, waveColor=null;
+  function rs(){ c.width=innerWidth; c.height=innerHeight; }
+  function col(){ if(!waveColor) waveColor=getComputedStyle(root).getPropertyValue('--teal').trim()||'#1B6B6B'; return waveColor; }
+  function draw(){
+    x.clearRect(0,0,c.width,c.height);
+    var h=c.height,w=c.width,wv=[{f:.008,a:60,s:.003,y:h*.25},{f:.005,a:40,s:.002,y:h*.55},{f:.012,a:25,s:.004,y:h*.78}];
+    x.strokeStyle=col(); x.lineWidth=1;
+    wv.forEach(function(o){ x.beginPath(); for(var i=0;i<=w;i+=2){ var y=o.y+Math.sin(i*o.f+t*o.s*1000)*o.a; i===0?x.moveTo(i,y):x.lineTo(i,y);} x.stroke(); });
+    t++; requestAnimationFrame(draw);
+  }
+  rs(); addEventListener('resize',rs); draw();
+})();
+</script>
 </body>
 </html>
