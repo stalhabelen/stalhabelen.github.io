@@ -4,7 +4,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Suleyman Talha Belen | Projects</title>
-<link rel="icon" href="https://stalhabelen.github.io/favicon.svg"/>
+<link rel="icon" href="favicon.jpeg?v=2" type="image/jpeg"/>
+<link rel="apple-touch-icon" href="favicon.jpeg?v=2"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -30,7 +31,7 @@ body{
 /* HEADER */
 header{padding:60px 0 34px;border-bottom:1.5px solid var(--rule);margin-bottom:48px;}
 .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;}
-.brand{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--ink);text-decoration:none;letter-spacing:.02em;}
+.brand{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--ink);text-decoration:none;letter-spacing:.02em;white-space:nowrap;}
 .nav{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
 .nav a{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.05em;color:var(--ink3);text-decoration:none;border-bottom:1px solid transparent;transition:color .15s,border-color .15s;}
 .nav a:hover{color:var(--teal);border-color:var(--teal);}
@@ -83,7 +84,13 @@ html[data-theme="dark"] .studied img{filter:brightness(0) invert(1);opacity:.7;}
 .entry:last-child{border-bottom:none;}
 .entry-thumb{width:160px;height:108px;border-radius:4px;overflow:hidden;border:1px solid var(--rule);background:var(--bg2);transition:border-color .2s,transform .2s;}
 .entry:hover .entry-thumb{border-color:var(--teal);transform:translateY(-2px);}
-.entry-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.entry-thumb img,.entry-thumb video{width:100%;height:100%;object-fit:cover;display:block;}
+.thumb-link{display:block;width:100%;height:100%;}
+.thumb-link:focus-visible{outline:2px solid var(--teal);outline-offset:-2px;}
+.entry-thumb.vlm-thumb{height:auto;aspect-ratio:794/712;}
+.entry-thumb.vlm-thumb img{object-fit:contain;}
+.entry-thumb.wide-thumb{height:auto;aspect-ratio:16/9;}
+.entry-thumb.wide-thumb img{object-fit:contain;}
 .entry-title{font-size:17px;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:3px;letter-spacing:-.2px;}
 .entry-title a{color:var(--ink);text-decoration:none;background-image:linear-gradient(var(--teal),var(--teal));background-size:0% 1.5px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .25s,color .15s;}
 .entry-title a:hover{color:var(--teal);background-size:100% 1.5px;}
@@ -94,6 +101,7 @@ html[data-theme="dark"] .studied img{filter:brightness(0) invert(1);opacity:.7;}
 .entry-links{display:flex;gap:8px;flex-wrap:wrap;}
 .entry-links a{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);text-decoration:none;border:1px solid var(--rule);border-radius:2px;padding:1px 9px;transition:background .15s,border-color .15s;}
 .entry-links a:hover{background:rgba(27,107,107,.07);border-color:var(--teal);}
+.entry-links .status{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink3);border:1px solid var(--rule);border-radius:2px;padding:1px 9px;}
 
 /* IDEAS */
 .idea{padding:24px 0;border-bottom:1px solid var(--rule2);}
@@ -118,14 +126,17 @@ footer a:hover{color:var(--teal);}
 @media(max-width:580px){
   .wrapper{padding:0 20px;}
   header{padding:32px 0 24px;}
-  .topbar{margin-bottom:28px;}
-  .nav{gap:14px;}
+  .topbar{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:28px;}
+  .nav{width:100%;gap:10px 16px;}
   .header-top{flex-direction:column-reverse;align-items:flex-start;gap:20px;}
   .photo-slot{width:88px;height:88px;}
   h1{font-size:33px;}
   .entry{grid-template-columns:1fr;gap:12px;}
   .entry-thumb{width:100%;height:160px;}
   .contact-grid{grid-template-columns:1fr;}
+}
+@media(max-width:380px){
+  .nav{display:grid;grid-template-columns:repeat(3,max-content);align-items:center;}
 }
 </style>
 </head>
@@ -140,6 +151,7 @@ footer a:hover{color:var(--teal);}
       <a href="index.html#experience">experience</a>
       <a href="projects.html" style="color:var(--teal)">projects</a>
       <a href="ideas.html">ideas</a>
+      <a href="CV_Suleyman_Talha_Belen.pdf" target="_blank" rel="noreferrer" aria-label="Open CV as PDF">CV</a>
       <a href="index.html#contact">contact</a>
       <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">🌙</button>
     </nav>
@@ -159,19 +171,28 @@ footer a:hover{color:var(--teal);}
   <section>
     <div class="section-label">Projects</div>
     <div class="entry">
-      <div class="entry-thumb" style="position:relative;">
-        <img src="https://stalhabelen.github.io/tool-selection.png" alt="ToolMind project">
+      <div class="entry-thumb wide-thumb"><a class="thumb-link" href="dexrefine-pipeline.png" target="_blank" rel="noreferrer" aria-label="Open the full-size DexRefine pipeline poster"><img src="dexrefine-pipeline.png" alt="DexRefine pipeline poster" loading="lazy" decoding="async"></a></div>
+      <div>
+        <div class="entry-title">DexRefine — RGB-Guided Contact-Aware Robot Reference Refinement</div>
+        <div class="entry-tag">Dexterous Manipulation · Human-to-Robot Retargeting · Contact Guidance · Physics Optimization</div>
+        <div class="entry-desc">DexRefine turns noisy human hand–object demonstrations into physically plausible robot references using RGB contact guidance, grasp-locked correction, Wuji retargeting, collision-aware refinement, and SPIDER/MJWP physics rollouts.</div>
+        <div class="entry-links"><a href="dexrefine-pipeline.png" target="_blank" rel="noreferrer">View full-size poster</a><span class="status">Code coming soon</span></div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="entry-thumb vlm-thumb" style="position:relative;">
+        <img src="tool-selection.png" alt="ToolMind project" loading="lazy" decoding="async">
         <div style="position:absolute;top:6px;left:6px;font-size:20px;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4));">👑</div>
       </div>
       <div>
         <div class="entry-title"><a href="https://stalhabelen.github.io/toolmind/" target="_blank">ToolMind — VLM-Guided Spatial Reasoning for Robotic Tool Use</a></div>
         <div class="entry-tag" style="font-weight:700;color:var(--teal);">🏆 Best Project · Learning for Robotics · VLMs · Robot Tool Use</div>
-        <div class="entry-desc">A scenario-specific robotic tool-use pipeline that combines VLM reasoning, depth-based geometric refinement, and KOMO-based motion planning for wall retrieval, screwdriver insertion, and shelf retrieval. Selected as the <strong>Best Project</strong> in Bilkent University's Learning for Robotics course.</div>
+        <div class="entry-desc">We developed a structured VLM Chain-of-Thought method for geometry analysis, grasp localization, and contact-tip localization, followed by depth refinement and KOMO motion planning. Selected as the <strong>Best Project</strong> in Bilkent University's Learning for Robotics course.</div>
         <div class="entry-links"><a href="https://stalhabelen.github.io/toolmind/" target="_blank">Project Website</a></div>
       </div>
     </div>
     <div class="entry">
-      <div class="entry-thumb"><img src="https://stalhabelen.github.io/ppo-maml-assembly.gif" alt="PPO-MAML for Meta-World Assembly-v3"></div>
+      <div class="entry-thumb"><video data-src="ppo-maml-assembly.mp4" poster="ppo-maml-poster.jpg" muted loop playsinline preload="none" aria-label="PPO-MAML rollout for Meta-World Assembly-v3"></video></div>
       <div>
         <div class="entry-title">PPO-MAML for Meta-World Assembly-v3</div>
         <div class="entry-tag">Reinforcement Learning · Meta-RL · Robotic Manipulation</div>
@@ -180,7 +201,7 @@ footer a:hover{color:var(--teal);}
       </div>
     </div>
     <div class="entry">
-      <div class="entry-thumb"><img src="https://stalhabelen.github.io/saliency_map.png" alt="Domain-Invariant Racer"></div>
+      <div class="entry-thumb"><img src="saliency_map.png" alt="Domain-Invariant Racer" loading="lazy" decoding="async"></div>
       <div>
         <div class="entry-title">Domain-Invariant Racer</div>
         <div class="entry-tag">Reinforcement Learning · Domain Randomization · Sim-to-Real</div>
@@ -189,7 +210,7 @@ footer a:hover{color:var(--teal);}
       </div>
     </div>
     <div class="entry">
-      <div class="entry-thumb"><img src="https://stalhabelen.github.io/decentralized_swarm.gif" alt="Safe Swarm Control with HOCBFs"></div>
+      <div class="entry-thumb"><video data-src="decentralized-swarm.mp4" poster="decentralized-swarm-poster.jpg" muted loop playsinline preload="none" aria-label="Decentralized safe swarm control simulation"></video></div>
       <div>
         <div class="entry-title">Safe Swarm Control with HOCBFs</div>
         <div class="entry-tag">Multi-Agent Systems · Control · Control Barrier Functions</div>
@@ -198,7 +219,7 @@ footer a:hover{color:var(--teal);}
       </div>
     </div>
     <div class="entry">
-      <div class="entry-thumb"><img src="https://stalhabelen.github.io/training_results.png" alt="Multimodal Audio Tokenizer"></div>
+      <div class="entry-thumb"><img src="training_results.png" alt="Multimodal Audio Tokenizer" loading="lazy" decoding="async"></div>
       <div>
         <div class="entry-title">Multimodal Audio Tokenizer</div>
         <div class="entry-tag">Audio Representation Learning · Tokenization · Multimodal ML</div>
@@ -207,7 +228,7 @@ footer a:hover{color:var(--teal);}
       </div>
     </div>
     <div class="entry">
-      <div class="entry-thumb"><img src="https://stalhabelen.github.io/nerf.png" alt="NeRF-inspired Seismic Subsurface Imaging"></div>
+      <div class="entry-thumb"><img src="nerf.png" alt="NeRF-inspired Seismic Subsurface Imaging" loading="lazy" decoding="async"></div>
       <div>
         <div class="entry-title">NeRF-inspired Seismic Subsurface Imaging</div>
         <div class="entry-tag">Neural Rendering · Seismic Imaging</div>
@@ -216,7 +237,7 @@ footer a:hover{color:var(--teal);}
       </div>
     </div>
     <div class="entry">
-      <div class="entry-thumb"><img src="https://stalhabelen.github.io/swinir-hr.png" alt="Image Super-Resolution with SwinIR"></div>
+      <div class="entry-thumb"><img src="swinir-hr.png" alt="Image Super-Resolution with SwinIR" loading="lazy" decoding="async"></div>
       <div>
         <div class="entry-title">Image Super-Resolution with SwinIR</div>
         <div class="entry-tag">Image Restoration · Swin Transformer</div>
@@ -227,7 +248,7 @@ footer a:hover{color:var(--teal);}
 
   </section>
   <footer>
-    <div class="f-left">© 2025 Suleyman Talha Belen</div>
+    <div class="f-left">© 2026 Suleyman Talha Belen</div>
     <div class="f-left"><a href="#">↑ top</a></div>
   </footer>
 </div>
@@ -241,6 +262,27 @@ footer a:hover{color:var(--teal);}
     var t=root.getAttribute('data-theme')==='dark'?'light':'dark';
     set(t); try{ localStorage.setItem('theme',t); }catch(e){}
   });
+
+  // Load project videos only when they are close to the viewport.
+  var lazyVideos=document.querySelectorAll('video[data-src]');
+  function loadVideo(video){
+    if(!video.dataset.src) return;
+    video.src=video.dataset.src;
+    video.removeAttribute('data-src');
+    video.load();
+    var playPromise=video.play();
+    if(playPromise) playPromise.catch(function(){});
+  }
+  if('IntersectionObserver' in window){
+    var videoObserver=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ loadVideo(entry.target); videoObserver.unobserve(entry.target); }
+      });
+    },{rootMargin:'160px'});
+    lazyVideos.forEach(function(video){ videoObserver.observe(video); });
+  }else{
+    lazyVideos.forEach(loadVideo);
+  }
 
   // subtle signal-waveform background
   var c=document.getElementById('wave-canvas'), x=c.getContext('2d'), t=0, waveColor=null;
