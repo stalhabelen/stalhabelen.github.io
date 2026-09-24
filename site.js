@@ -18,6 +18,29 @@
     try { localStorage.setItem('theme', next); } catch (_) {}
   });
 
+  // Native disclosure keeps navigation usable even without JavaScript.
+  const more = document.querySelector('.nav-more');
+  if (more) {
+    const summary = more.querySelector('summary');
+    document.addEventListener('click', event => {
+      if (!more.contains(event.target)) more.open = false;
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && more.open) {
+        more.open = false;
+        summary.focus();
+        event.preventDefault();
+      }
+    });
+    more.addEventListener('focusout', event => {
+      if (event.relatedTarget && !more.contains(event.relatedTarget)) more.open = false;
+    });
+    more.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      more.open = false;
+    }));
+    window.addEventListener('pageshow', () => { more.open = false; });
+  }
+
   const motto = document.getElementById('mottoText');
   const languages = document.querySelectorAll('.lang-btn');
   languages.forEach(button => button.addEventListener('click', () => {
