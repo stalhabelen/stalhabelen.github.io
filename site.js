@@ -4,7 +4,11 @@
   function setTheme(theme) {
     root.dataset.theme = theme;
     if (!button) return;
-    button.textContent = theme === 'dark' ? '◑' : '◐';
+    const icon = button.querySelector('[data-theme-icon]');
+    const label = button.querySelector('[data-theme-label]');
+    if (icon) icon.textContent = theme === 'dark' ? '◑' : '◐';
+    else button.textContent = theme === 'dark' ? '◑' : '◐';
+    if (label) label.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
     button.setAttribute('aria-pressed', String(theme === 'dark'));
     button.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
     button.title = theme === 'dark' ? 'Light theme' : 'Dark theme';

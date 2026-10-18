@@ -1,0 +1,125 @@
+/* Homepage-only layout; the shared palette, typefaces, and other pages stay intact. */
+.academic-home .wrapper{max-width:1160px}
+.academic-home .site-header{margin-bottom:42px}
+.academic-home .topbar{margin-bottom:0}
+.academic-home main>section{margin-bottom:48px}
+.academic-layout{display:grid;grid-template-columns:210px minmax(0,1fr);column-gap:64px;align-items:start}
+.academic-layout>main{min-width:0}
+.academic-home h1{font-size:28px;line-height:1.22;letter-spacing:-.5px;font-weight:500;margin:0;text-wrap:initial}
+.profile-sidebar{position:sticky;top:28px;align-self:start;display:flex;flex-direction:column;align-items:flex-start;gap:18px;min-width:0}
+.profile-sidebar .photo-slot{width:170px;height:170px}
+.profile-bio{font-size:16px;line-height:1.75;max-width:none}
+.profile-bio p+p{margin-top:20px}
+.profile-links{flex-direction:column;align-items:flex-start;width:max-content;max-width:100%;gap:0}
+.profile-links .social-link{color:var(--accent)}
+.profile-links .social-link:hover{color:var(--ink)}
+.profile-links .social-link svg{width:14px;height:14px}
+.academic-home .profile-theme{position:static;display:inline-flex;align-items:center;gap:8px;min-height:35px;padding:0;border:0;font-family:var(--mono);font-size:11px;line-height:1.5;color:var(--ink3);margin-top:-12px}
+.profile-theme [data-theme-icon]{width:14px;font-size:17px;text-align:center}
+.academic-home .profile-theme:hover{color:var(--ink)}
+.academic-home .section-label{font-family:var(--serif);font-size:23px;line-height:1.35;font-weight:500;letter-spacing:-.3px;text-transform:none;color:var(--ink);margin-bottom:22px;gap:22px}
+.academic-home .section-heading{gap:22px;margin-bottom:0}
+.academic-home .section-heading .section-label{flex:1;margin-bottom:0}
+.academic-home .section-heading .section-label::after{display:block}
+.academic-home .section-heading>a{flex:none;color:var(--accent)}
+.research-list>.entry{grid-template-columns:194px minmax(0,1fr);gap:28px;padding:24px 0;align-items:center}
+.research-list>.entry:last-child{padding-bottom:0}
+.research-list .entry-thumb{height:auto;aspect-ratio:16/10;border-radius:4px;background:var(--surface);border:1px solid var(--rule2)}
+.research-list .entry-thumb img{object-fit:contain;padding:8px}
+.research-list .entry-title{margin-bottom:9px}
+.research-list .project-name{font-size:21px;margin-bottom:3px}
+.research-list .project-subtitle{font-size:15px;line-height:1.45;font-weight:400}
+.academic-home .entry-desc{margin-bottom:8px}
+.project-recognition{font-size:13px;color:var(--accent);font-style:italic;line-height:1.5;margin:7px 0}
+.academic-home .entry-links{margin-top:10px;gap:8px 20px}
+.academic-home .entry-links a{border:0;border-bottom:1px solid var(--rule);padding:0 0 2px;border-radius:0}
+.academic-home .entry-links a:hover{border-color:var(--accent)}
+.academic-home .logo-entry{grid-template-columns:88px minmax(0,1fr);gap:24px;padding:22px 0}
+.academic-home #research>.entry:first-of-type,.academic-home #experience>.entry:first-of-type{padding-top:0}
+.academic-home .logo-entry .entry-thumb{min-height:58px}
+.academic-home .logo-entry .entry-thumb img{max-width:80px;max-height:64px}
+.academic-home .logo-entry .logo-nyu img{width:124px;max-width:none;max-height:none}
+.academic-home .entry-tag{font-size:10px;margin-bottom:7px}
+.academic-home .entry-meta{margin-bottom:7px}
+.academic-home .teaching-entry{grid-template-columns:88px minmax(0,1fr);gap:24px;padding:22px 0 0}
+.teaching-entry .entry-thumb{height:68px;border-radius:3px;margin-top:3px}
+.academic-home .edu-timeline{--date-width:86px;--timeline-gap:18px;margin-top:0}
+.academic-home .edu-date{padding-top:3px}
+.academic-home .edu-dot{margin-top:12px}
+.academic-home .edu-item:not(:last-child)::before{top:16px;bottom:-16px}
+.academic-home .edu-heading{display:flex;align-items:center;gap:12px;margin-bottom:7px;min-height:30px}
+.academic-home .edu-logo{width:27px;height:30px;object-position:center;margin:0;flex:none}
+.academic-home .edu-name{font-size:16px;margin:0}
+.academic-home .edu-note{max-width:610px}
+.academic-home .edu-body{padding-bottom:23px}
+.academic-home .edu-item:last-child .edu-body{padding-bottom:0}
+.academic-home #contact{padding-top:28px;margin-bottom:26px}
+.academic-home #contact .section-label{margin-bottom:12px}
+.academic-home #contact .section-label::after{display:none}
+.academic-home .contact-layout{grid-template-columns:minmax(0,1fr) 104px;gap:40px}
+.academic-home #contact .prose{margin:0;max-width:650px;font-size:15px}
+.academic-home #contact .prose p+p{margin-top:10px}
+.academic-home .contact-layout>.art{width:92px;justify-self:center;transform:rotate(3deg)}
+.academic-home footer{margin-top:0;padding-top:20px}
+@media(max-width:960px){
+  .academic-layout{grid-template-columns:184px minmax(0,1fr);column-gap:36px}
+  .profile-sidebar .photo-slot{width:154px;height:154px}
+  .academic-home h1{font-size:26px}
+  .research-list>.entry{grid-template-columns:156px minmax(0,1fr);gap:22px}
+}
+@media(max-height:650px){
+  .profile-sidebar{position:static}
+}
+@media(max-width:860px){
+  .academic-layout{grid-template-columns:1fr;row-gap:32px}
+  .profile-sidebar{position:static;display:grid;grid-template-columns:154px minmax(0,1fr);column-gap:28px;row-gap:12px;align-items:start;padding-bottom:28px;border-bottom:1px solid var(--rule)}
+  .profile-sidebar .photo-slot{grid-column:1;grid-row:1 / span 3}
+  .profile-sidebar h1{grid-column:2;grid-row:1}
+  .profile-sidebar h1 br{display:none}
+  .profile-links{grid-column:2;grid-row:2;flex-direction:row;align-items:center;width:100%;gap:0 18px}
+  .academic-home .profile-theme{grid-column:2;grid-row:3;justify-self:start;margin-top:0}
+}
+@media(max-width:760px){
+  .academic-home .site-header{margin-bottom:32px}
+  .academic-home .topbar{flex-direction:row;align-items:center;gap:16px}
+  .academic-home .nav{width:auto;gap:18px}
+  .academic-home .nav .nav-cv{position:static}
+  .research-list>.entry{grid-template-columns:164px minmax(0,1fr);gap:22px}
+}
+@media(max-width:520px){
+  .academic-home main>section{margin-bottom:38px}
+  .academic-home .brand{font-size:12px}
+  .academic-home .nav{gap:12px}
+  .profile-sidebar{grid-template-columns:104px minmax(0,1fr);column-gap:20px;row-gap:16px;align-items:center;padding-bottom:24px}
+  .profile-sidebar .photo-slot{width:104px;height:104px;grid-row:1}
+  .academic-home h1{font-size:27px;line-height:1.2;letter-spacing:-.5px}
+  .profile-sidebar h1 br{display:block}
+  .profile-links{grid-column:1 / -1;gap:3px 18px}
+  .profile-links .social-link{font-size:10px;min-height:35px;gap:6px}
+  .academic-home .profile-theme{grid-column:1 / -1;font-size:10px;margin-top:-10px}
+  .academic-home .section-label{font-size:21px;gap:14px}
+  .academic-home .section-heading{gap:12px}
+  .academic-home .section-heading>a{font-size:10px}
+  .research-list>.entry{grid-template-columns:1fr;gap:16px;padding:22px 0}
+  .research-list .entry-thumb{width:100%;max-width:320px;aspect-ratio:16/9;justify-self:start}
+  .research-list .project-name{font-size:22px}
+  .academic-home .logo-entry,.academic-home .teaching-entry{grid-template-columns:52px minmax(0,1fr);gap:16px}
+  .academic-home .logo-entry .entry-thumb{min-height:48px}
+  .academic-home .logo-entry .entry-thumb img{max-width:50px;max-height:50px}
+  .academic-home .logo-entry .logo-nyu img{width:94px;max-width:none;max-height:none}
+  .teaching-entry .entry-thumb{height:48px}
+  .academic-home .edu-timeline{--date-width:62px;--timeline-gap:9px}
+  .academic-home .edu-date{font-size:9px}
+  .academic-home .edu-heading{gap:9px}
+  .academic-home .edu-logo{width:23px;height:26px}
+  .academic-home .edu-name{font-size:15px}
+  .academic-home .contact-layout{grid-template-columns:minmax(0,1fr) 64px;gap:20px}
+  .academic-home .contact-layout>.art{width:60px;grid-row:auto;margin:0}
+}
+@media(max-width:360px){
+  .academic-home .topbar{flex-wrap:wrap;gap:10px}
+  .academic-home .nav{width:100%;justify-content:flex-end}
+  .profile-sidebar{grid-template-columns:90px minmax(0,1fr);column-gap:16px}
+  .profile-sidebar .photo-slot{width:90px;height:90px}
+  .academic-home h1{font-size:24px}
+}
