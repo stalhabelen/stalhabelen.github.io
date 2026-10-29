@@ -29,6 +29,17 @@
 .research-list .entry-title{margin-bottom:9px}
 .research-list .project-name{font-size:21px;margin-bottom:3px}
 .research-list .project-subtitle{font-size:15px;line-height:1.45;font-weight:400}
+.research-list .teaser-thumb{aspect-ratio:16/9}
+.project-authors{display:flex;flex-wrap:wrap;align-items:center;gap:3px 10px;font-size:13px;line-height:1.8;color:var(--ink2);margin-bottom:8px}
+.project-author,.project-affiliation{display:inline-block}
+.project-authors strong{font-weight:600;color:var(--ink)}
+.project-authors sup,.project-affiliations sup{font-size:.7em;line-height:0;margin-left:1px}
+.project-author-role{display:inline-block;margin-left:8px;font-family:var(--mono);font-size:10px;color:var(--accent)}
+.project-affiliations{display:flex;flex-wrap:wrap;align-items:center;gap:3px 6px;font-size:11px;line-height:1.7;color:var(--ink3);margin-bottom:12px}
+/* Decorative placeholders only: undisclosed names are not embedded in the page. */
+.project-teaser .redacted-detail{display:inline-block;flex:none;width:var(--redacted-width,10ch);max-width:100%;height:1.1em;line-height:1.1;overflow:hidden;filter:blur(3px);opacity:.65;user-select:none;pointer-events:none}
+.project-teaser .redacted-detail::before{content:"Name to be announced";white-space:nowrap;color:var(--ink3)}
+.project-affiliations .redacted-detail::before{content:"Institution to be announced"}
 .academic-home .entry-desc{margin-bottom:8px}
 .project-recognition{font-size:13px;color:var(--accent);font-style:italic;line-height:1.5;margin:7px 0}
 .academic-home .entry-links{margin-top:10px;gap:8px 20px}
