@@ -50,6 +50,10 @@
 .academic-home .logo-entry .entry-thumb{min-height:58px}
 .academic-home .logo-entry .entry-thumb img{max-width:80px;max-height:64px}
 .academic-home .logo-entry .logo-nyu img{width:124px;max-width:none;max-height:none}
+/* Show the official wide mark within its square transparent source canvas. */
+.academic-home .logo-entry .logo-lira{height:64px;min-height:64px}
+.academic-home .logo-entry .logo-lira img{width:100px;max-width:none;max-height:none;flex-shrink:0}
+[data-theme="dark"] .academic-home .logo-lira img{filter:brightness(0) invert(.92)}
 .academic-home .entry-tag{font-size:10px;margin-bottom:7px}
 .academic-home .entry-meta{margin-bottom:7px}
 .academic-home .teaching-entry{grid-template-columns:88px minmax(0,1fr);gap:24px;padding:22px 0 0}
@@ -118,6 +122,8 @@
   .academic-home .logo-entry .entry-thumb{min-height:48px}
   .academic-home .logo-entry .entry-thumb img{max-width:50px;max-height:50px}
   .academic-home .logo-entry .logo-nyu img{width:94px;max-width:none;max-height:none}
+  .academic-home .logo-entry .logo-lira{height:48px;min-height:48px}
+  .academic-home .logo-entry .logo-lira img{width:58px;max-width:none;max-height:none}
   .teaching-entry .entry-thumb{height:48px}
   .academic-home .edu-timeline{--date-width:62px;--timeline-gap:9px}
   .academic-home .edu-date{font-size:9px}
