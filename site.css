@@ -115,6 +115,7 @@ section{margin-bottom:70px;scroll-margin-top:32px}
 .project-list>.entry:nth-child(-n+2){grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);padding:36px 0}
 .project-list>.entry:first-child{padding-top:0}
 .project-list>.entry:nth-child(-n+2) .entry-thumb{aspect-ratio:16/10;height:auto}
+.project-list>.entry.robot-data-project .entry-thumb,.research-list>.entry.robot-data-project .entry-thumb{aspect-ratio:2/1;height:auto}
 .about-layout{display:grid;grid-template-columns:minmax(0,1fr) 144px;gap:64px;align-items:start}
 .about-content{min-width:0}
 .about-layout>.art{position:sticky;top:32px;align-self:start;margin:8px 0;transform:rotate(3deg)}
